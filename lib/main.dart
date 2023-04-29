@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:satuarah/app/controllers/auth_controller.dart';
+
+import 'app/modules/loading/loading_view.dart';
 import 'app/routes/app_pages.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -9,19 +13,40 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  Get.put(AuthController(), permanent: true);
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Application",
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
+    // return GetMaterialApp(
+    //       debugShowCheckedModeBanner: false,
+    //       title: "Application",
+    //       initialRoute: Routes.signUp,
+    //       getPages: AppPages.routes,
+    //     );
+
+    return StreamBuilder<User?>(
+      stream: auth.authStateChanges(),
+      builder: (context, snapAuth) {
+        if (snapAuth.connectionState == ConnectionState.waiting) {
+          return const LoadingView();
+        }
+
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: "Application",
+          initialRoute: snapAuth.hasData ? Routes.home : Routes.signIn,
+          getPages: AppPages.routes,
+        );
+      },
     );
   }
 }

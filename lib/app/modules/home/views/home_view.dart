@@ -9,15 +9,22 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'HomeView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: Column(
+        children: [
+          SizedBox(
+            width: 50,
+            height: 50,
+            child: IconButton(
+              onPressed: () {
+                controller.doLogout();
+              },
+              icon: const Icon(
+                Icons.add,
+                size: 24.0,
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
