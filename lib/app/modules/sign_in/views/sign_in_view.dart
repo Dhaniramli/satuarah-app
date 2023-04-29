@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:satuarah/app/routes/app_pages.dart';
 
 import '../../../../theme.dart';
 import '../../sign_up/views/sign_up_view.dart';
@@ -49,18 +50,31 @@ class SignInView extends GetView<SignInController> {
                             fontSize: 15, fontWeight: medium)),
                   ),
                   const SizedBox(height: 50),
-                  TextFormField(
-                    controller: controller.password,
-                    decoration: InputDecoration(
-                        icon: const ImageIcon(
-                          AssetImage(
-                            "assets/password.png",
+                  Obx(
+                    () => TextField(
+                      controller: controller.password,
+                      obscureText: controller.isHidden.value,
+                      decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              controller.isHidden.toggle();
+                            },
+                            icon: Icon(
+                              controller.isHidden.isFalse
+                                  ? Icons.remove_red_eye
+                                  : Icons.remove_red_eye_outlined,
+                            ),
                           ),
-                          size: 20,
-                        ),
-                        hintText: 'Password',
-                        hintStyle: textGrayStyle.copyWith(
-                            fontSize: 15, fontWeight: medium)),
+                          icon: const ImageIcon(
+                            AssetImage(
+                              "assets/password.png",
+                            ),
+                            size: 20,
+                          ),
+                          hintText: 'Password',
+                          hintStyle: textGrayStyle.copyWith(
+                              fontSize: 15, fontWeight: medium)),
+                    ),
                   ),
                 ],
               ),
@@ -69,11 +83,40 @@ class SignInView extends GetView<SignInController> {
                 width: double.infinity,
                 height: 42,
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (controller.isLoading.isFalse) {
-                      controller.isLoading(true);
-                      controller.doLogin();
-                      // controller.isLoading(false);
+                      if (controller.email.text.isNotEmpty &&
+                          controller.password.text.isNotEmpty) {
+                        controller.isLoading(true);
+                        Map<String, dynamic> hasil = await controller.signIn(
+                          controller.email.text,
+                          controller.password.text,
+                        );
+                        controller.isLoading(false);
+                        if (hasil["error"] == true) {
+                          Get.snackbar(
+                            "Terjadi Kesalahan",
+                            hasil["message"],
+                            duration: const Duration(seconds: 2),
+                            snackStyle: SnackStyle.FLOATING,
+                            backgroundColor: primaryColor,
+                            colorText: Colors.white,
+                            borderRadius: 10,
+                          );
+                        } else {
+                          Get.offAllNamed(Routes.home);
+                        }
+                      } else {
+                        Get.snackbar(
+                          "Terjadi Kesalahan",
+                          "email dan password wajib diisi",
+                          duration: const Duration(seconds: 2),
+                          snackStyle: SnackStyle.FLOATING,
+                          backgroundColor: primaryColor,
+                          colorText: Colors.white,
+                          borderRadius: 10,
+                        );
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -106,7 +149,7 @@ class SignInView extends GetView<SignInController> {
                   ),
                   TextButton(
                     onPressed: () {
-                      Get.to(SignUpView());
+                      Get.to(() => const SignUpView());
                     },
                     child: Text(
                       'Daftar',

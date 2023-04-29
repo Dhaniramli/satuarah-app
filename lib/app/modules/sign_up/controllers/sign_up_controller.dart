@@ -40,8 +40,6 @@ class SignUpController extends GetxController {
             "user": "costumer",
           });
 
-          
-
           Get.snackbar(
             "Berhasil",
             "Data anda berhasil di rekam",
