@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../../../../theme.dart';
 import '../../loading/loading_view.dart';
 import '../controllers/sign_up_controller.dart';
-import 'widget/text_field_widget.dart';
 import 'widget/text_form_widget.dart';
 
 class SignUpView extends GetView<SignUpController> {
@@ -43,6 +42,19 @@ class SignUpView extends GetView<SignUpController> {
 
     Widget formFullName() {
       return TextFormWidget(
+          label: "Nama Lengkap",
+          controller: controller.fullName,
+          obscureText: false,
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Nama lengkap wajib diisi';
+            }
+            return null;
+          });
+    }
+
+    Widget formEmail() {
+      return TextFormWidget(
         label: "Email",
         controller: controller.email,
         obscureText: false,
@@ -58,25 +70,26 @@ class SignUpView extends GetView<SignUpController> {
       );
     }
 
-    Widget formEmail() {
-      return TextFieldWidget(
-        label: "Nama Lengkap",
-        controller: controller.fullName,
-        obscureText: false,
-      );
-    }
-
     Widget formPhoneNumber() {
-      return TextFieldWidget(
+      return TextFormWidget(
         label: "Nomor Telepon",
         controller: controller.phoneNumber,
         obscureText: false,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Nomor telepon wajib diisi';
+          } else if (!RegExp(r'^(?:\+62|62|0)[2-9]{1}[0-9]+$')
+              .hasMatch(value)) {
+            return 'Format nomor telepon tidak valid';
+          }
+          return null;
+        },
       );
     }
 
     Widget formPass() {
       return Obx(
-        () => TextFieldWidget(
+        () => TextFormWidget(
           label: "Password",
           controller: controller.password,
           obscureText: controller.isHiddenOne.value,
@@ -90,13 +103,21 @@ class SignUpView extends GetView<SignUpController> {
                   : Icons.remove_red_eye_outlined,
             ),
           ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Password wajib diisi';
+            } else if (value.length < 6) {
+              return 'Password harus minimal 6 karakter';
+            }
+            return null;
+          },
         ),
       );
     }
 
     Widget formPassConfir() {
       return Obx(
-        () => TextFieldWidget(
+        () => TextFormWidget(
           label: "Konfirmasi Password",
           controller: controller.passwordConfirmation,
           obscureText: controller.isHiddenTwo.value,
@@ -110,6 +131,14 @@ class SignUpView extends GetView<SignUpController> {
                   : Icons.remove_red_eye_outlined,
             ),
           ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Password wajib diisi';
+            } else if (value.length < 6) {
+              return 'Password harus minimal 6 karakter';
+            }
+            return null;
+          },
         ),
       );
     }
