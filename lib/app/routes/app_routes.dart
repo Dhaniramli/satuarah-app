@@ -7,6 +7,9 @@ abstract class Routes {
   static const signIn = _Paths.signIn;
   static const signUp = _Paths.signUp;
   static const mainNavigation = _Paths.mainNavigation;
+  static const POPULAR_ROUTE = _Paths.POPULAR_ROUTE;
+  static const LEAVING_TODAY = _Paths.LEAVING_TODAY;
+  static const FIND_RIDE = _Paths.FIND_RIDE;
 }
 
 abstract class _Paths {
@@ -15,4 +18,7 @@ abstract class _Paths {
   static const signIn = '/signIn';
   static const signUp = '/signUp';
   static const mainNavigation = '/mainNavigation';
+  static const POPULAR_ROUTE = '/popular-route';
+  static const LEAVING_TODAY = '/leaving-today';
+  static const FIND_RIDE = '/find-ride';
 }
