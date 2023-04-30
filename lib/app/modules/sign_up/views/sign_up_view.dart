@@ -136,9 +136,12 @@ class SignUpView extends GetView<SignUpController> {
               return 'Password wajib diisi';
             } else if (value.length < 6) {
               return 'Password harus minimal 6 karakter';
+            } else if (value != controller.password.text){
+              return 'Password tidak valid';
             }
             return null;
           },
+          
         ),
       );
     }

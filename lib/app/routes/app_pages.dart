@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/main_navigation/bindings/main_navigation_binding.dart';
+import '../modules/main_navigation/views/main_navigation_view.dart';
 import '../modules/sign_in/bindings/sign_in_binding.dart';
 import '../modules/sign_in/views/sign_in_view.dart';
 import '../modules/sign_up/bindings/sign_up_binding.dart';
@@ -11,7 +13,6 @@ part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
-
 
   static final routes = [
     GetPage(
@@ -28,6 +29,11 @@ class AppPages {
       name: _Paths.signUp,
       page: () => const SignUpView(),
       binding: SignUpBinding(),
+    ),
+    GetPage(
+      name: _Paths.mainNavigation,
+      page: () => const MainNavigationView(),
+      binding: MainNavigationBinding(),
     ),
   ];
 }

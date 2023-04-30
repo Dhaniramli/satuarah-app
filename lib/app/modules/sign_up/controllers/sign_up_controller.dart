@@ -54,7 +54,7 @@ class SignUpController extends GetxController {
           phoneNumber.clear();
           password.clear();
           passwordConfirmation.clear();
-          Get.toNamed(Routes.home);
+          Get.toNamed(Routes.mainNavigation);
         } else {
           print("pass salah");
         }

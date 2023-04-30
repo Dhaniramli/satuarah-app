@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Application",
-          initialRoute: snapAuth.hasData ? Routes.home : Routes.signIn,
+          initialRoute: snapAuth.hasData ? Routes.mainNavigation : Routes.signIn,
           getPages: AppPages.routes,
         );
       },
