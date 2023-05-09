@@ -10,6 +10,8 @@ import '../modules/main_navigation/bindings/main_navigation_binding.dart';
 import '../modules/main_navigation/views/main_navigation_view.dart';
 import '../modules/popular_route/bindings/popular_route_binding.dart';
 import '../modules/popular_route/views/popular_route_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/sign_in/bindings/sign_in_binding.dart';
 import '../modules/sign_in/views/sign_in_view.dart';
 import '../modules/sign_up/bindings/sign_up_binding.dart';
@@ -55,6 +57,11 @@ class AppPages {
       name: _Paths.FIND_RIDE,
       page: () => const FindRideView(),
       binding: FindRideBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

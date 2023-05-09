@@ -10,6 +10,7 @@ abstract class Routes {
   static const POPULAR_ROUTE = _Paths.POPULAR_ROUTE;
   static const LEAVING_TODAY = _Paths.LEAVING_TODAY;
   static const FIND_RIDE = _Paths.FIND_RIDE;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const POPULAR_ROUTE = '/popular-route';
   static const LEAVING_TODAY = '/leaving-today';
   static const FIND_RIDE = '/find-ride';
+  static const PROFILE = '/profile';
 }
