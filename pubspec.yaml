@@ -12,6 +12,7 @@ dependencies:
   firebase_core: ^2.10.0
   flutter:
     sdk: flutter
+  flutter_switch: ^0.3.2
   get: 4.6.5
   google_fonts: ^4.0.4
 

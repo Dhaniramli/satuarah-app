@@ -1,23 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+import '../../../routes/app_pages.dart';
 
-  final count = 0.obs;
+class ProfileController extends GetxController {
+  RxBool statusSwitch1 = false.obs;
+  RxBool statusSwitch2 = false.obs;
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  doLogout() async {
+    await auth.signOut();
+    Get.offAllNamed(Routes.signIn);
+  }
+
   @override
   void onInit() {
     super.onInit();
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
