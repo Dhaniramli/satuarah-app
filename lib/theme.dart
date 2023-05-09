@@ -5,6 +5,7 @@ Color primaryColor = const Color(0xff009EFF);
 Color bigTextBlackColor = const Color(0xff323232);
 Color grayColor = const Color(0xff656565);
 Color grayDuaColor = const Color(0xffABABAB);
+Color grayTigaColor = const Color(0xff929292);
 // Color containerInputColor = Color(0xffECF2FF);
 // Color textInputColor = Color(0xff8391A1);
 // Color textGreyColor = Color(0xff6A707C);
@@ -34,6 +35,7 @@ TextStyle textWhiteStyle = GoogleFonts.inter(
 TextStyle textPrimaryStyle = GoogleFonts.inter(
   color: primaryColor,
 );
+TextStyle textFontInterStyle = GoogleFonts.inter();
 // TextStyle textInputColorStyle = GoogleFonts.roboto(
 //   color: textInputColor,
 // );

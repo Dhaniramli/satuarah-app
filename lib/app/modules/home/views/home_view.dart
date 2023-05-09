@@ -14,12 +14,12 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SafeArea(
         child: Column(
           children: [
             Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0, vertical: 16.0),
               height: 160.0,
               width: MediaQuery.of(context).size.width,
               color: primaryColor,

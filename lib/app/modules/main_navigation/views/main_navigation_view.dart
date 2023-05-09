@@ -1,122 +1,172 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:satuarah/app/modules/home/views/home_view.dart';
+import 'package:satuarah/app/modules/profile/views/profile_view.dart';
 
 import '../../../../theme.dart';
-import '../../home/views/home_view.dart';
-import '../controllers/main_navigation_controller.dart';
 
-class MainNavigationView extends StatelessWidget {
-  const MainNavigationView({Key? key}) : super(key: key);
+class MainNavigationView extends StatefulWidget {
+  const MainNavigationView({super.key});
+
+  @override
+  State<MainNavigationView> createState() => _MainNavigationViewState();
+}
+
+class _MainNavigationViewState extends State<MainNavigationView> {
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MainNavigationController>(
-      init: MainNavigationController(),
-      builder: (controller) {
-        controller.view = this;
-
-        return SafeArea(
-          child: Scaffold(
-            bottomNavigationBar: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: [
-                  Text(
-                    "Selectted: ${controller.selectedIndex}",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: black,
-                    ),
-                  ),
-                  Positioned(
-                    top: 0.0,
-                    right: 0.0,
-                    left: 0.0,
-                    height: MediaQuery.of(context).size.height,
-                    child: IndexedStack(
-                      index: controller.selectedIndex,
-                      children: [
-                        HomeView(),
-                        Container(
-                          color: Colors.red,
-                        ),
-                        Container(
-                          color: Colors.blue,
-                        ),
-                        Container(
-                          color: Colors.green,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    right: 0.0,
-                    left: 0.0,
-                    bottom: 0.0,
-                    height: 76.0,
-                    child: Container(
-                      padding: const EdgeInsets.all(12.0),
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        border: BorderDirectional(
-                          top: BorderSide(
-                            color: primaryColor,
-                            width: 4.0,
-                            style: BorderStyle.solid,
-                          ),
-                        ),
-                        color: white,
-                      ),
-                      child: Row(
-                        children: List.generate(
-                          controller.menuList.length,
-                          (index) {
-                            var item = controller.menuList[index];
-                            return Expanded(
-                              child: InkWell(
-                                onTap: () {
-                                  controller.selectedIndex = index;
-                                  controller.update();
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      "${item['icon']}",
-                                      width: 30.0,
-                                      height: 30.0,
-                                      fit: BoxFit.fill,
-                                      color: controller.selectedIndex == index
-                                          ? primaryColor
-                                          : Colors.grey,
-                                    ),
-                                    const SizedBox(height: 3.0),
-                                    Text(
-                                      "${item['label']}",
-                                      style: TextStyle(
-                                        fontSize: 13.0,
-                                        fontWeight: semiBold,
-                                        color: controller.selectedIndex == index
-                                            ? primaryColor
-                                            : Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+    Widget bottomNav() {
+      return BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 9,
+        clipBehavior: Clip.antiAlias,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: primaryColor,
+                width: 4.0,
               ),
             ),
           ),
-        );
-      },
+          child: BottomNavigationBar(
+            backgroundColor: white,
+            currentIndex: currentIndex,
+            onTap: (value) {
+              setState(() {
+                print(value);
+                currentIndex = value;
+              });
+            },
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                  icon: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          currentIndex == 0
+                              ? 'assets/beranda.png'
+                              : 'assets/beranda_off.png',
+                          width: 30,
+                        ),
+                        const SizedBox(height: 3.0),
+                        Text(
+                          "Beranda",
+                          style: textFontInterStyle.copyWith(
+                              color: currentIndex == 0
+                                  ? primaryColor
+                                  : grayTigaColor,
+                              fontSize: 13,
+                              fontWeight: semiBold),
+                        )
+                      ],
+                    ),
+                  ),
+                  label: ''),
+              BottomNavigationBarItem(
+                  icon: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          currentIndex == 1
+                              ? 'assets/riwayat.png'
+                              : 'assets/riwayat_off.png',
+                          width: 30,
+                        ),
+                        const SizedBox(height: 3.0),
+                        Text(
+                          "Riwayat",
+                          style: textFontInterStyle.copyWith(
+                              color: currentIndex == 1
+                                  ? primaryColor
+                                  : grayTigaColor,
+                              fontSize: 13,
+                              fontWeight: semiBold),
+                        )
+                      ],
+                    ),
+                  ),
+                  label: ''),
+              BottomNavigationBarItem(
+                  icon: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          currentIndex == 2
+                              ? 'assets/chat.png'
+                              : 'assets/chat_off.png',
+                          width: 30,
+                        ),
+                        const SizedBox(height: 3.0),
+                        Text(
+                          "Chat",
+                          style: textFontInterStyle.copyWith(
+                              color: currentIndex == 2
+                                  ? primaryColor
+                                  : grayTigaColor,
+                              fontSize: 13,
+                              fontWeight: semiBold),
+                        )
+                      ],
+                    ),
+                  ),
+                  label: ''),
+              BottomNavigationBarItem(
+                  icon: Container(
+                    margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          currentIndex == 3
+                              ? 'assets/profile_on.png'
+                              : 'assets/profile.png',
+                          width: 30,
+                        ),
+                        const SizedBox(height: 3.0),
+                        Text(
+                          "Profil",
+                          style: textFontInterStyle.copyWith(
+                              color: currentIndex == 3
+                                  ? primaryColor
+                                  : grayTigaColor,
+                              fontSize: 13,
+                              fontWeight: semiBold),
+                        )
+                      ],
+                    ),
+                  ),
+                  label: ''),
+            ],
+          ),
+        ),
+      );
+    }
+
+    Widget body() {
+      switch (currentIndex) {
+        case 0:
+          return const HomeView();
+        case 1:
+          return const HomeView();
+        case 2:
+          return const ProfileView();
+        case 3:
+          return const ProfileView();
+        default:
+          return const HomeView();
+      }
+    }
+
+    return Scaffold(
+      backgroundColor: white,
+      bottomNavigationBar: bottomNav(),
+      body: body(),
+      extendBody: true,
     );
   }
 }
