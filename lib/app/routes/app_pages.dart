@@ -49,7 +49,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.POPULAR_ROUTE,
-      page: () => const PopularRouteView(),
+      page: () => PopularRouteView(),
       binding: PopularRouteBinding(),
     ),
     GetPage(
