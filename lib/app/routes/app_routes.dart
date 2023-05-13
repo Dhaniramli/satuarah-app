@@ -11,6 +11,8 @@ abstract class Routes {
   static const LEAVING_TODAY = _Paths.LEAVING_TODAY;
   static const FIND_RIDE = _Paths.FIND_RIDE;
   static const PROFILE = _Paths.PROFILE;
+  static const CHAT = _Paths.CHAT;
+  static const HISTORY = _Paths.HISTORY;
 }
 
 abstract class _Paths {
@@ -23,4 +25,6 @@ abstract class _Paths {
   static const LEAVING_TODAY = '/leaving-today';
   static const FIND_RIDE = '/find-ride';
   static const PROFILE = '/profile';
+  static const CHAT = '/chat';
+  static const HISTORY = '/history';
 }
