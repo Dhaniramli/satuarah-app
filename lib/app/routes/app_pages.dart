@@ -69,12 +69,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHAT,
-      page: () => const ChatView(),
+      page: () => ChatView(),
       binding: ChatBinding(),
     ),
     GetPage(
       name: _Paths.HISTORY,
-      page: () => const HistoryView(),
+      page: () => HistoryView(),
       binding: HistoryBinding(),
     ),
   ];

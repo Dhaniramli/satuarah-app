@@ -3,6 +3,8 @@ import 'package:satuarah/app/modules/home/views/home_view.dart';
 import 'package:satuarah/app/modules/profile/views/profile_view.dart';
 
 import '../../../../theme.dart';
+import '../../chat/views/chat_view.dart';
+import '../../history/views/history_view.dart';
 
 class MainNavigationView extends StatefulWidget {
   const MainNavigationView({super.key});
@@ -152,9 +154,9 @@ class _MainNavigationViewState extends State<MainNavigationView> {
         case 0:
           return const HomeView();
         case 1:
-          return const HomeView();
+          return HistoryView();
         case 2:
-          return const ProfileView();
+          return ChatView();
         case 3:
           return const ProfileView();
         default:

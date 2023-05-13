@@ -1,23 +1,54 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 
+import '../../../../theme.dart';
 import '../controllers/history_controller.dart';
 
 class HistoryView extends GetView<HistoryController> {
-  const HistoryView({Key? key}) : super(key: key);
+  HistoryView({Key? key}) : super(key: key);
+
+  final List<Widget> myHistorys = List.generate(
+    20,
+    (index) => Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: grayDuaColor,
+          ),
+        ),
+      ),
+      child: ListTile(
+        onTap: () {},
+        leading: CircleAvatar(
+          radius: 30,
+          child: Image.asset(
+            "assets/profile.png",
+            fit: BoxFit.cover,
+          ),
+        ),
+        title: Text(
+          "Orang ke ${index + 1}",
+          style: textBigBlackStyle.copyWith(fontSize: 19, fontWeight: semiBold),
+        ),
+        subtitle: Text(
+          "Telah sampai ${index + 1}",
+          style: textBigBlackStyle.copyWith(fontSize: 15, fontWeight: regular),
+        ),
+      ),
+    ),
+  ).reversed.toList();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       appBar: AppBar(
-        title: const Text('HistoryView'),
+        title: const Text('Riwayat'),
         centerTitle: true,
       ),
-      body: const Center(
-        child: Text(
-          'HistoryView is working',
-          style: TextStyle(fontSize: 20),
-        ),
+      body: ListView.builder(
+        itemCount: myHistorys.length,
+        itemBuilder: (context, index) => myHistorys[index],
       ),
     );
   }
