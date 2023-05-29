@@ -152,7 +152,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     Widget body() {
       switch (currentIndex) {
         case 0:
-          return const HomeView();
+          return HomeView();
         case 1:
           return HistoryView();
         case 2:
@@ -160,7 +160,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
         case 3:
           return const ProfileView();
         default:
-          return const HomeView();
+          return HomeView();
       }
     }
 
