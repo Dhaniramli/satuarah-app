@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Application",
-          initialRoute: Routes.LEAVING_TODAY,
+          initialRoute: Routes.FIND_RIDE,
           getPages: AppPages.routes,
         );
 

@@ -59,7 +59,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FIND_RIDE,
-      page: () => const FindRideView(),
+      page: () => FindRideView(),
       binding: FindRideBinding(),
     ),
     GetPage(

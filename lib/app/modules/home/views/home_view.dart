@@ -114,7 +114,7 @@ class HomeView extends GetView<HomeController> {
                   ButtonBox(
                     icon: "assets/carit.png",
                     tittLe: "Cari Tebengan",
-                    onTap: const FindRideView(),
+                    onTap: FindRideView(),
                   ),
                 ],
               ),
