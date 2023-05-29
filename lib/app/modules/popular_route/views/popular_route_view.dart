@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme.dart';
+import '../../cek/views/cek_view.dart';
 import '../controllers/popular_route_controller.dart';
 
 class PopularRouteView extends GetView<PopularRouteController> {
@@ -70,7 +71,9 @@ class PopularRouteView extends GetView<PopularRouteController> {
                     width: 145,
                     height: 29,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(()=> CekView());
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,
                         shape: RoundedRectangleBorder(

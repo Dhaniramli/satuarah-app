@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/cek/bindings/cek_binding.dart';
+import '../modules/cek/views/cek_view.dart';
 import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
 import '../modules/find_ride/bindings/find_ride_binding.dart';
@@ -76,6 +78,11 @@ class AppPages {
       name: _Paths.HISTORY,
       page: () => HistoryView(),
       binding: HistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.CEK,
+      page: () => CekView(),
+      binding: CekBinding(),
     ),
   ];
 }
