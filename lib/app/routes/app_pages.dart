@@ -54,7 +54,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LEAVING_TODAY,
-      page: () => const LeavingTodayView(),
+      page: () => LeavingTodayView(),
       binding: LeavingTodayBinding(),
     ),
     GetPage(

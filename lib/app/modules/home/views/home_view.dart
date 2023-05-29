@@ -109,7 +109,7 @@ class HomeView extends GetView<HomeController> {
                   ButtonBox(
                     icon: "assets/bhi.png",
                     tittLe: "Berangkat ini hari",
-                    onTap: const LeavingTodayView(),
+                    onTap: LeavingTodayView(),
                   ),
                   ButtonBox(
                     icon: "assets/carit.png",
