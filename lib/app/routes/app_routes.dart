@@ -14,6 +14,7 @@ abstract class Routes {
   static const CHAT = _Paths.CHAT;
   static const HISTORY = _Paths.HISTORY;
   static const CEK = _Paths.CEK;
+  static const ORDERING = _Paths.ORDERING;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const CHAT = '/chat';
   static const HISTORY = '/history';
   static const CEK = '/cek';
+  static const ORDERING = '/ordering';
 }
