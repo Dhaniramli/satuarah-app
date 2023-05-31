@@ -68,7 +68,7 @@ class OrderingView extends GetView<OrderingController> {
                                   margin: const EdgeInsets.only(top: 6.92),
                                   height: 12.96,
                                   width: 64.81,
-                                  child: const RatingBar(
+                                  child: const RatingBarView(
                                     rating: 4.5,
                                     ratingCount: 12,
                                     size: 12.96,

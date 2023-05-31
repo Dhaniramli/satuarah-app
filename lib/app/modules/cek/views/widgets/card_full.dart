@@ -53,7 +53,7 @@ class CardFull extends StatelessWidget {
                             margin: const EdgeInsets.only(top: 4),
                             height: 8,
                             width: 40,
-                            child: const RatingBar(
+                            child: const RatingBarView(
                               rating: 4.5,
                               ratingCount: 12,
                               size: 8,

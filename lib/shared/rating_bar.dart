@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../theme.dart';
 
-class RatingBar extends StatelessWidget {
+class RatingBarView extends StatelessWidget {
   final double rating;
   final double size;
   final int? ratingCount;
 
-  const RatingBar({
+  const RatingBarView({
     super.key,
     required this.rating,
     required this.size,

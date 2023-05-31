@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 import '../../../../shared/rating_bar.dart';
@@ -68,7 +69,7 @@ class OrderDetailView extends GetView<OrderDetailController> {
                                   margin: const EdgeInsets.only(top: 6.92),
                                   height: 12.96,
                                   width: 64.81,
-                                  child: const RatingBar(
+                                  child: const RatingBarView(
                                     rating: 4.5,
                                     ratingCount: 12,
                                     size: 12.96,
@@ -90,7 +91,19 @@ class OrderDetailView extends GetView<OrderDetailController> {
                     ),
                   ),
                   const SizedBox(height: 9),
-                  const RatingBar(rating: 3.5, size: 30),
+                  // const RatingBarView(rating: 3.5, size: 30),
+                  RatingBar.builder(
+                    minRating: 1,
+                    itemBuilder: (context, index) => Icon(
+                      Icons.star,
+                      color: yellowColor,
+                      size: 30,
+                    ),
+                    // updateOnDrag: true,
+                    onRatingUpdate: (value) {
+                      
+                    },
+                  )
                 ],
               ),
             ),
