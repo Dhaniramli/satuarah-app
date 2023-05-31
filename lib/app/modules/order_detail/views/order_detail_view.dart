@@ -11,7 +11,7 @@ class OrderDetailView extends GetView<OrderDetailController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pesan'),
+        title: const Text('Deskripsi Pemesanan'),
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Get.back(),
