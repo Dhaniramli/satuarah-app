@@ -11,6 +11,7 @@ Color greenColor = const Color(0xff05FF00);
 const Color white = Color(0xffFFFFFF);
 Color black = const Color(0xff000000);
 Color blackDua = const Color(0xff272727);
+Color yellowColor = const Color(0xffFFD600);
 
 
 TextStyle textBlackDuaStyle = GoogleFonts.inter(

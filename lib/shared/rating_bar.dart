@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme.dart';
+
 class RatingBar extends StatelessWidget {
   final double rating;
   final double size;
@@ -22,7 +24,7 @@ class RatingBar extends StatelessWidget {
     for (int i = 0; i < 5; i++) {
       if (i < realNumber) {
         _starList.add(Icon(Icons.star,
-            color: Theme.of(context).primaryColor, size: size));
+            color: yellowColor, size: size));
       } else if (i == realNumber) {
         _starList.add(
           SizedBox(
@@ -33,7 +35,7 @@ class RatingBar extends StatelessWidget {
               children: [
                 Icon(
                   Icons.star,
-                  color: Theme.of(context).primaryColor,
+                  color: yellowColor,
                   size: size,
                 ),
                 ClipRect(

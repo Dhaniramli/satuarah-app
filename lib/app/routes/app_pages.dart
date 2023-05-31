@@ -14,12 +14,16 @@ import '../modules/leaving_today/bindings/leaving_today_binding.dart';
 import '../modules/leaving_today/views/leaving_today_view.dart';
 import '../modules/main_navigation/bindings/main_navigation_binding.dart';
 import '../modules/main_navigation/views/main_navigation_view.dart';
+import '../modules/order_detail/bindings/order_detail_binding.dart';
+import '../modules/order_detail/views/order_detail_view.dart';
 import '../modules/ordering/bindings/ordering_binding.dart';
 import '../modules/ordering/views/ordering_view.dart';
 import '../modules/popular_route/bindings/popular_route_binding.dart';
 import '../modules/popular_route/views/popular_route_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/register_driver/bindings/register_driver_binding.dart';
+import '../modules/register_driver/views/register_driver_view.dart';
 import '../modules/sign_in/bindings/sign_in_binding.dart';
 import '../modules/sign_in/views/sign_in_view.dart';
 import '../modules/sign_up/bindings/sign_up_binding.dart';
@@ -90,6 +94,16 @@ class AppPages {
       name: _Paths.ORDERING,
       page: () => const OrderingView(),
       binding: OrderingBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDER_DETAIL,
+      page: () => const OrderDetailView(),
+      binding: OrderDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER_DRIVER,
+      page: () => const RegisterDriverView(),
+      binding: RegisterDriverBinding(),
     ),
   ];
 }

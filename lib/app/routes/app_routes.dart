@@ -15,6 +15,8 @@ abstract class Routes {
   static const HISTORY = _Paths.HISTORY;
   static const CEK = _Paths.CEK;
   static const ORDERING = _Paths.ORDERING;
+  static const ORDER_DETAIL = _Paths.ORDER_DETAIL;
+  static const REGISTER_DRIVER = _Paths.REGISTER_DRIVER;
 }
 
 abstract class _Paths {
@@ -31,4 +33,6 @@ abstract class _Paths {
   static const HISTORY = '/history';
   static const CEK = '/cek';
   static const ORDERING = '/ordering';
+  static const ORDER_DETAIL = '/order-detail';
+  static const REGISTER_DRIVER = '/register-driver';
 }

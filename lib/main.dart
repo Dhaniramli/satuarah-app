@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: "Application",
-          initialRoute: Routes.ORDERING,
+          initialRoute: Routes.ORDER_DETAIL,
           getPages: AppPages.routes,
         );
 
