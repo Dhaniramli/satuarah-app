@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:satuarah/app/modules/order_detail/views/order_detail_view.dart';
 
 import '../../../../theme.dart';
 import '../controllers/history_controller.dart';
@@ -18,7 +19,9 @@ class HistoryView extends GetView<HistoryController> {
         ),
       ),
       child: ListTile(
-        onTap: () {},
+        onTap: () {
+          Get.to(() => OrderDetailView());
+        },
         leading: CircleAvatar(
           radius: 30,
           child: Image.asset(
