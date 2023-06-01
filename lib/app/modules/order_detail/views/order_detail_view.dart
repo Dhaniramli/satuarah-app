@@ -99,7 +99,7 @@ class OrderDetailView extends GetView<OrderDetailController> {
                       color: yellowColor,
                       size: 30,
                     ),
-                    // updateOnDrag: true,
+                    updateOnDrag: true,
                     onRatingUpdate: (value) {
                       
                     },
