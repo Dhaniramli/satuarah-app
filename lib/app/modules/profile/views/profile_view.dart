@@ -3,6 +3,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme.dart';
+import '../../register_driver/views/register_driver_view.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -81,7 +82,9 @@ class ProfileView extends GetView<ProfileController> {
         width: 145,
         height: 42,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.to(() => RegisterDriverView());
+          },
           style: ElevatedButton.styleFrom(
             backgroundColor: primaryColor,
             shape: RoundedRectangleBorder(

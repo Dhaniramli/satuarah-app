@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../../shared/rating_bar.dart';
 import '../../../../../theme.dart';
+import '../../../ordering/views/ordering_view.dart';
 
 class CardFull extends StatelessWidget {
   const CardFull({
@@ -135,7 +137,9 @@ class CardFull extends StatelessWidget {
                   width: 145,
                   height: 29,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => OrderingView());
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                       shape: RoundedRectangleBorder(
