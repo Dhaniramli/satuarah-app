@@ -7,7 +7,7 @@ import '../../../../../theme.dart';
 class ButtonBox extends StatelessWidget {
   String icon;
   String tittLe;
-  final Widget onTap;
+  void Function()? onTap;
 
   ButtonBox(
       {super.key,
@@ -18,11 +18,7 @@ class ButtonBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: ((context) => onTap)));
-        Get.to(onTap);
-      },
+      onTap: onTap,
       child: SizedBox(
         width: 74,
         child: Column(
