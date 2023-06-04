@@ -18,6 +18,8 @@ import '../modules/leaving_today/bindings/leaving_today_binding.dart';
 import '../modules/leaving_today/views/leaving_today_view.dart';
 import '../modules/main_navigation/bindings/main_navigation_binding.dart';
 import '../modules/main_navigation/views/main_navigation_view.dart';
+import '../modules/make_a_trip/bindings/make_a_trip_binding.dart';
+import '../modules/make_a_trip/views/make_a_trip_view.dart';
 import '../modules/order_detail/bindings/order_detail_binding.dart';
 import '../modules/order_detail/views/order_detail_view.dart';
 import '../modules/ordering/bindings/ordering_binding.dart';
@@ -118,6 +120,11 @@ class AppPages {
       name: _Paths.EDIT_PROFILE,
       page: () => const EditProfileView(),
       binding: EditProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAKE_A_TRIP,
+      page: () => const MakeATripView(),
+      binding: MakeATripBinding(),
     ),
   ];
 }

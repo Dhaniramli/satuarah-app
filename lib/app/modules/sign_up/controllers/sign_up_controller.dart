@@ -28,16 +28,19 @@ class SignUpController extends GetxController {
           password.text.isNotEmpty &&
           passwordConfirmation.text.isNotEmpty) {
         if (password.text == passwordConfirmation.text) {
-          await auth.createUserWithEmailAndPassword(
+          final userAuth = await auth.createUserWithEmailAndPassword(
             email: email.text,
             password: password.text,
           );
 
-          await firestore.collection("users").add({
+          String idUser = userAuth.user!.uid;
+
+          await firestore.collection("users").doc(idUser).set({
             "full_name": fullName.text,
             "email": email.text,
             "phone_number": phoneNumber.text,
-            "user": "costumer",
+            "user_as": "costumer",
+            "id_user": idUser,
           });
 
           Get.snackbar(

@@ -19,6 +19,7 @@ abstract class Routes {
   static const REGISTER_DRIVER = _Paths.REGISTER_DRIVER;
   static const CHAT_ROOM = _Paths.CHAT_ROOM;
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+  static const MAKE_A_TRIP = _Paths.MAKE_A_TRIP;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const REGISTER_DRIVER = '/register-driver';
   static const CHAT_ROOM = '/chat-room';
   static const EDIT_PROFILE = '/edit-profile';
+  static const MAKE_A_TRIP = '/make-a-trip';
 }

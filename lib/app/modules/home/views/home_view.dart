@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../../theme.dart';
 import '../../find_ride/views/find_ride_view.dart';
 import '../../leaving_today/views/leaving_today_view.dart';
+import '../../make_a_trip/views/make_a_trip_view.dart';
 import '../../popular_route/views/popular_route_view.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/button_box.dart';
@@ -113,8 +114,8 @@ class HomeView extends GetView<HomeController> {
                   ),
                   ButtonBox(
                     icon: "assets/carit.png",
-                    tittLe: "Cari Tebengan",
-                    onTap: FindRideView(),
+                    tittLe: "Buat Tebengan",
+                    onTap: MakeATripView(),
                   ),
                 ],
               ),

@@ -81,7 +81,7 @@ class _MainNavigationViewState extends State<MainNavigationView> {
                         ),
                         const SizedBox(height: 3.0),
                         Text(
-                          "Riwayat",
+                          "Perjalanan",
                           style: textFontInterStyle.copyWith(
                               color: currentIndex == 1
                                   ? primaryColor
