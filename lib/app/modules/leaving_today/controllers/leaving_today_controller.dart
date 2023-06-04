@@ -1,23 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 class LeavingTodayController extends GetxController {
-  //TODO: Implement LeavingTodayController
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final count = 0.obs;
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamtrip() async* {
+    yield* firestore.collection('trip').snapshots();
+  }
+
   @override
   void onInit() {
     super.onInit();
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

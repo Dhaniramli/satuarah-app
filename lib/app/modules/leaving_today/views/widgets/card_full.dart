@@ -6,8 +6,21 @@ import '../../../../../theme.dart';
 import '../../../ordering/views/ordering_view.dart';
 
 class CardFull extends StatelessWidget {
+  final String fullNameC;
+  final String startC;
+  final String finishC;
+  final String dateC;
+  final String timeC;
+  final String priceC;
+
   const CardFull({
     super.key,
+    required this.fullNameC,
+    required this.startC,
+    required this.finishC,
+    required this.dateC,
+    required this.timeC,
+    required this.priceC,
   });
 
   @override
@@ -45,7 +58,7 @@ class CardFull extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            "Irwansyah",
+                            fullNameC,
                             style: textBlackDuaStyle.copyWith(
                               fontSize: 9.33,
                               fontWeight: medium,
@@ -85,12 +98,12 @@ class CardFull extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Makassar',
+                                startC,
                                 style: textBlackDuaStyle.copyWith(
                                     fontSize: 9.83, fontWeight: medium),
                               ),
                               Text(
-                                '13 Januari  03:00 PM',
+                                '$dateC  $timeC',
                                 style: textGrayStyle.copyWith(
                                     fontSize: 6.13, fontWeight: medium),
                               ),
@@ -110,7 +123,7 @@ class CardFull extends StatelessWidget {
                           Icon(Icons.location_on_outlined,
                               color: grayTigaColor),
                           Text(
-                            'Takalar',
+                            finishC,
                             style: textBlackDuaStyle.copyWith(
                                 fontSize: 9.83, fontWeight: medium),
                           ),
@@ -121,7 +134,7 @@ class CardFull extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(right: 23, top: 11),
                     child: Text(
-                      'Harga : Rp.100.000',
+                      'Harga : Rp.$priceC',
                       style: textBlackDuaStyle.copyWith(
                           fontSize: 9.83, fontWeight: medium),
                     ),
