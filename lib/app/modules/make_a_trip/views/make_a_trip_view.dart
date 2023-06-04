@@ -200,7 +200,7 @@ class _MakeATripViewState extends State<MakeATripView> {
             TextFormWidget(
               label: "Biaya",
               hintText: "Biaya Perjalanan",
-              // controller: controller.nomorKtp,
+              controller: controller.tripPrice,
               obscureText: false,
               maxLines: 1,
               validator: (value) {
@@ -213,12 +213,44 @@ class _MakeATripViewState extends State<MakeATripView> {
               },
             ),
             const SizedBox(height: 15),
-            const TextFormWidget(
+            TextFormWidget(
               label: "Keterangan Lain",
               hintText: "Contoh: gantian nyetir, sharing biaya tol dll",
-              // controller: controller.nomorKtp,
+              controller: controller.otherInformation,
               obscureText: false,
               maxLines: null,
+            ),
+            const SizedBox(height: 50),
+            SizedBox(
+              width: double.infinity,
+              height: 42,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                ),
+                onPressed: () {
+                  // if (formKey.currentState!.validate()) {
+                  if (controller.isLoading.isFalse) {
+                    controller.isLoading.toggle();
+                    controller.doMakeATrip();
+                    controller.isLoading(false);
+                  }
+                  // }
+                },
+                child: Obx(
+                  () => controller.isLoading.isFalse
+                      ? Text(
+                          'Buat',
+                          style: textWhiteStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: bold,
+                          ),
+                        )
+                      : const CircularProgressIndicator(),
+                ),
+              ),
             ),
           ],
         ),

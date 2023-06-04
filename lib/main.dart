@@ -26,28 +26,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Application",
-          initialRoute: Routes.MAKE_A_TRIP,
-          getPages: AppPages.routes,
-        );
-
-    // return StreamBuilder<User?>(
-    //   stream: auth.authStateChanges(),
-    //   builder: (context, snapAuth) {
-    //     if (snapAuth.connectionState == ConnectionState.waiting) {
-    //       return const LoadingView();
-    //     }
-
-    //     return GetMaterialApp(
+    // return GetMaterialApp(
     //       debugShowCheckedModeBanner: false,
     //       title: "Application",
-    //       initialRoute:
-    //           snapAuth.hasData ? Routes.mainNavigation : Routes.signIn,
+    //       initialRoute: Routes.MAKE_A_TRIP,
     //       getPages: AppPages.routes,
     //     );
-    //   },
-    // );
+
+    return StreamBuilder<User?>(
+      stream: auth.authStateChanges(),
+      builder: (context, snapAuth) {
+        if (snapAuth.connectionState == ConnectionState.waiting) {
+          return const LoadingView();
+        }
+
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: "Application",
+          initialRoute:
+              snapAuth.hasData ? Routes.mainNavigation : Routes.signIn,
+          getPages: AppPages.routes,
+        );
+      },
+    );
   }
 }
