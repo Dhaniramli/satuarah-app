@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../shared/rating_bar.dart';
 import '../../../../theme.dart';
+import '../../../data/models/trip_model.dart';
 import '../controllers/ordering_controller.dart';
 
 class OrderingView extends GetView<OrderingController> {
-  const OrderingView({Key? key}) : super(key: key);
+  final TripModel trip = Get.arguments;
+  final NumberFormat numberFormat = NumberFormat('#,###');
+
+  OrderingView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,9 +62,10 @@ class OrderingView extends GetView<OrderingController> {
                             ),
                             const SizedBox(width: 4),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Irwansyah",
+                                  trip.fullName,
                                   style: textBlackDuaStyle.copyWith(
                                     fontSize: 16,
                                     fontWeight: medium,
@@ -69,7 +76,7 @@ class OrderingView extends GetView<OrderingController> {
                                   height: 12.96,
                                   width: 64.81,
                                   child: const RatingBarView(
-                                    rating: 4.5,
+                                    rating: 0,
                                     ratingCount: 12,
                                     size: 12.96,
                                   ),
@@ -98,12 +105,12 @@ class OrderingView extends GetView<OrderingController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Makassar',
+                                      trip.cityStart,
                                       style: textBlackDuaStyle.copyWith(
                                           fontSize: 16, fontWeight: medium),
                                     ),
                                     Text(
-                                      '13 Januari  03:00 PM',
+                                      '${trip.tripDate}  ${trip.tripTime}',
                                       style: textGrayStyle.copyWith(
                                           fontSize: 10, fontWeight: medium),
                                     ),
@@ -126,15 +133,15 @@ class OrderingView extends GetView<OrderingController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Makassar',
+                                      trip.cityFinish,
                                       style: textBlackDuaStyle.copyWith(
                                           fontSize: 16, fontWeight: medium),
                                     ),
-                                    Text(
-                                      '13 Januari  03:00 PM',
-                                      style: textGrayStyle.copyWith(
-                                          fontSize: 10, fontWeight: medium),
-                                    ),
+                                    // Text(
+                                    //   '13 Januari  03:00 PM : Masih Statis',
+                                    //   style: textGrayStyle.copyWith(
+                                    //       fontSize: 10, fontWeight: medium),
+                                    // ),
                                   ],
                                 ),
                               ],
@@ -145,7 +152,7 @@ class OrderingView extends GetView<OrderingController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Harga : Rp.100.000',
+                              'Harga : Rp.${numberFormat.format(int.parse(trip.tripPrice))}',
                               style: textBlackDuaStyle.copyWith(
                                   fontSize: 15, fontWeight: medium),
                             ),
@@ -204,15 +211,15 @@ class OrderingView extends GetView<OrderingController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Avanza velos (Plat Genap)",
+                          trip.merekKendaraan,
                           style: textBlackDuaStyle.copyWith(
-                              fontSize: 13, fontWeight: medium),
+                              fontSize: 15, fontWeight: medium),
                         ),
-                        Text(
-                          "Seat 1-2-2",
-                          style: textBlackDuaStyle.copyWith(
-                              fontSize: 13, fontWeight: medium),
-                        ),
+                        // Text(
+                        //   "Seat 1-2-2",
+                        //   style: textBlackDuaStyle.copyWith(
+                        //       fontSize: 13, fontWeight: medium),
+                        // ),
                       ],
                     )
                   ],
@@ -227,9 +234,9 @@ class OrderingView extends GetView<OrderingController> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      "Sisa 2 penumpang seat belakang",
+                      "${trip.chair} Kursi",
                       style: textBlackDuaStyle.copyWith(
-                          fontSize: 13, fontWeight: medium),
+                          fontSize: 15, fontWeight: medium),
                     ),
                   ],
                 ),

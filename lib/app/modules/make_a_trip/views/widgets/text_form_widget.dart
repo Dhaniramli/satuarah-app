@@ -29,7 +29,7 @@ class TextFormWidget extends StatelessWidget {
       children: [
         Text(
           label,
-          style: textGrayStyle.copyWith(
+          style: textBlackDuaStyle.copyWith(
             fontSize: 12,
             fontWeight: regular,
           ),

@@ -1,25 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:satuarah/app/modules/loading/loading_view.dart';
 
 import '../../../../theme.dart';
+import '../../../data/models/trip_model.dart';
 import '../../../data/models/user_model.dart';
-import '../../find_ride/views/find_ride_view.dart';
+import '../../../routes/app_pages.dart';
 import '../../leaving_today/views/leaving_today_view.dart';
+import '../../loading/loading_view.dart';
 import '../../make_a_trip/views/make_a_trip_view.dart';
+import '../../ordering/views/ordering_view.dart';
 import '../../popular_route/views/popular_route_view.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/button_box.dart';
 import 'widgets/card_full.dart';
 
 class HomeView extends GetView<HomeController> {
-  HomeView({Key? key}) : super(key: key);
-
-  final List<Widget> closets = List.generate(
-    20,
-    (index) => const CardFull(),
-  ).reversed.toList();
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +151,7 @@ class HomeView extends GetView<HomeController> {
                                 borderRadius: 10,
                               );
                             } else {
-                              Get.to(() => MakeATripView());
+                              Get.toNamed(Routes.MAKE_A_TRIP, arguments: user);
                             }
                           },
                         ),
@@ -174,9 +171,45 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: closets.length,
-                      itemBuilder: (context, index) => closets[index],
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: controller.streamtrip(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        if (snapshot.data!.docs.isEmpty) {
+                          return const Center(
+                            child: Text("Tidak Ada Data"),
+                          );
+                        }
+
+                        List<TripModel> allTrip = [];
+
+                        for (var element in snapshot.data!.docs) {
+                          allTrip.add(TripModel.fromJson(element.data()));
+                        }
+                        return ListView.builder(
+                          itemCount: allTrip.length,
+                          itemBuilder: (context, index) {
+                            TripModel trip = allTrip[index];
+                            return CardFull(
+                              fullNameC: trip.fullName,
+                              startC: trip.cityStart,
+                              finishC: trip.cityFinish,
+                              dateC: trip.tripDate,
+                              timeC: trip.tripTime,
+                              priceC: trip.tripPrice,
+                              onPressed: () {
+                                Get.toNamed(Routes.ORDERING, arguments: trip);
+                              },
+                            );
+                          },
+                        );
+                      },
                     ),
                   )
                 ],

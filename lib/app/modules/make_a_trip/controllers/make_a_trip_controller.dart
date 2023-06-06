@@ -15,6 +15,11 @@ class MakeATripController extends GetxController {
   late TextEditingController tripTime;
   late TextEditingController tripPrice;
   late TextEditingController otherInformation;
+  late TextEditingController fullName;
+  late TextEditingController email;
+  late TextEditingController idDriver;
+  late TextEditingController nomorPlat;
+  late TextEditingController merekKendaraan;
   late String chair;
   late String cityStart;
   late String cityFinish;
@@ -24,6 +29,11 @@ class MakeATripController extends GetxController {
       if (tripDate.text.isNotEmpty &&
           tripTime.text.isNotEmpty &&
           tripPrice.text.isNotEmpty &&
+          fullName.text.isNotEmpty &&
+          email.text.isNotEmpty &&
+          idDriver.text.isNotEmpty &&
+          nomorPlat.text.isNotEmpty &&
+          merekKendaraan.text.isNotEmpty &&
           chair.isNotEmpty &&
           cityStart.isNotEmpty &&
           cityFinish.isNotEmpty) {
@@ -32,20 +42,25 @@ class MakeATripController extends GetxController {
           "trip_time": tripTime.text,
           "trip_price": tripPrice.text,
           "other_information": otherInformation.text,
+          "full_name": fullName.text,
+          "email_driver": email.text,
+          "id_driver": idDriver.text,
+          "nomor_plat": nomorPlat.text,
+          "merek_kendaraan": merekKendaraan.text,
           "chair": chair,
           "city_start": cityStart,
           "city_finish": cityFinish,
         });
 
-        Get.snackbar(
-          "Berhasil",
-          "Data anda berhasil di rekam",
-          duration: const Duration(seconds: 2),
-          snackStyle: SnackStyle.FLOATING,
-          backgroundColor: primaryColor,
-          colorText: Colors.white,
-          borderRadius: 10,
-        );
+        // Get.snackbar(
+        //   "Berhasil",
+        //   "Data anda berhasil di rekam",
+        //   duration: const Duration(seconds: 2),
+        //   snackStyle: SnackStyle.FLOATING,
+        //   backgroundColor: primaryColor,
+        //   colorText: Colors.white,
+        //   borderRadius: 10,
+        // );
         tripDate.clear();
         tripTime.clear();
         tripPrice.clear();
@@ -53,6 +68,7 @@ class MakeATripController extends GetxController {
         chair = "";
         cityStart = "";
         cityFinish = "";
+        Get.back();
         Get.back();
       } else {
         print("salah");
@@ -77,6 +93,11 @@ class MakeATripController extends GetxController {
     tripTime = TextEditingController();
     tripPrice = TextEditingController();
     otherInformation = TextEditingController();
+    fullName = TextEditingController();
+    email = TextEditingController();
+    idDriver = TextEditingController();
+    nomorPlat = TextEditingController();
+    merekKendaraan = TextEditingController();
     chair = "";
     cityStart = "";
     cityFinish = "";
@@ -89,6 +110,11 @@ class MakeATripController extends GetxController {
     tripTime.dispose();
     tripPrice.dispose();
     otherInformation.dispose();
+    fullName.dispose();
+    email.dispose();
+    idDriver.dispose();
+    nomorPlat.dispose();
+    merekKendaraan.dispose();
     super.onClose();
   }
 }

@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:satuarah/app/modules/ordering/views/ordering_view.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../shared/rating_bar.dart';
 import '../../../../../theme.dart';
 
 class CardFull extends StatelessWidget {
+  final String fullNameC;
+  final String startC;
+  final String finishC;
+  final String dateC;
+  final String timeC;
+  final String priceC;
+  final void Function()? onPressed;
+
   const CardFull({
     super.key,
+    required this.fullNameC,
+    required this.startC,
+    required this.finishC,
+    required this.dateC,
+    required this.timeC,
+    required this.priceC,
+    this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
+    final NumberFormat numberFormat = NumberFormat('#,###');
+
     return Container(
-      margin: const EdgeInsets.only(right: 20, left: 20, bottom: 30),
+      margin: const EdgeInsets.only(right: 20, left: 20, bottom: 5, top: 10),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
           border: Border.all(color: grayDuaColor, width: 3),
@@ -43,9 +59,10 @@ class CardFull extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Irwansyah",
+                            fullNameC,
                             style: textBlackDuaStyle.copyWith(
                               fontSize: 9.33,
                               fontWeight: medium,
@@ -56,7 +73,7 @@ class CardFull extends StatelessWidget {
                             height: 8,
                             width: 40,
                             child: const RatingBarView(
-                              rating: 4.5,
+                              rating: 0,
                               ratingCount: 12,
                               size: 8,
                             ),
@@ -85,12 +102,12 @@ class CardFull extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Makassar',
+                                startC,
                                 style: textBlackDuaStyle.copyWith(
                                     fontSize: 9.83, fontWeight: medium),
                               ),
                               Text(
-                                '13 Januari  03:00 PM',
+                                '$dateC  $timeC',
                                 style: textGrayStyle.copyWith(
                                     fontSize: 6.13, fontWeight: medium),
                               ),
@@ -110,7 +127,7 @@ class CardFull extends StatelessWidget {
                           Icon(Icons.location_on_outlined,
                               color: grayTigaColor),
                           Text(
-                            'Takalar',
+                            finishC,
                             style: textBlackDuaStyle.copyWith(
                                 fontSize: 9.83, fontWeight: medium),
                           ),
@@ -119,9 +136,9 @@ class CardFull extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(right: 82, top: 11),
+                    margin: const EdgeInsets.only(right: 23, top: 11),
                     child: Text(
-                      'Harga : Rp.100.000',
+                      'Harga : Rp.${numberFormat.format(int.parse(priceC))}',
                       style: textBlackDuaStyle.copyWith(
                           fontSize: 9.83, fontWeight: medium),
                     ),
@@ -137,9 +154,7 @@ class CardFull extends StatelessWidget {
                   width: 145,
                   height: 29,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => OrderingView());
-                    },
+                    onPressed: onPressed,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                       shape: RoundedRectangleBorder(

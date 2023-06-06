@@ -18,6 +18,10 @@ class HomeController extends GetxController {
         .doc(auth.currentUser!.uid);
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamtrip() async* {
+    yield* firestore.collection('trip').snapshots();
+  }
+
   final count = 0.obs;
   @override
   void onInit() {
