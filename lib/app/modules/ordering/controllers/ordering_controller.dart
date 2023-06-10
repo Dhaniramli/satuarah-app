@@ -1,23 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class OrderingController extends GetxController {
-  //TODO: Implement OrderingController
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final count = 0.obs;
+  doDelete(String idTrip) async {
+    await firestore.collection("trip").doc(idTrip).delete();
+     Get.back();
+  }
+
   @override
   void onInit() {
     super.onInit();
   }
 
   @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

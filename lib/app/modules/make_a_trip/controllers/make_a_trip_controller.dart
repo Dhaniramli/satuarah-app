@@ -37,7 +37,7 @@ class MakeATripController extends GetxController {
           chair.isNotEmpty &&
           cityStart.isNotEmpty &&
           cityFinish.isNotEmpty) {
-        await firestore.collection("trip").add({
+        var docRef = await firestore.collection("trip").add({
           "trip_date": tripDate.text,
           "trip_time": tripTime.text,
           "trip_price": tripPrice.text,
@@ -52,15 +52,10 @@ class MakeATripController extends GetxController {
           "city_finish": cityFinish,
         });
 
-        // Get.snackbar(
-        //   "Berhasil",
-        //   "Data anda berhasil di rekam",
-        //   duration: const Duration(seconds: 2),
-        //   snackStyle: SnackStyle.FLOATING,
-        //   backgroundColor: primaryColor,
-        //   colorText: Colors.white,
-        //   borderRadius: 10,
-        // );
+        firestore.collection("trip").doc(docRef.id).update({
+          "id_trip": docRef.id,
+        });
+
         tripDate.clear();
         tripTime.clear();
         tripPrice.clear();

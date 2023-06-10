@@ -1,13 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:satuarah/app/modules/order_detail/views/order_detail_view.dart';
 
 import '../../../../theme.dart';
+import '../../../data/models/trip_model.dart';
+import '../../../routes/app_pages.dart';
+import '../../order_detail/views/order_detail_view.dart';
 import '../controllers/history_controller.dart';
-
-// ignore_for_file: camel_case_types, prefer_typing_uninitialized_variables
-
-import 'package:flutter/material.dart';
+import 'widgets/card_full.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class _HistoryViewState extends State<HistoryView>
 
   @override
   void initState() {
-    tabController = new TabController(length: 2, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
 
@@ -67,6 +67,8 @@ class _HistoryViewState extends State<HistoryView>
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(HistoryController());
+
     Widget tabRiwayat() {
       return ListView.builder(
         itemCount: myHistorys.length,
@@ -75,11 +77,48 @@ class _HistoryViewState extends State<HistoryView>
     }
 
     Widget tabJadwal() {
-      return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15),
-        child: ListView(
-          children: [],
-        ),
+      return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: controller.firestore
+            .collection('trip')
+            .where("id_driver", isEqualTo: controller.auth.currentUser!.uid)
+            .snapshots(),
+        // stream: controller.streamHistory(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.data!.docs.isEmpty) {
+            return const Center(
+              child: Text("Tidak Ada Data"),
+            );
+          }
+
+          List<TripModel> allTrip = [];
+
+          for (var element in snapshot.data!.docs) {
+            allTrip.add(TripModel.fromJson(element.data()));
+          }
+          return ListView.builder(
+            itemCount: allTrip.length,
+            itemBuilder: (context, index) {
+              TripModel trip = allTrip[index];
+              return CardFull(
+                fullNameC: trip.fullName,
+                startC: trip.cityStart,
+                finishC: trip.cityFinish,
+                dateC: trip.tripDate,
+                timeC: trip.tripTime,
+                priceC: trip.tripPrice,
+                onPressed: () {
+                  Get.toNamed(Routes.ORDERING, arguments: trip);
+                },
+              );
+            },
+          );
+        },
       );
     }
 

@@ -26,6 +26,46 @@ class OrderingView extends GetView<OrderingController> {
             color: white,
           ),
         ),
+        actions: [
+          trip.idDriver == controller.auth.currentUser!.uid
+              ? IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Konfirmasi'),
+                        content: const Text(
+                            'Apakah Anda yakin ingin menghapus ini?'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Get.back(),
+                            child: const Text('Tidak'),
+                          ),
+                          TextButton(
+                            onPressed: () => controller.doDelete(trip.idTrip),
+                            child: const Text('Ya'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    size: 25.0,
+                  ),
+                )
+              : const SizedBox(),
+              const SizedBox(width: 10),
+          trip.idDriver == controller.auth.currentUser!.uid
+              ? IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.edit,
+                    size: 25.0,
+                  ),
+                )
+              : const SizedBox(),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
