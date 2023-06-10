@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../shared/rating_bar.dart';
 import '../../../../theme.dart';
 import '../../../data/models/trip_model.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/ordering_controller.dart';
 
 class OrderingView extends GetView<OrderingController> {
@@ -55,10 +56,12 @@ class OrderingView extends GetView<OrderingController> {
                   ),
                 )
               : const SizedBox(),
-              const SizedBox(width: 10),
+          const SizedBox(width: 10),
           trip.idDriver == controller.auth.currentUser!.uid
               ? IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(Routes.EDIT_A_TRIP, arguments: trip);
+                  },
                   icon: const Icon(
                     Icons.edit,
                     size: 25.0,
@@ -196,27 +199,30 @@ class OrderingView extends GetView<OrderingController> {
                               style: textBlackDuaStyle.copyWith(
                                   fontSize: 15, fontWeight: medium),
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(top: 38),
-                              width: 137,
-                              height: 35,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
+                            trip.idDriver == controller.auth.currentUser!.uid
+                                ? const SizedBox()
+                                : Container(
+                                    margin: const EdgeInsets.only(top: 38),
+                                    width: 137,
+                                    height: 35,
+                                    child: ElevatedButton(
+                                      onPressed: () {},
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: primaryColor,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        "Cek Rute",
+                                        style: textWhiteStyle.copyWith(
+                                          fontSize: 14,
+                                          fontWeight: semiBold,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                child: Text(
-                                  "Cek Rute",
-                                  style: textWhiteStyle.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: semiBold,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         )
                       ],
@@ -287,27 +293,29 @@ class OrderingView extends GetView<OrderingController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 38),
-                width: 145,
-                height: 42,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                  child: Text(
-                    "Pesan",
-                    style: textWhiteStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                ),
-              ),
+              trip.idDriver != controller.auth.currentUser!.uid
+                  ? Container(
+                      margin: const EdgeInsets.only(top: 38),
+                      width: 145,
+                      height: 42,
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        child: Text(
+                          "Pesan",
+                          style: textWhiteStyle.copyWith(
+                            fontSize: 14,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ],

@@ -6,6 +6,8 @@ import '../modules/chat/bindings/chat_binding.dart';
 import '../modules/chat/views/chat_view.dart';
 import '../modules/chat_room/bindings/chat_room_binding.dart';
 import '../modules/chat_room/views/chat_room_view.dart';
+import '../modules/edit_a_trip/bindings/edit_a_trip_binding.dart';
+import '../modules/edit_a_trip/views/edit_a_trip_view.dart';
 import '../modules/edit_profile/bindings/edit_profile_binding.dart';
 import '../modules/edit_profile/views/edit_profile_view.dart';
 import '../modules/find_ride/bindings/find_ride_binding.dart';
@@ -125,6 +127,11 @@ class AppPages {
       name: _Paths.MAKE_A_TRIP,
       page: () => const MakeATripView(),
       binding: MakeATripBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_A_TRIP,
+      page: () => const EditATripView(),
+      binding: EditATripBinding(),
     ),
   ];
 }
