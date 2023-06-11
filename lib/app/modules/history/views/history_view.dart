@@ -70,9 +70,49 @@ class _HistoryViewState extends State<HistoryView>
     final controller = Get.put(HistoryController());
 
     Widget tabRiwayat() {
-      return ListView.builder(
-        itemCount: myHistorys.length,
-        itemBuilder: (context, index) => myHistorys[index],
+      return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        stream: controller.firestore
+            .collection('trip')
+            .where("id_driver", isEqualTo: controller.auth.currentUser!.uid)
+            .where("trip_status", isEqualTo: "Selesai")
+            .snapshots(),
+        // stream: controller.streamHistory(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.data!.docs.isEmpty) {
+            return const Center(
+              child: Text("Tidak Ada Data"),
+            );
+          }
+
+          List<TripModel> allTrip = [];
+
+          for (var element in snapshot.data!.docs) {
+            allTrip.add(TripModel.fromJson(element.data()));
+          }
+          return ListView.builder(
+            itemCount: allTrip.length,
+            itemBuilder: (context, index) {
+              TripModel trip = allTrip[index];
+              return CardFull(
+                fullNameC: trip.fullName,
+                startC: trip.cityStart,
+                finishC: trip.cityFinish,
+                dateC: trip.tripDate,
+                timeC: trip.tripTime,
+                priceC: trip.tripPrice,
+                onPressed: () {
+                  Get.toNamed(Routes.ORDERING, arguments: trip);
+                },
+              );
+            },
+          );
+        },
       );
     }
 
@@ -81,12 +121,13 @@ class _HistoryViewState extends State<HistoryView>
         stream: controller.firestore
             .collection('trip')
             .where("id_driver", isEqualTo: controller.auth.currentUser!.uid)
-            .snapshots(),
+            .where('trip_status',
+                whereIn: ['Menunggu', 'Dalam Perjalanan']).snapshots(),
         // stream: controller.streamHistory(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Text("Tidak Ada"),
             );
           }
 

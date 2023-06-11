@@ -6,6 +6,7 @@ class TripModel {
   final String tripDate;
   final String tripPrice;
   final String tripTime;
+  final String tripStatus;
   final String fullName;
   final String idDriver;
   final String email;
@@ -21,6 +22,7 @@ class TripModel {
     required this.tripDate,
     required this.tripPrice,
     required this.tripTime,
+    required this.tripStatus,
     required this.fullName,
     required this.idDriver,
     required this.email,
@@ -37,6 +39,7 @@ class TripModel {
         tripDate: json["trip_date"] ?? "",
         tripPrice: json["trip_price"] ?? "",
         tripTime: json["trip_time"] ?? "",
+        tripStatus: json["trip_status"] ?? "",
         fullName: json["full_name"] ?? "",
         idDriver: json["id_driver"] ?? "",
         email: json["email"] ?? "",
@@ -53,6 +56,7 @@ class TripModel {
         "trip_date": tripDate,
         "trip_price": tripPrice,
         "trip_time": tripTime,
+        "trip_status": tripStatus,
         "full_name": fullName,
         "id_driver": idDriver,
         "email": email,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:satuarah/app/modules/chat_room/views/chat_room_view.dart';
 
 import '../../../../shared/rating_bar.dart';
 import '../../../../theme.dart';
@@ -8,17 +9,24 @@ import '../../../data/models/trip_model.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/ordering_controller.dart';
 
-class OrderingView extends GetView<OrderingController> {
-  final TripModel trip = Get.arguments;
-  final NumberFormat numberFormat = NumberFormat('#,###');
-
-  OrderingView({Key? key}) : super(key: key);
+class OrderingView extends StatefulWidget {
+  const OrderingView({super.key});
 
   @override
+  State<OrderingView> createState() => _OrderingViewState();
+}
+
+class _OrderingViewState extends State<OrderingView> {
+  @override
   Widget build(BuildContext context) {
+    final TripModel trip = Get.arguments;
+    final NumberFormat numberFormat = NumberFormat('#,###');
+    final controller = Get.put(OrderingController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pesan'),
+        title: trip.idDriver == controller.auth.currentUser!.uid
+            ? const Text('Detail')
+            : const Text('Pesan'),
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Get.back(),
@@ -199,30 +207,30 @@ class OrderingView extends GetView<OrderingController> {
                               style: textBlackDuaStyle.copyWith(
                                   fontSize: 15, fontWeight: medium),
                             ),
-                            trip.idDriver == controller.auth.currentUser!.uid
-                                ? const SizedBox()
-                                : Container(
-                                    margin: const EdgeInsets.only(top: 38),
-                                    width: 137,
-                                    height: 35,
-                                    child: ElevatedButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: primaryColor,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        "Cek Rute",
-                                        style: textWhiteStyle.copyWith(
-                                          fontSize: 14,
-                                          fontWeight: semiBold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                            // trip.idDriver == controller.auth.currentUser!.uid
+                            //     ? const SizedBox()
+                            //     : Container(
+                            //         margin: const EdgeInsets.only(top: 38),
+                            //         width: 137,
+                            //         height: 35,
+                            //         child: ElevatedButton(
+                            //           onPressed: () {},
+                            //           style: ElevatedButton.styleFrom(
+                            //             backgroundColor: primaryColor,
+                            //             shape: RoundedRectangleBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(5),
+                            //             ),
+                            //           ),
+                            //           child: Text(
+                            //             "Cek Rute",
+                            //             style: textWhiteStyle.copyWith(
+                            //               fontSize: 14,
+                            //               fontWeight: semiBold,
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ),
                           ],
                         )
                       ],
@@ -293,29 +301,58 @@ class OrderingView extends GetView<OrderingController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              trip.idDriver != controller.auth.currentUser!.uid
-                  ? Container(
-                      margin: const EdgeInsets.only(top: 38),
-                      width: 145,
-                      height: 42,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                        child: Text(
-                          "Pesan",
-                          style: textWhiteStyle.copyWith(
-                            fontSize: 14,
-                            fontWeight: semiBold,
-                          ),
-                        ),
+              Container(
+                margin: const EdgeInsets.only(top: 38),
+                width: 145,
+                height: 42,
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (controller.isLoading.isFalse) {
+                      controller.isLoading(true);
+                      if (trip.idDriver == controller.auth.currentUser!.uid) {
+                        if (trip.tripStatus == "Menunggu") {
+                          controller.doUpdateSatu(trip.idTrip);
+                        } else if (trip.tripStatus == "Dalam Perjalanan") {
+                          controller.doUpdateDua(trip.idTrip);
+                        }
+                        Future.delayed(const Duration(seconds: 3), () {
+                          controller.isLoading.value = false;
+                        });
+                        setState(() {
+                          trip.tripStatus;
+                        });
+                      } else {
+                        Get.toNamed(Routes.CHAT_ROOM, arguments: trip);
+                      }
+                      controller.isLoading(false);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        trip.tripStatus == "Selesai" ? grayColor : primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: Obx(
+                    () => Text(
+                      controller.isLoading.isFalse
+                          ? trip.idDriver == controller.auth.currentUser!.uid
+                              ? trip.tripStatus == "Menunggu"
+                                  ? "Mulai Perjalanan"
+                                  : trip.tripStatus == "Dalam Perjalanan"
+                                      ? "Akhiri Perjalanan"
+                                      : "Selesai"
+                              : "Pesan"
+                          : "Memuat..",
+                      style: textWhiteStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: semiBold,
                       ),
-                    )
-                  : const SizedBox(),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ],

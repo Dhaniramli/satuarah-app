@@ -50,6 +50,7 @@ class MakeATripController extends GetxController {
           "chair": chair,
           "city_start": cityStart,
           "city_finish": cityFinish,
+          "trip_status": "Menunggu",
         });
 
         firestore.collection("trip").doc(docRef.id).update({
