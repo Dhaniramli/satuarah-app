@@ -1,9 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController {
-  //TODO: Implement ChatController
+   FirebaseFirestore firestore = FirebaseFirestore.instance;
+   FirebaseAuth auth = FirebaseAuth.instance;
+  String uidC = FirebaseAuth.instance.currentUser!.uid;
 
-  final count = 0.obs;
+  Stream<QuerySnapshot<Map<String, dynamic>>> chatStream(String email) {
+    return firestore
+        .collection("users")
+        .doc(email)
+        .collection("chats")
+        .orderBy("lastTime", descending: true)
+        .snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> friendStream(String email) {
+    return firestore.collection("users").doc(email).snapshots();
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +35,5 @@ class ChatController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+ 
 }
