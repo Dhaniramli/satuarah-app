@@ -275,7 +275,7 @@ class _OrderingViewState extends State<OrderingView> {
                   width: 145,
                   height: 42,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (controller.isLoading.isFalse) {
                         controller.isLoading(true);
                         if (trip.idDriver == controller.auth.currentUser!.uid) {
@@ -291,7 +291,20 @@ class _OrderingViewState extends State<OrderingView> {
                             trip.tripStatus;
                           });
                         } else {
-                          controller.addNewConnection(trip);
+                          var userMap;
+                          await controller.firestore
+                              .collection('users')
+                              .where(
+                                "full_name",
+                                isEqualTo: trip.fullName,
+                              )
+                              .get()
+                              .then((value) {
+                            setState(() {
+                              userMap = value.docs[0].data();
+                            });
+                          });
+                          controller.addNewConnection(trip, userMap);
                         }
                         controller.isLoading(false);
                       }

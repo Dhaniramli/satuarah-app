@@ -17,7 +17,7 @@ class OrderingController extends GetxController {
   late String roomId;
   var chat_id;
   // LOGIC CHAT
-  void addNewConnection(dynamic trip) async {
+  void addNewConnection(dynamic trip, Map<String, dynamic>? userMap) async {
     try {
       String date = DateTime.now().toIso8601String();
       CollectionReference chats = _firestore.collection("chats");
@@ -78,7 +78,7 @@ class OrderingController extends GetxController {
 
       Get.to(
         () => ChatRoomView(
-          trip: trip,
+          userMap: userMap,
           chatRoomid: chat_id,
           friendEmail: tripC.idDriver,
         ),

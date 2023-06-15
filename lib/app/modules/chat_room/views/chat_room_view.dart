@@ -6,18 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme.dart';
-import '../../../data/models/trip_model.dart';
 import '../controllers/chat_room_controller.dart';
 
 class ChatRoomView extends GetView<ChatRoomController> {
-  final TripModel? trip;
+  final Map<String, dynamic>? userMap;
   final String? chatRoomid;
   final String? friendEmail;
 
   const ChatRoomView({
     super.key,
     this.chatRoomid,
-    this.trip,
+    this.userMap,
     this.friendEmail,
   });
 
@@ -61,12 +60,12 @@ class ChatRoomView extends GetView<ChatRoomController> {
                         // var dataFriend =
                         //     snapFriend.data!.data() as Map<String, dynamic>;
                         // if (dataFriend["photo"] == "") {
-                          return Image.asset(
-                            'assets/profile.png',
-                            height: 50,
-                            width: 50,
-                            fit: BoxFit.cover,
-                          );
+                        return Image.asset(
+                          'assets/profile.png',
+                          height: 50,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        );
                         // } else {
                         //   return Image.network(
                         //     "${dataFriend["photo"]}",
@@ -172,7 +171,7 @@ class ChatRoomView extends GetView<ChatRoomController> {
                     controller.auth.currentUser!.uid,
                     chatRoomid.toString(),
                     controller.message.text,
-                    trip!.idDriver);
+                    userMap!["id_user"]);
                 controller.message.clear();
               },
               child: Image.asset(
@@ -292,7 +291,7 @@ Widget messages(BuildContext context, Map<String, dynamic> map) {
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   color: map['pengirim'] == controller.auth.currentUser!.uid
-                      ? primaryColor
+                      ? grayTigaColor
                       : primaryColor,
                   borderRadius: BorderRadius.only(
                       topLeft: const Radius.circular(8),
@@ -308,7 +307,7 @@ Widget messages(BuildContext context, Map<String, dynamic> map) {
                 ),
                 child: Text(
                   map["msg"],
-                  style: textWhiteStyle.copyWith(fontSize: 13),
+                  style: textWhiteStyle.copyWith(fontSize: 13, fontWeight: medium),
                 ),
               ),
             ),

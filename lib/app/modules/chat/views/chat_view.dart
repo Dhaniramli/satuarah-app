@@ -5,12 +5,19 @@ import 'package:get/get.dart';
 import '../../../../theme.dart';
 import '../controllers/chat_controller.dart';
 
-class ChatView extends GetView<ChatController> {
-  const ChatView({Key? key}) : super(key: key);
+class ChatView extends StatefulWidget {
+  const ChatView({super.key});
 
+  @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ChatController());
+    Map<String, dynamic> userMap = {};
+
     return Scaffold(
       backgroundColor: white,
       appBar: AppBar(
@@ -41,7 +48,31 @@ class ChatView extends GetView<ChatController> {
                           ),
                         ),
                         child: ListTile(
-                          onTap: () {},
+                          onTap: () async {
+                            await controller.firestore
+                                .collection('users')
+                                .where(
+                                  "full_name",
+                                  isEqualTo: "${data?["full_name"]}",
+                                )
+                                .get()
+                                .then((value) {
+                              setState(() {
+                                userMap = value.docs[0].data();
+                              });
+                            });
+
+                            // controller.selectChat(
+                            //     "${widget.chatId}",
+                            //     currentUser,
+                            //     userMap ?? {},
+                            //     "${widget.friendEmail}");
+
+                            controller.addNewConnection(
+                              "${data?["id_user"]}",
+                              userMap,
+                            );
+                          },
                           leading: CircleAvatar(
                             radius: 30,
                             child: Image.asset(
