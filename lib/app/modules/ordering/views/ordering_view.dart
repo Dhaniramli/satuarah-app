@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:satuarah/app/modules/chat_room/views/chat_room_view.dart';
 
 import '../../../../shared/rating_bar.dart';
 import '../../../../theme.dart';

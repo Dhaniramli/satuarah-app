@@ -1,9 +1,9 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
-import 'package:satuarah/app/modules/loading/loading_view.dart';
-
 import '../../../../theme.dart';
 import '../../../data/models/user_model.dart';
 import '../../edit_profile/views/edit_profile_view.dart';
@@ -264,54 +264,51 @@ class ProfileView extends GetView<ProfileController> {
         builder: (context, snapshot) {
           if (snapshot.hasError) return const Text("Error");
           if (!snapshot.hasData) return const Text("No Data");
-          if (snapshot.data!.data != null) {
-            Map<String, dynamic>? data =
-                (snapshot.data!.data() as Map<String, dynamic>?);
-            data!["id"] = snapshot.data!.id;
+          Map<String, dynamic>? data =
+              (snapshot.data!.data() as Map<String, dynamic>?);
+          data!["id"] = snapshot.data!.id;
 
-            UserModel user = UserModel(
-              email: data["email"],
-              fullName: data["full_name"],
-              idUser: data["id_user"],
-              merekKendaraan: data["merek_kendaraan"] ?? "",
-              nomorKtp: data["nomor_ktp"] ?? "",
-              nomorPlat: data["nomor_plat"] ?? "",
-              nomorSim: data["nomor_sim"] ?? "",
-              phoneNumber: data["phone_number"],
-              userAs: data["user_as"],
-            );
+          UserModel user = UserModel(
+            email: data["email"],
+            fullName: data["full_name"],
+            idUser: data["id_user"],
+            merekKendaraan: data["merek_kendaraan"] ?? "",
+            nomorKtp: data["nomor_ktp"] ?? "",
+            nomorPlat: data["nomor_plat"] ?? "",
+            nomorSim: data["nomor_sim"] ?? "",
+            phoneNumber: data["phone_number"],
+            userAs: data["user_as"],
+          );
 
-            return Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  dataProfile(),
-                  const SizedBox(height: 50),
-                  buttonEdit(),
-                  user.userAs == "costumer"
-                      ? Padding(
-                          padding: const EdgeInsets.only(top: 39),
-                          child: Text(
-                            "Ingin menjadi driver? klik dibawah",
-                            style: textBlackDuaStyle.copyWith(
-                              fontSize: 13.53,
-                              fontWeight: regular,
-                            ),
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                dataProfile(),
+                const SizedBox(height: 50),
+                buttonEdit(),
+                user.userAs == "costumer"
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 39),
+                        child: Text(
+                          "Ingin menjadi driver? klik dibawah",
+                          style: textBlackDuaStyle.copyWith(
+                            fontSize: 13.53,
+                            fontWeight: regular,
                           ),
-                        )
-                      : const SizedBox(),
-                  const SizedBox(height: 11),
-                  user.userAs == "costumer" ? buttonDriver() : const SizedBox(),
-                  const SizedBox(height: 50),
-                  buttonSwitch(),
-                  const SizedBox(height: 130),
-                  buttonLogout(),
-                ],
-              ),
-            );
-          }
-          return LoadingView();
+                        ),
+                      )
+                    : const SizedBox(),
+                const SizedBox(height: 11),
+                user.userAs == "costumer" ? buttonDriver() : const SizedBox(),
+                const SizedBox(height: 50),
+                buttonSwitch(),
+                const SizedBox(height: 130),
+                buttonLogout(),
+              ],
+            ),
+          );
         },
       ),
     );

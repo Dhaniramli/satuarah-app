@@ -41,6 +41,8 @@ class SignUpController extends GetxController {
             "phone_number": phoneNumber.text,
             "user_as": "costumer",
             "id_user": idUser,
+            "createAt": DateTime.now().toIso8601String(),
+            "status":false,
           });
 
           Get.snackbar(

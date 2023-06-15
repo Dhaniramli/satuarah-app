@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:satuarah/app/modules/home/views/home_view.dart';
 import 'package:satuarah/app/modules/profile/views/profile_view.dart';
@@ -13,8 +15,35 @@ class MainNavigationView extends StatefulWidget {
   State<MainNavigationView> createState() => _MainNavigationViewState();
 }
 
-class _MainNavigationViewState extends State<MainNavigationView> {
+class _MainNavigationViewState extends State<MainNavigationView>
+    with WidgetsBindingObserver {
+  bool isOnline = false;
   int currentIndex = 0;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    updateUserStatus(true);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      updateUserStatus(true);
+    } else {
+      updateUserStatus(false);
+    }
+  }
+
+  void updateUserStatus(bool isOnline) {
+    final userRef = firestore.collection("users").doc(auth.currentUser!.uid);
+    userRef.update({
+      'status': isOnline,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,8 +10,6 @@ import '../../../data/models/user_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../leaving_today/views/leaving_today_view.dart';
 import '../../loading/loading_view.dart';
-import '../../make_a_trip/views/make_a_trip_view.dart';
-import '../../ordering/views/ordering_view.dart';
 import '../../popular_route/views/popular_route_view.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/button_box.dart';

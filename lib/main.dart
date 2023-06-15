@@ -22,7 +22,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
