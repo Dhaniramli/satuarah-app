@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+// import 'package:intl/intl.dart';
 
 class AuthController extends GetxController {
   // untuk cek kondisi ada auth atau tidak -> uid
@@ -21,4 +22,6 @@ class AuthController extends GetxController {
 
     super.onInit();
   }
+
+  
 }

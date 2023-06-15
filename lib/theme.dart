@@ -13,6 +13,7 @@ Color black = const Color(0xff000000);
 Color blackDua = const Color(0xff272727);
 Color yellowColor = const Color(0xffFFD600);
 
+Color containerInputColor = const Color(0xffCECECE);
 
 TextStyle textBlackDuaStyle = GoogleFonts.inter(
   color: blackDua,
