@@ -1,11 +1,11 @@
-// import 'dart:io';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 // import 'package:path/path.dart';
 
 import '../../../../theme.dart';
@@ -13,7 +13,7 @@ import '../../../../theme.dart';
 class EditProfileController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  // FirebaseStorage storage = FirebaseStorage.instance;
+  FirebaseStorage storage = FirebaseStorage.instance;
 
   RxBool isLoading = false.obs;
 
@@ -24,40 +24,53 @@ class EditProfileController extends GetxController {
   late TextEditingController nomorSim;
   late TextEditingController nomorPlat;
   late TextEditingController merekKendaraan;
-  // late ImagePicker pickerC;
-  // XFile? pickedImage = null;
+  late ImagePicker pickerC;
+  XFile? pickedImage = null;
 
-  //   Future<String?> uploadImage(String uid) async {
-  //   Reference storageRef = storage.ref("$uid.png");
-  //   File file = File(pickedImage!.path);
+  updatePhotoUrl(String url) async {
+    CollectionReference users = firestore.collection("users");
 
-  //   try {
-  //     final dataUpload = await storageRef.putFile(file);
+    await users.doc(auth.currentUser!.uid).update({
+      "photo": url,
+    });
+  }
 
-  //     print(dataUpload);
-  //     final photoUrl = await storageRef.getDownloadURL();
-  //     // deleteImage();
-  //     return photoUrl;
-  //   } catch (err) {
-  //     print(err);
-  //     return null;
-  //   }
-  // }
+  Future<String?> uploadImage(String uid) async {
+    Reference storageRef = storage.ref("$uid.png");
+    File file = File(pickedImage!.path);
 
-  // Future<void> selectImage() async {
-  //   try {
-  //     final dataImage = await pickerC.pickImage(source: ImageSource.gallery);
-  //     if (dataImage != null) {
-  //       print(dataImage.name);
-  //       pickedImage = dataImage;
-  //     }
-  //     // update();
-  //   } catch (err) {
-  //     print(err);
-  //     pickedImage = null;
-  //     // update();
-  //   }
-  // }
+    try {
+      final dataUpload = await storageRef.putFile(file);
+
+      print(dataUpload);
+      final photoUrl = await storageRef.getDownloadURL();
+      deleteImage();
+      return photoUrl;
+    } catch (err) {
+      print(err);
+      return null;
+    }
+  }
+
+  deleteImage() {
+    pickedImage = null;
+    update();
+  }
+
+  Future<void> selectImage() async {
+    try {
+      final dataImage = await pickerC.pickImage(source: ImageSource.gallery);
+      if (dataImage != null) {
+        print(dataImage.name);
+        pickedImage = dataImage;
+      }
+      update();
+    } catch (err) {
+      print(err);
+      pickedImage = null;
+      update();
+    }
+  }
 
   doEditProfile() async {
     try {
@@ -114,7 +127,7 @@ class EditProfileController extends GetxController {
     nomorSim = TextEditingController();
     nomorPlat = TextEditingController();
     merekKendaraan = TextEditingController();
-    // pickerC = ImagePicker();
+    pickerC = ImagePicker();
     super.onInit();
   }
 

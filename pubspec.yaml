@@ -11,12 +11,14 @@ dependencies:
   dropdown_search: ^5.0.6
   firebase_auth: ^4.4.2
   firebase_core: ^2.10.0
+  firebase_storage: ^11.0.16
   flutter:
     sdk: flutter
   flutter_rating_bar: ^4.0.1
   flutter_switch: ^0.3.2
   get: 4.6.5
   google_fonts: ^4.0.4
+  image_picker: ^0.8.7
   intl: ^0.17.0
 
 dev_dependencies:

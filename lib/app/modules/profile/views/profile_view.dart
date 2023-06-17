@@ -171,6 +171,7 @@ class ProfileView extends GetView<ProfileController> {
             nomorSim: data["nomor_sim"] ?? "",
             phoneNumber: data["phone_number"],
             userAs: data["user_as"],
+            photo: data["photo"],
           );
 
           return Container(
@@ -198,6 +199,7 @@ class ProfileView extends GetView<ProfileController> {
                         nomorSim: data["nomor_sim"] ?? "",
                         phoneNumber: data["phone_number"],
                         userAs: data["user_as"],
+                        photo: data["photo"],
                       );
 
                       return Container(

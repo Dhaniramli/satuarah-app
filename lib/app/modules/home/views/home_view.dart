@@ -44,6 +44,7 @@ class HomeView extends GetView<HomeController> {
                 nomorSim: data["nomor_sim"] ?? "",
                 phoneNumber: data["phone_number"],
                 userAs: data["user_as"],
+                photo: data["photo"],
               );
 
               return Column(

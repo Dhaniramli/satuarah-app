@@ -8,6 +8,7 @@ class UserModel {
   final String nomorSim;
   final String phoneNumber;
   final String userAs;
+  final String photo;
 
   UserModel({
     required this.email,
@@ -19,6 +20,7 @@ class UserModel {
     required this.nomorSim,
     required this.phoneNumber,
     required this.userAs,
+    required this.photo,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -31,6 +33,7 @@ class UserModel {
         nomorSim: json["nomor_sim"] ?? "",
         phoneNumber: json["phone_number"] ?? "",
         userAs: json["user_as"] ?? "",
+        photo: json["photo"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +46,6 @@ class UserModel {
         "nomor_sim": nomorSim,
         "phone_number": phoneNumber,
         "user_as": userAs,
+        "photo": photo,
       };
 }

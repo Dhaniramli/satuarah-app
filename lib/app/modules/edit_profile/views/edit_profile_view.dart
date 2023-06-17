@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -69,40 +71,6 @@ class _EditProfileViewState extends State<EditProfileView> {
       );
     }
 
-    Widget buttonEdit() {
-      return SizedBox(
-        width: double.infinity,
-        height: 42,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: primaryColor,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          ),
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              if (controller.isLoading.isFalse) {
-                controller.isLoading.toggle();
-                setState(() {
-                  dataUser.userAs == "driver"
-                      ? controller.doEditProfileDriver()
-                      : controller.doEditProfile();
-                });
-                controller.isLoading(false);
-              }
-            }
-          },
-          child: Text(
-            'Simpan',
-            style: textWhiteStyle.copyWith(
-              fontSize: 16,
-              fontWeight: bold,
-            ),
-          ),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: header(),
       body: SingleChildScrollView(
@@ -114,38 +82,97 @@ class _EditProfileViewState extends State<EditProfileView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 155,
+                  height: 205,
                   width: double.infinity,
                   decoration: const BoxDecoration(),
                   child: Stack(
                     children: [
                       Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              "assets/profile.png",
-                              width: 150,
-                              height: 150,
-                              fit: BoxFit.fitHeight,
-                            ),
-                          ),
+                        child: GetBuilder<EditProfileController>(
+                          builder: (c) => c.pickedImage != null
+                              ? Container(
+                                  padding: const EdgeInsets.all(20),
+                                  height: 200,
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Stack(
+                                      children: [
+                                        Image(
+                                          image: FileImage(
+                                            File(c.pickedImage!.path),
+                                          ),
+                                          width: 200,
+                                          height: 200,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Center(
+                                          child: GestureDetector(
+                                            onTap: () => c.deleteImage(),
+                                            child: const Icon(
+                                              Icons.delete,
+                                              size: 30.0,
+                                              color: Color.fromARGB(
+                                                  255, 159, 159, 159),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  padding: const EdgeInsets.all(20),
+                                  height: 200,
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Stack(
+                                      children: [
+                                        dataUser.photo.isEmpty
+                                            ? Image.asset(
+                                                "assets/profile.png",
+                                                width: 200,
+                                                height: 200,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.network(
+                                                dataUser.photo,
+                                                width: 200,
+                                                height: 200,
+                                                fit: BoxFit.cover,
+                                              ),
+                                        Center(
+                                          child: GestureDetector(
+                                            onTap: () => c.deleteImage(),
+                                            child: const Icon(
+                                              Icons.delete,
+                                              size: 30.0,
+                                              color: Color.fromARGB(
+                                                  255, 159, 159, 159),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                         ),
                       ),
                       Center(
                         child: Container(
-                          margin: const EdgeInsets.only(left: 80, top: 70),
+                          margin: const EdgeInsets.only(left: 130, top: 120),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: GestureDetector(
                               onTap: () {
-                                // controller.selectImage();
+                                controller.selectImage();
                               },
                               child: Image.asset(
                                 "assets/edit.png",
@@ -281,7 +308,44 @@ class _EditProfileViewState extends State<EditProfileView> {
                         ),
                       ),
                 const SizedBox(height: 50),
-                buttonEdit(),
+                SizedBox(
+                  width: double.infinity,
+                  height: 42,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                    ),
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        if (controller.isLoading.isFalse) {
+                          controller.isLoading.toggle();
+                          setState(() {
+                            controller
+                                .uploadImage(dataUser.idUser)
+                                .then((hasilKembalian) {
+                              if (hasilKembalian != null) {
+                                controller.updatePhotoUrl(hasilKembalian);
+                              }
+                            });
+                            dataUser.userAs == "driver"
+                                ? controller.doEditProfileDriver()
+                                : controller.doEditProfile();
+                          });
+                          controller.isLoading(false);
+                        }
+                      }
+                    },
+                    child: Text(
+                      'Simpan',
+                      style: textWhiteStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: bold,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
