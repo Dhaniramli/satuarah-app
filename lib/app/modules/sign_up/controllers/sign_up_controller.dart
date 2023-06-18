@@ -42,7 +42,8 @@ class SignUpController extends GetxController {
             "user_as": "costumer",
             "id_user": idUser,
             "createAt": DateTime.now().toIso8601String(),
-            "status":false,
+            "status": false,
+            "photo": "",
           });
 
           Get.snackbar(

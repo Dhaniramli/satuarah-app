@@ -162,16 +162,16 @@ class ProfileView extends GetView<ProfileController> {
           data!["id"] = snapshot.data!.id;
 
           UserModel user = UserModel(
-            email: data["email"],
-            fullName: data["full_name"],
-            idUser: data["id_user"],
+            email: data["email"] ?? "",
+            fullName: data["full_name"] ?? "",
+            idUser: data["id_user"] ?? "",
             merekKendaraan: data["merek_kendaraan"] ?? "",
             nomorKtp: data["nomor_ktp"] ?? "",
             nomorPlat: data["nomor_plat"] ?? "",
             nomorSim: data["nomor_sim"] ?? "",
-            phoneNumber: data["phone_number"],
-            userAs: data["user_as"],
-            photo: data["photo"],
+            phoneNumber: data["phone_number"] ?? "",
+            userAs: data["user_as"] ?? "",
+            photo: data["photo"] ?? "",
           );
 
           return Container(
@@ -190,16 +190,16 @@ class ProfileView extends GetView<ProfileController> {
                       data!["id"] = snapshot.data!.id;
 
                       UserModel user = UserModel(
-                        email: data["email"],
-                        fullName: data["full_name"],
-                        idUser: data["id_user"],
+                        email: data["email"] ?? "",
+                        fullName: data["full_name"] ?? "",
+                        idUser: data["id_user"] ?? "",
                         merekKendaraan: data["merek_kendaraan"] ?? "",
                         nomorKtp: data["nomor_ktp"] ?? "",
                         nomorPlat: data["nomor_plat"] ?? "",
                         nomorSim: data["nomor_sim"] ?? "",
-                        phoneNumber: data["phone_number"],
-                        userAs: data["user_as"],
-                        photo: data["photo"],
+                        phoneNumber: data["phone_number"] ?? "",
+                        userAs: data["user_as"] ?? "",
+                        photo: data["photo"] ?? "",
                       );
 
                       return Container(
