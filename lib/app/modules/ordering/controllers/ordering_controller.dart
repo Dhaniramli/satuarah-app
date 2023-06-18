@@ -26,7 +26,15 @@ class OrderingController extends GetxController {
 
       await tripRef.doc(tripId).collection("request").doc(userId).delete();
 
-      print("Trip deleted successfully.");
+       Get.snackbar(
+        "Berhasil",
+        "Permintaan anda tolak",
+        duration: const Duration(seconds: 2),
+        snackStyle: SnackStyle.FLOATING,
+        backgroundColor: white,
+        colorText: primaryColor,
+        borderRadius: 10,
+      );
     } catch (e) {
       print("Error deleting trip: $e");
       // Tambahkan penanganan kesalahan sesuai kebutuhan Anda.
