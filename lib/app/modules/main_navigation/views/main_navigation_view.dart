@@ -222,7 +222,7 @@ class _MainNavigationViewState extends State<MainNavigationView>
                           ),
                         );
                       } else {
-                        return Container();
+                        return const Center(child: CircularProgressIndicator());
                       }
                     },
                   ),

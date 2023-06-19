@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../shared/rating_bar.dart';
 import '../../../../../theme.dart';
-import '../../../ordering/views/ordering_view.dart';
 
 class CardFull extends StatelessWidget {
   final String fullNameC;
@@ -12,6 +11,8 @@ class CardFull extends StatelessWidget {
   final String dateC;
   final String timeC;
   final String priceC;
+  final String photoC;
+  final void Function()? onPressed;
 
   const CardFull({
     super.key,
@@ -21,10 +22,14 @@ class CardFull extends StatelessWidget {
     required this.dateC,
     required this.timeC,
     required this.priceC,
+    this.onPressed,
+    required this.photoC,
   });
 
   @override
   Widget build(BuildContext context) {
+    final NumberFormat numberFormat = NumberFormat('#,###');
+
     return Container(
       margin: const EdgeInsets.only(right: 20, left: 20, bottom: 5, top: 10),
       padding: const EdgeInsets.all(10),
@@ -47,15 +52,26 @@ class CardFull extends StatelessWidget {
                         width: 25.0,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50)),
-                        child: Image.asset(
-                          "assets/profile.png",
-                          width: 25.0,
-                          height: 25.0,
-                          fit: BoxFit.fill,
-                        ),
+                        child: photoC == ""
+                            ? Image.asset(
+                                "assets/profile.png",
+                                width: 25.0,
+                                height: 25.0,
+                                fit: BoxFit.fill,
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.network(
+                                  photoC,
+                                  width: 25.0,
+                                  height: 25.0,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                       ),
                       const SizedBox(width: 4),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             fullNameC,
@@ -69,7 +85,7 @@ class CardFull extends StatelessWidget {
                             height: 8,
                             width: 40,
                             child: const RatingBarView(
-                              rating: 4.5,
+                              rating: 0,
                               ratingCount: 12,
                               size: 8,
                             ),
@@ -134,7 +150,7 @@ class CardFull extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(right: 23, top: 11),
                     child: Text(
-                      'Harga : Rp.$priceC',
+                      'Harga : Rp.${numberFormat.format(int.parse(priceC))}',
                       style: textBlackDuaStyle.copyWith(
                           fontSize: 9.83, fontWeight: medium),
                     ),
@@ -150,9 +166,7 @@ class CardFull extends StatelessWidget {
                   width: 145,
                   height: 29,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Get.to(() => OrderingView());
-                    },
+                    onPressed: onPressed,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
                       shape: RoundedRectangleBorder(

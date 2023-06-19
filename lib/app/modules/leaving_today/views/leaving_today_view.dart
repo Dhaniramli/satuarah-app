@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../../theme.dart';
 import '../../../data/models/trip_model.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/leaving_today_controller.dart';
 import 'widgets/card_full.dart';
 
@@ -17,7 +18,7 @@ class LeavingTodayView extends GetView<LeavingTodayController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Berangkat Hari Ini'),
+        title: const Text('Semua Tebengan'),
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Get.back(),
@@ -58,6 +59,10 @@ class LeavingTodayView extends GetView<LeavingTodayController> {
                 dateC: trip.tripDate,
                 timeC: trip.tripTime,
                 priceC: trip.tripPrice,
+                photoC: trip.photo,
+                onPressed: () {
+                  Get.toNamed(Routes.ORDERING, arguments: trip);
+                },
               );
             },
           );

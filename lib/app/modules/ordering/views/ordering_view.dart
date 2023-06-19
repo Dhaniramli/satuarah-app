@@ -463,7 +463,6 @@ class _OrderingViewState extends State<OrderingView> {
                       });
                     });
                     setState(() {
-                      // controller.addNewRequest(trip);
                       controller.addNewConnection(trip, userMap, trip.idTrip);
                     });
                   }
