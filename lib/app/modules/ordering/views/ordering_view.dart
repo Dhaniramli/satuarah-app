@@ -272,26 +272,40 @@ class _OrderingViewState extends State<OrderingView> {
                   ],
                 ),
                 const SizedBox(height: 22),
-                Row(
-                  children: [
-                    Image.asset(
-                      "assets/user2.png",
-                      width: 24,
-                      height: 24,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      "${trip.chair} Penumpang",
-                      style: textBlackDuaStyle.copyWith(
-                          fontSize: 15, fontWeight: medium),
-                    ),
-                  ],
+                StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  stream: controller.streamPenumpang(trip.idTrip),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    final data2 = snapshot.data!;
+
+                    return Row(
+                      children: [
+                        Image.asset(
+                          "assets/user2.png",
+                          width: 24,
+                          height: 24,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          data2.docs.isEmpty
+                              ? "0 Penumpang"
+                              : "${data2.docs.length} Penumpang",
+                          style: textBlackDuaStyle.copyWith(
+                              fontSize: 15, fontWeight: medium),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(color: black, width: 1),
