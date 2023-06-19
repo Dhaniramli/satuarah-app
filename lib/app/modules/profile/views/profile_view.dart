@@ -213,10 +213,21 @@ class ProfileView extends GetView<ProfileController> {
                                   width: 50,
                                   child: CircleAvatar(
                                     radius: 50,
-                                    child: Image.asset(
-                                      "assets/profile.png",
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: user.photo == ""
+                                        ? Image.asset(
+                                            "assets/profile.png",
+                                            fit: BoxFit.cover,
+                                          )
+                                        : ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            child: Image.network(
+                                              user.photo,
+                                              height: 100,
+                                              width: 100,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
                                   ),
                                 ),
                                 user.userAs == "driver"

@@ -75,10 +75,20 @@ class _ChatViewState extends State<ChatView> {
                           },
                           leading: CircleAvatar(
                             radius: 30,
-                            child: Image.asset(
-                              "assets/profile.png",
-                              fit: BoxFit.cover,
-                            ),
+                            child: data?["photo"] == ""
+                                ? Image.asset(
+                                    "assets/profile.png",
+                                    fit: BoxFit.cover,
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.network(
+                                      data?["photo"],
+                                      width: 100.0,
+                                      height: 100.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                           ),
                           title: Text(
                             "${data?["full_name"]}",

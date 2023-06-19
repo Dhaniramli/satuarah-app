@@ -204,6 +204,7 @@ class HomeView extends GetView<HomeController> {
                               dateC: trip.tripDate,
                               timeC: trip.tripTime,
                               priceC: trip.tripPrice,
+                              photoC: trip.photo,
                               onPressed: () {
                                 Get.toNamed(Routes.ORDERING, arguments: trip);
                               },

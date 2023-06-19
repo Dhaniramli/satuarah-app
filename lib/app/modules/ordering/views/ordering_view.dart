@@ -105,12 +105,22 @@ class _OrderingViewState extends State<OrderingView> {
                               width: 40.51,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50)),
-                              child: Image.asset(
-                                "assets/profile.png",
-                                width: 40.51,
-                                height: 40.51,
-                                fit: BoxFit.fill,
-                              ),
+                              child: trip.photo == ""
+                                  ? Image.asset(
+                                      "assets/profile.png",
+                                      width: 40.51,
+                                      height: 40.51,
+                                      fit: BoxFit.fill,
+                                    )
+                                  : ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: Image.network(
+                                        trip.photo,
+                                        width: 40.51,
+                                        height: 40.51,
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
                             ),
                             const SizedBox(width: 4),
                             Column(

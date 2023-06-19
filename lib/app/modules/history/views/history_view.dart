@@ -106,6 +106,7 @@ class _HistoryViewState extends State<HistoryView>
                 dateC: trip.tripDate,
                 timeC: trip.tripTime,
                 priceC: trip.tripPrice,
+                photo: trip.photo,
                 onPressed: () {
                   Get.toNamed(Routes.ORDERING, arguments: trip);
                 },
@@ -153,6 +154,7 @@ class _HistoryViewState extends State<HistoryView>
                 dateC: trip.tripDate,
                 timeC: trip.tripTime,
                 priceC: trip.tripPrice,
+                photo: trip.photo,
                 onPressed: () {
                   Get.toNamed(Routes.ORDERING, arguments: trip);
                 },

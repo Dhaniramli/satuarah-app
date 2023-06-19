@@ -38,6 +38,9 @@ class _MakeATripViewState extends State<MakeATripView> {
     if (controller.nomorPlat.text == "") {
       controller.nomorPlat.text = dataUser.nomorPlat;
     }
+    if (controller.photo == "") {
+      controller.photo = dataUser.photo;
+    }
 
     return Scaffold(
       appBar: AppBar(

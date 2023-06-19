@@ -13,6 +13,7 @@ class TripModel {
   final String nomorPlat;
   final String merekKendaraan;
   final String idTrip;
+  final String photo;
 
   TripModel({
     required this.chair,
@@ -29,6 +30,7 @@ class TripModel {
     required this.nomorPlat,
     required this.merekKendaraan,
     required this.idTrip,
+    required this.photo,
   });
 
   factory TripModel.fromJson(Map<String, dynamic> json) => TripModel(
@@ -46,6 +48,7 @@ class TripModel {
         nomorPlat: json["nomor_plat"] ?? "",
         merekKendaraan: json["merek_kendaraan"] ?? "",
         idTrip: json["id_trip"] ?? "",
+        photo: json["photo"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,5 +66,6 @@ class TripModel {
         "nomor_plat": nomorPlat,
         "merek_kendaraan": merekKendaraan,
         "id_trip": idTrip,
+        "photo": photo,
       };
 }

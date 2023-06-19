@@ -20,6 +20,7 @@ class MakeATripController extends GetxController {
   late TextEditingController idDriver;
   late TextEditingController nomorPlat;
   late TextEditingController merekKendaraan;
+  late String photo;
   late String chair;
   late String cityStart;
   late String cityFinish;
@@ -50,6 +51,7 @@ class MakeATripController extends GetxController {
           "chair": chair,
           "city_start": cityStart,
           "city_finish": cityFinish,
+          "photo": photo,
           "trip_status": "Menunggu",
         });
 
@@ -94,6 +96,7 @@ class MakeATripController extends GetxController {
     idDriver = TextEditingController();
     nomorPlat = TextEditingController();
     merekKendaraan = TextEditingController();
+    photo = "";
     chair = "";
     cityStart = "";
     cityFinish = "";

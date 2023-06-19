@@ -11,6 +11,7 @@ class CardFull extends StatelessWidget {
   final String dateC;
   final String timeC;
   final String priceC;
+  final String photo;
   final void Function()? onPressed;
 
   const CardFull({
@@ -21,6 +22,7 @@ class CardFull extends StatelessWidget {
     required this.dateC,
     required this.timeC,
     required this.priceC,
+    required this.photo,
     this.onPressed,
   });
 
@@ -52,12 +54,22 @@ class CardFull extends StatelessWidget {
                           width: 25.0,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50)),
-                          child: Image.asset(
-                            "assets/profile.png",
-                            width: 25.0,
-                            height: 25.0,
-                            fit: BoxFit.fill,
-                          ),
+                          child: photo == ""
+                              ? Image.asset(
+                                  "assets/profile.png",
+                                  width: 25,
+                                  height: 25,
+                                  fit: BoxFit.fill,
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: Image.network(
+                                    photo,
+                                    width: 25,
+                                    height: 25,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                         ),
                         const SizedBox(width: 4),
                         Column(

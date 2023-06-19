@@ -1,10 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../views/main_navigation_view.dart';
 
 class MainNavigationController extends GetxController {
   MainNavigationView? view;
+  FirebaseAuth auth = FirebaseAuth.instance;
 
+  DocumentReference get userCollection {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(auth.currentUser!.uid);
+  }
 
   @override
   void onReady() {

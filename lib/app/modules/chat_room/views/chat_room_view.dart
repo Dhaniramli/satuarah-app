@@ -57,23 +57,23 @@ class ChatRoomView extends GetView<ChatRoomController> {
                     builder: ((context, snapFriend) {
                       if (snapFriend.connectionState ==
                           ConnectionState.active) {
-                        // var dataFriend =
-                        //     snapFriend.data!.data() as Map<String, dynamic>;
-                        // if (dataFriend["photo"] == "") {
-                        return Image.asset(
-                          'assets/profile.png',
-                          height: 50,
-                          width: 50,
-                          fit: BoxFit.cover,
-                        );
-                        // } else {
-                        //   return Image.network(
-                        //     "${dataFriend["photo"]}",
-                        //     height: 50,
-                        //     width: 50,
-                        //     fit: BoxFit.cover,
-                        //   );
-                        // }
+                        var dataFriend =
+                            snapFriend.data!.data() as Map<String, dynamic>;
+                        if (dataFriend["photo"] == "") {
+                          return Image.asset(
+                            'assets/profile.png',
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          );
+                        } else {
+                          return Image.network(
+                            "${dataFriend["photo"]}",
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          );
+                        }
                       }
                       return Image.asset(
                         'assets/profile.png',
@@ -307,7 +307,8 @@ Widget messages(BuildContext context, Map<String, dynamic> map) {
                 ),
                 child: Text(
                   map["msg"],
-                  style: textWhiteStyle.copyWith(fontSize: 13, fontWeight: medium),
+                  style:
+                      textWhiteStyle.copyWith(fontSize: 13, fontWeight: medium),
                 ),
               ),
             ),
