@@ -121,7 +121,7 @@ class ProfileView extends GetView<ProfileController> {
     Widget buttonLogout() {
       return Container(
         width: double.infinity,
-        height: 35,
+        height: 42,
         decoration: BoxDecoration(
           border: Border.all(color: primaryColor),
           borderRadius: BorderRadius.circular(5),
@@ -278,7 +278,6 @@ class ProfileView extends GetView<ProfileController> {
                   height: 42,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Get.to(() => EditProfileView());
                       Get.toNamed(Routes.EDIT_PROFILE, arguments: user);
                     },
                     style: ElevatedButton.styleFrom(
@@ -310,9 +309,9 @@ class ProfileView extends GetView<ProfileController> {
                     : const SizedBox(),
                 const SizedBox(height: 11),
                 user.userAs == "costumer" ? buttonDriver() : const SizedBox(),
-                const SizedBox(height: 50),
-                buttonSwitch(),
-                const SizedBox(height: 130),
+                // const SizedBox(height: 50),
+                // buttonSwitch(),
+                const SizedBox(height: 30),
                 buttonLogout(),
               ],
             ),

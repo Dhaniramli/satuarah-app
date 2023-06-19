@@ -22,6 +22,7 @@ class _OrderingViewState extends State<OrderingView> {
     final TripModel trip = Get.arguments;
     final NumberFormat numberFormat = NumberFormat('#,###');
     final controller = Get.put(OrderingController());
+    Map<String, dynamic> userMap = {};
 
     return Scaffold(
       appBar: AppBar(
@@ -434,6 +435,24 @@ class _OrderingViewState extends State<OrderingView> {
             height: 42,
             child: ElevatedButton(
               onPressed: () async {
+                // var userMap;
+                await controller.firestore
+                    .collection('users')
+                    .where(
+                      "full_name",
+                      isEqualTo: trip.fullName,
+                    )
+                    .get()
+                    .then((value) {
+                  setState(() {
+                    if (value.docs.isNotEmpty) {
+                      userMap = value.docs[0].data();
+                      // Lanjutkan dengan kode lainnya
+                    } else {
+                      // Handle ketika list kosong
+                    }
+                  });
+                });
                 if (controller.isLoading.isFalse) {
                   controller.isLoading(true);
                   if (trip.idDriver == controller.auth.currentUser!.uid) {
@@ -449,19 +468,6 @@ class _OrderingViewState extends State<OrderingView> {
                       trip.tripStatus;
                     });
                   } else {
-                    var userMap;
-                    await controller.firestore
-                        .collection('users')
-                        .where(
-                          "full_name",
-                          isEqualTo: trip.fullName,
-                        )
-                        .get()
-                        .then((value) {
-                      setState(() {
-                        userMap = value.docs[0].data();
-                      });
-                    });
                     setState(() {
                       controller.addNewConnection(trip, userMap, trip.idTrip);
                     });

@@ -12,6 +12,7 @@ class OrderingController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   RxBool isLoading = false.obs;
+  
 
   bool flagNewConnection = false;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -116,7 +117,7 @@ class OrderingController extends GetxController {
           .get();
 
       // REQUEST
-      if (requestMe != true) {
+      if (requestMe != null) {
         await tripRef
             .doc(tripId)
             .collection("request")

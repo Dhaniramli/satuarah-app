@@ -137,7 +137,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SEARCH_RIDE,
-      page: () => const SearchRideView(),
+      page: () => SearchRideView(),
       binding: SearchRideBinding(),
     ),
   ];
