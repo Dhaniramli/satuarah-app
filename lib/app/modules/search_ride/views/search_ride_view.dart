@@ -13,7 +13,7 @@ class SearchRideView extends GetView<SearchRideController> {
     final controller = Get.put(SearchRideController());
 
     // Setelah widget terbangun, fokus diberikan ke TextFormField
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(controller.textFormFieldFocusNode);
     });
 
@@ -43,59 +43,76 @@ class SearchRideView extends GetView<SearchRideController> {
                   border: InputBorder.none,
                 ),
                 style: const TextStyle(color: white),
-                textInputAction: TextInputAction.done,
                 onChanged: (value) => controller.searchTrip(value),
                 onFieldSubmitted: (value) {
                   controller.searchTrip(value);
-                },
-                onEditingComplete: () {
-                  // Aksi yang dilakukan ketika keyboard mengklik tombol "Done"
-                  // Misalnya, menyimpan nilai atau melakukan pencarian
                 },
               ),
             ),
           ),
         ],
       ),
-      body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-        stream: controller.streamtrip(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      body: Obx(
+        () => controller.tempSearch.isEmpty
+            ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: controller.streamtrip(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-          if (snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text("Tidak Ada Data"),
-            );
-          }
+                  if (snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                      child: Text("Tidak Ada Data"),
+                    );
+                  }
 
-          List<TripModel> allTrip = [];
+                  List<TripModel> allTrip = [];
 
-          for (var element in snapshot.data!.docs) {
-            allTrip.add(TripModel.fromJson(element.data()));
-          }
-          return ListView.builder(
-            itemCount: allTrip.length,
-            itemBuilder: (context, index) {
-              TripModel trip = allTrip[index];
-              return CardFull(
-                fullNameC: "Belum Ada",
-                startC: trip.cityStart,
-                finishC: trip.cityFinish,
-                dateC: trip.tripDate,
-                timeC: trip.tripTime,
-                priceC: trip.tripPrice,
-                photoC: trip.photo,
-                onPressed: () {
-                  Get.toNamed(Routes.ORDERING, arguments: trip);
+                  for (var element in snapshot.data!.docs) {
+                    allTrip.add(TripModel.fromJson(element.data()));
+                  }
+                  return ListView.builder(
+                    itemCount: allTrip.length,
+                    itemBuilder: (context, index) {
+                      TripModel trip = allTrip[index];
+                      return CardFull(
+                        fullNameC: trip.fullName,
+                        startC: trip.cityStart,
+                        finishC: trip.cityFinish,
+                        dateC: trip.tripDate,
+                        timeC: trip.tripTime,
+                        priceC: trip.tripPrice,
+                        photoC: trip.photo,
+                        onPressed: () {
+                          Get.toNamed(Routes.ORDERING, arguments: trip);
+                        },
+                      );
+                    },
+                  );
                 },
-              );
-            },
-          );
-        },
+              )
+            : Expanded(
+                child: ListView.builder(
+                  itemCount: controller.tempSearch.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CardFull(
+                      fullNameC: "${controller.tempSearch[index]["full_name"]}",
+                      startC: "${controller.tempSearch[index]["city_start"]}",
+                      finishC: "${controller.tempSearch[index]["city_finish"]}",
+                      dateC: "${controller.tempSearch[index]["trip_date"]}",
+                      timeC: "${controller.tempSearch[index]["trip_time"]}",
+                      priceC: "${controller.tempSearch[index]["trip_price"]}",
+                      photoC: "${controller.tempSearch[index]["photo"]}",
+                      onPressed: () {
+                        // Get.toNamed(Routes.ORDERING, arguments: trip);
+                      },
+                    );
+                  },
+                ),
+              ),
       ),
     );
   }
