@@ -271,6 +271,22 @@ class _OrderingViewState extends State<OrderingView> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 22),
+                Row(
+                  children: [
+                    Image.asset(
+                      "assets/user2.png",
+                      width: 24,
+                      height: 24,
+                    ),
+                    const SizedBox(width: 6),
+                    Text(
+                      "${trip.chair} Penumpang",
+                      style: textBlackDuaStyle.copyWith(
+                          fontSize: 15, fontWeight: medium),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -361,10 +377,11 @@ class _OrderingViewState extends State<OrderingView> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
-                                          controller.deleteTrip(
-                                              trip.idTrip, item["id_user"]);
                                           controller.addNewRide(
-                                              item, trip.idTrip);
+                                            item,
+                                            trip.idTrip,
+                                            item["id_user"],
+                                          );
                                         },
                                         child: Image.asset(
                                           "assets/centant.png",

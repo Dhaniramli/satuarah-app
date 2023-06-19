@@ -21,6 +21,7 @@ abstract class Routes {
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
   static const MAKE_A_TRIP = _Paths.MAKE_A_TRIP;
   static const EDIT_A_TRIP = _Paths.EDIT_A_TRIP;
+  static const SEARCH_RIDE = _Paths.SEARCH_RIDE;
 }
 
 abstract class _Paths {
@@ -43,4 +44,5 @@ abstract class _Paths {
   static const EDIT_PROFILE = '/edit-profile';
   static const MAKE_A_TRIP = '/make-a-trip';
   static const EDIT_A_TRIP = '/edit-a-trip';
+  static const SEARCH_RIDE = '/search-ride';
 }

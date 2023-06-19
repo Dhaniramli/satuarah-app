@@ -11,6 +11,7 @@ import '../../../routes/app_pages.dart';
 import '../../leaving_today/views/leaving_today_view.dart';
 import '../../loading/loading_view.dart';
 import '../../popular_route/views/popular_route_view.dart';
+import '../../search_ride/views/search_ride_view.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/button_box.dart';
 import 'widgets/card_full.dart';
@@ -75,38 +76,36 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ),
                         const SizedBox(height: 42.85),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 13.0),
-                          height: 26.0,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            color: white,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/lokasi.png',
-                                width: 10.0,
-                                height: 17.21,
-                              ),
-                              const SizedBox(width: 8.0),
-                              Expanded(
-                                child: TextField(
-                                  onSubmitted: (_) {},
-                                  style: textGrayStyle.copyWith(
-                                      fontSize: 12, fontWeight: regular),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Cari tujuan anda',
-                                    hintStyle: textGrayStyle.copyWith(
+                        GestureDetector(
+                          onTap: () => Get.to(() => SearchRideView()),
+                          child: Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 13.0),
+                            height: 26.0,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets/lokasi.png',
+                                  width: 10.0,
+                                  height: 17.21,
+                                ),
+                                const SizedBox(width: 8.0),
+                                Expanded(
+                                  child: Text(
+                                    "Cari Tujuan Anda",
+                                    style: textGrayStyle.copyWith(
                                         fontSize: 12, fontWeight: regular),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -134,7 +133,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                         ButtonBox(
                           icon: "assets/bhi.png",
-                          tittLe: "Berangkat ini hari",
+                          tittLe: "Semua Tebengan",
                           onTap: () => Get.to(() => LeavingTodayView()),
                         ),
                         ButtonBox(
@@ -164,7 +163,7 @@ class HomeView extends GetView<HomeController> {
                     margin: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 14),
                     child: Text(
-                      "Terdekat dari Anda",
+                      "Berangkat hari ini",
                       style: textBigBlackStyle.copyWith(
                         fontSize: 15,
                         fontWeight: semiBold,

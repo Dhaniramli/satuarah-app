@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:satuarah/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
@@ -19,7 +20,16 @@ class HomeController extends GetxController {
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamtrip() async* {
-    yield* firestore.collection('trip').snapshots();
+    yield* firestore
+        .collection('trip')
+        .where(
+          "trip_date",
+          isEqualTo: DateFormat('dd/MM/yyyy').format(
+            DateTime.now(),
+          ),
+        )
+        .where("trip_status",
+            whereIn: ['Menunggu', 'Dalam Perjalanan']).snapshots();
   }
 
   final count = 0.obs;

@@ -20,13 +20,22 @@ class OrderingController extends GetxController {
   late String roomId;
   var chat_id;
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamPenumpang(
+      String tripId) async* {
+    yield* firestore
+        .collection('trip')
+        .doc(tripId)
+        .collection("ride")
+        .snapshots();
+  }
+
   Future<void> deleteTrip(String tripId, String userId) async {
     try {
       CollectionReference tripRef = _firestore.collection("trip");
 
       await tripRef.doc(tripId).collection("request").doc(userId).delete();
 
-       Get.snackbar(
+      Get.snackbar(
         "Berhasil",
         "Permintaan anda tolak",
         duration: const Duration(seconds: 2),
@@ -49,7 +58,8 @@ class OrderingController extends GetxController {
         .snapshots();
   }
 
-  void addNewRide(Map<String, dynamic>? userMap, String tripId) async {
+  void addNewRide(
+      Map<String, dynamic>? userMap, String tripId, String userId) async {
     CollectionReference tripRef = _firestore.collection("trip");
 
     final requestMe = await tripRef
@@ -60,6 +70,8 @@ class OrderingController extends GetxController {
 
     // REQUEST
     if (requestMe != true) {
+      await tripRef.doc(tripId).collection("request").doc(userId).delete();
+
       await tripRef
           .doc(tripId)
           .collection("ride")

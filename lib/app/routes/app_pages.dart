@@ -32,6 +32,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register_driver/bindings/register_driver_binding.dart';
 import '../modules/register_driver/views/register_driver_view.dart';
+import '../modules/search_ride/bindings/search_ride_binding.dart';
+import '../modules/search_ride/views/search_ride_view.dart';
 import '../modules/sign_in/bindings/sign_in_binding.dart';
 import '../modules/sign_in/views/sign_in_view.dart';
 import '../modules/sign_up/bindings/sign_up_binding.dart';
@@ -132,6 +134,11 @@ class AppPages {
       name: _Paths.EDIT_A_TRIP,
       page: () => const EditATripView(),
       binding: EditATripBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH_RIDE,
+      page: () => const SearchRideView(),
+      binding: SearchRideBinding(),
     ),
   ];
 }
