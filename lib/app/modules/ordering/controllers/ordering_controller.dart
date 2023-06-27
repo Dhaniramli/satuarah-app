@@ -12,7 +12,6 @@ class OrderingController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   RxBool isLoading = false.obs;
-  
 
   bool flagNewConnection = false;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -73,13 +72,9 @@ class OrderingController extends GetxController {
     if (requestMe != true) {
       await tripRef.doc(tripId).collection("request").doc(userId).delete();
 
-      await tripRef
-          .doc(tripId)
-          .collection("ride")
-          .doc(_auth.currentUser!.uid)
-          .set(
+      await tripRef.doc(tripId).collection("ride").doc(userMap!["id_user"]).set(
         {
-          "full_name": userMap!["full_name"],
+          "full_name": userMap["full_name"],
           "photo": userMap["photo"],
           "id_user": userMap["id_user"],
         },

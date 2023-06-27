@@ -85,8 +85,24 @@ class _HistoryViewState extends State<HistoryView>
           }
 
           if (snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text("Tidak Ada Data"),
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/nothing.png",
+                    width: 50.0,
+                    height: 90.0,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Tidak ada tebengan",
+                    style: textGrayStyle.copyWith(fontWeight: semiBold),
+                  )
+                ],
+              ),
             );
           }
 
@@ -133,8 +149,84 @@ class _HistoryViewState extends State<HistoryView>
           }
 
           if (snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/nothing.png",
+                    width: 50.0,
+                    height: 90.0,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Tidak ada tebengan",
+                    style: textGrayStyle.copyWith(fontWeight: semiBold),
+                  )
+                ],
+              ),
+            );
+          }
+
+          List<TripModel> allTrip = [];
+
+          for (var element in snapshot.data!.docs) {
+            allTrip.add(TripModel.fromJson(element.data()));
+          }
+          return ListView.builder(
+            itemCount: allTrip.length,
+            itemBuilder: (context, index) {
+              TripModel trip = allTrip[index];
+              return CardFull(
+                fullNameC: trip.fullName,
+                startC: trip.cityStart,
+                finishC: trip.cityFinish,
+                dateC: trip.tripDate,
+                timeC: trip.tripTime,
+                priceC: trip.tripPrice,
+                photo: trip.photo,
+                onPressed: () {
+                  Get.toNamed(Routes.ORDERING, arguments: trip);
+                },
+              );
+            },
+          );
+        },
+      );
+    }
+
+    Widget tabJadwal2() {
+      return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+        // stream: controller.firestore.collection('trip').doc().collection("ride").doc(controller.auth.currentUser!.uid).snapshots(),
+        // stream: controller.streamHistory(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
             return const Center(
-              child: Text("Tidak Ada Data"),
+              child: Text("Tidak Ada"),
+            );
+          }
+
+          if (snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/nothing.png",
+                    width: 50.0,
+                    height: 90.0,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Tidak ada tebengan",
+                    style: textGrayStyle.copyWith(fontWeight: semiBold),
+                  )
+                ],
+              ),
             );
           }
 

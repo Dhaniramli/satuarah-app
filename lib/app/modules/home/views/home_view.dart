@@ -182,16 +182,29 @@ class HomeView extends GetView<HomeController> {
                         }
 
                         if (snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: Text("Tidak Ada Data"),
+                          return Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/nothing.png",
+                                  width: 50.0,
+                                  height: 90.0,
+                                  fit: BoxFit.fill,
+                                ),
+                                const SizedBox(height: 10),
+                                Text("Tidak ada tebengan", style: textGrayStyle.copyWith(fontWeight: semiBold),)
+                              ],
+                            ),
                           );
                         }
 
-                        List<TripModel> allTrip = [];
+                          List<TripModel> allTrip = [];
 
-                        for (var element in snapshot.data!.docs) {
-                          allTrip.add(TripModel.fromJson(element.data()));
-                        }
+                          for (var element in snapshot.data!.docs) {
+                            allTrip.add(TripModel.fromJson(element.data()));
+                          }
                         return ListView.builder(
                           itemCount: allTrip.length,
                           itemBuilder: (context, index) {

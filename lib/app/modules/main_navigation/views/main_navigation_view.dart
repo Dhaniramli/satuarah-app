@@ -157,7 +157,31 @@ class _MainNavigationViewState extends State<MainNavigationView>
                     stream: controller.userCollection.snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) return const Text("Error");
-                      if (!snapshot.hasData) return const Text("No Data");
+                      if (!snapshot.hasData) {
+                        return Container(
+                          margin: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                currentIndex == 3
+                                    ? 'assets/profile_on.png'
+                                    : 'assets/profile.png',
+                                width: 30,
+                              ),
+                              const SizedBox(height: 3.0),
+                              Text(
+                                "Profil",
+                                style: textFontInterStyle.copyWith(
+                                    color: currentIndex == 3
+                                        ? primaryColor
+                                        : grayTigaColor,
+                                    fontSize: 13,
+                                    fontWeight: semiBold),
+                              )
+                            ],
+                          ),
+                        );
+                      }
                       if (snapshot.data!.data != null) {
                         Map<String, dynamic>? data =
                             (snapshot.data!.data() as Map<String, dynamic>?);
