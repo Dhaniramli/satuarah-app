@@ -25,8 +25,8 @@ class SearchRideController extends GetxController {
 
       if (queryAwal.isEmpty && data.length == 1) {
         //fungsi yang akan dijalankan pada satu huruf ketikan pertama
-        CollectionReference users = firestore.collection("trip");
-        final keyNameResult = await users
+        CollectionReference trips = firestore.collection("trip");
+        final keyNameResult = await trips
             .where("trip_status", whereIn: ['Menunggu', 'Dalam Perjalanan'])
             .where("keyFinish", isEqualTo: data.substring(0, 1).toUpperCase())
             .get();

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -17,12 +18,22 @@ class OrderingView extends StatefulWidget {
 }
 
 class _OrderingViewState extends State<OrderingView> {
+  
+  @override
+  void initState() {
+    super.initState();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+  }
+
   @override
   Widget build(BuildContext context) {
     final TripModel trip = Get.arguments;
     final NumberFormat numberFormat = NumberFormat('#,###');
     final controller = Get.put(OrderingController());
     Map<String, dynamic> userMap = {};
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).unfocus();
+    });
 
     return Scaffold(
       appBar: AppBar(

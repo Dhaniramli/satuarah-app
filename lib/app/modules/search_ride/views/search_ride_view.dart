@@ -1,29 +1,38 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
 import '../../../../theme.dart';
 import '../../../data/models/trip_model.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/search_ride_controller.dart';
 import 'widgets/card_full.dart';
 
-class SearchRideView extends GetView<SearchRideController> {
+class SearchRideView extends StatefulWidget {
+  const SearchRideView({super.key});
+
+  @override
+  State<SearchRideView> createState() => _SearchRideViewState();
+}
+
+class _SearchRideViewState extends State<SearchRideView> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SearchRideController());
 
     // Setelah widget terbangun, fokus diberikan ke TextFormField
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FocusScope.of(context).requestFocus(controller.textFormFieldFocusNode);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   FocusScope.of(context).requestFocus(controller.textFormFieldFocusNode);
+    // });
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: white,
         leading: IconButton(
           onPressed: () => Get.back(),
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios,
-            color: white,
+            color: primaryColor,
           ),
         ),
         leadingWidth: 40,
@@ -35,17 +44,23 @@ class SearchRideView extends GetView<SearchRideController> {
               child: TextFormField(
                 focusNode: controller.textFormFieldFocusNode,
                 controller: controller.inputan,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'ketikkan tujuan anda',
-                  hintStyle: TextStyle(color: white),
+                  hintStyle: TextStyle(color: primaryColor),
                   filled: true,
                   fillColor: Colors.transparent,
                   border: InputBorder.none,
                 ),
-                style: const TextStyle(color: white),
-                onChanged: (value) => controller.searchTrip(value),
+                style: TextStyle(color: primaryColor),
+                onChanged: (value) {
+                  setState(() {
+                    controller.searchTrip(value);
+                  });
+                },
                 onFieldSubmitted: (value) {
-                  controller.searchTrip(value);
+                  setState(() {
+                    controller.searchTrip(value);
+                  });
                 },
               ),
             ),
@@ -54,64 +69,60 @@ class SearchRideView extends GetView<SearchRideController> {
       ),
       body: Obx(
         () => controller.tempSearch.isEmpty
-            ? StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                stream: controller.streamtrip(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
+            ? SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 200),
+                  child: Center(
+                    child: Icon(
+                      Icons.search,
+                      size: 70,
+                      color: primaryColor,
+                    ),
+                  ),
+                ),
+              )
+            : ListView.builder(
+                itemCount: controller.tempSearch.length,
+                itemBuilder: (BuildContext context, int index) {
+                  TripModel trip = TripModel(
+                    chair: "${controller.tempSearch[index]["chair"]}",
+                    cityFinish:
+                        "${controller.tempSearch[index]["city_finish"]}",
+                    cityStart: "${controller.tempSearch[index]["city_start"]}",
+                    email: "${controller.tempSearch[index]["email"]}",
+                    fullName: "${controller.tempSearch[index]["full_name"]}",
+                    idDriver: "${controller.tempSearch[index]["id_driver"]}",
+                    idTrip: "${controller.tempSearch[index]["id_trip"]}",
+                    merekKendaraan:
+                        "${controller.tempSearch[index]["merek_kendaraan"]}",
+                    nomorPlat: "${controller.tempSearch[index]["nomor_plat"]}",
+                    otherInformation:
+                        "${controller.tempSearch[index]["other_information"]}",
+                    photo: "${controller.tempSearch[index]["photo"]}",
+                    tripDate: "${controller.tempSearch[index]["trip_date"]}",
+                    tripPrice: "${controller.tempSearch[index]["trip_price"]}",
+                    tripStatus:
+                        "${controller.tempSearch[index]["trip_status"]}",
+                    tripTime: "${controller.tempSearch[index]["trip_time"]}",
+                  );
 
-                  if (snapshot.data!.docs.isEmpty) {
-                    return const Center(
-                      child: Text("Tidak Ada Data"),
-                    );
-                  }
-
-                  List<TripModel> allTrip = [];
-
-                  for (var element in snapshot.data!.docs) {
-                    allTrip.add(TripModel.fromJson(element.data()));
-                  }
-                  return ListView.builder(
-                    itemCount: allTrip.length,
-                    itemBuilder: (context, index) {
-                      TripModel trip = allTrip[index];
-                      return CardFull(
-                        fullNameC: trip.fullName,
-                        startC: trip.cityStart,
-                        finishC: trip.cityFinish,
-                        dateC: trip.tripDate,
-                        timeC: trip.tripTime,
-                        priceC: trip.tripPrice,
-                        photoC: trip.photo,
-                        onPressed: () {
-                          Get.toNamed(Routes.ORDERING, arguments: trip);
-                        },
-                      );
+                  return CardFull(
+                    fullNameC: trip.fullName,
+                    startC: trip.cityStart,
+                    finishC: trip.cityFinish,
+                    dateC: trip.tripDate,
+                    timeC: trip.tripTime,
+                    priceC: trip.tripPrice,
+                    photoC: trip.photo,
+                    onPressed: () {
+                      Get.toNamed(Routes.ORDERING, arguments: trip);
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        FocusScope.of(context).unfocus();
+                      });
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
                     },
                   );
                 },
-              )
-            : Expanded(
-                child: ListView.builder(
-                  itemCount: controller.tempSearch.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CardFull(
-                      fullNameC: "${controller.tempSearch[index]["full_name"]}",
-                      startC: "${controller.tempSearch[index]["city_start"]}",
-                      finishC: "${controller.tempSearch[index]["city_finish"]}",
-                      dateC: "${controller.tempSearch[index]["trip_date"]}",
-                      timeC: "${controller.tempSearch[index]["trip_time"]}",
-                      priceC: "${controller.tempSearch[index]["trip_price"]}",
-                      photoC: "${controller.tempSearch[index]["photo"]}",
-                      onPressed: () {
-                        // Get.toNamed(Routes.ORDERING, arguments: trip);
-                      },
-                    );
-                  },
-                ),
               ),
       ),
     );
