@@ -81,49 +81,64 @@ class _SearchRideViewState extends State<SearchRideView> {
                   ),
                 ),
               )
-            : ListView.builder(
-                itemCount: controller.tempSearch.length,
-                itemBuilder: (BuildContext context, int index) {
-                  TripModel trip = TripModel(
-                    chair: "${controller.tempSearch[index]["chair"]}",
-                    cityFinish:
-                        "${controller.tempSearch[index]["city_finish"]}",
-                    cityStart: "${controller.tempSearch[index]["city_start"]}",
-                    email: "${controller.tempSearch[index]["email"]}",
-                    fullName: "${controller.tempSearch[index]["full_name"]}",
-                    idDriver: "${controller.tempSearch[index]["id_driver"]}",
-                    idTrip: "${controller.tempSearch[index]["id_trip"]}",
-                    merekKendaraan:
-                        "${controller.tempSearch[index]["merek_kendaraan"]}",
-                    nomorPlat: "${controller.tempSearch[index]["nomor_plat"]}",
-                    otherInformation:
-                        "${controller.tempSearch[index]["other_information"]}",
-                    photo: "${controller.tempSearch[index]["photo"]}",
-                    tripDate: "${controller.tempSearch[index]["trip_date"]}",
-                    tripPrice: "${controller.tempSearch[index]["trip_price"]}",
-                    tripStatus:
-                        "${controller.tempSearch[index]["trip_status"]}",
-                    tripTime: "${controller.tempSearch[index]["trip_time"]}",
-                  );
+            : controller.isLoading.isTrue
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView.builder(
+                    itemCount: controller.tempSearch.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      TripModel trip = TripModel(
+                        chair: "${controller.tempSearch[index]["chair"]}",
+                        cityFinish:
+                            "${controller.tempSearch[index]["city_finish"]}",
+                        cityStart:
+                            "${controller.tempSearch[index]["city_start"]}",
+                        email: "${controller.tempSearch[index]["email"]}",
+                        fullName:
+                            "${controller.tempSearch[index]["full_name"]}",
+                        idDriver:
+                            "${controller.tempSearch[index]["id_driver"]}",
+                        idTrip: "${controller.tempSearch[index]["id_trip"]}",
+                        merekKendaraan:
+                            "${controller.tempSearch[index]["merek_kendaraan"]}",
+                        nomorPlat:
+                            "${controller.tempSearch[index]["nomor_plat"]}",
+                        otherInformation:
+                            "${controller.tempSearch[index]["other_information"]}",
+                        photo: "${controller.tempSearch[index]["photo"]}",
+                        tripDate:
+                            "${controller.tempSearch[index]["trip_date"]}",
+                        tripPrice:
+                            "${controller.tempSearch[index]["trip_price"]}",
+                        tripStatus:
+                            "${controller.tempSearch[index]["trip_status"]}",
+                        tripTime:
+                            "${controller.tempSearch[index]["trip_time"]}",
+                        rides: [
+                          "${controller.tempSearch[index][index]}"
+                        ],
+                      );
 
-                  return CardFull(
-                    fullNameC: trip.fullName,
-                    startC: trip.cityStart,
-                    finishC: trip.cityFinish,
-                    dateC: trip.tripDate,
-                    timeC: trip.tripTime,
-                    priceC: trip.tripPrice,
-                    photoC: trip.photo,
-                    onPressed: () {
-                      Get.toNamed(Routes.ORDERING, arguments: trip);
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        FocusScope.of(context).unfocus();
-                      });
-                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      return CardFull(
+                        fullNameC: trip.fullName,
+                        startC: trip.cityStart,
+                        finishC: trip.cityFinish,
+                        dateC: trip.tripDate,
+                        timeC: trip.tripTime,
+                        priceC: trip.tripPrice,
+                        photoC: trip.photo,
+                        onPressed: () {
+                          Get.toNamed(Routes.ORDERING, arguments: trip);
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            FocusScope.of(context).unfocus();
+                          });
+                          SystemChannels.textInput
+                              .invokeMethod('TextInput.hide');
+                        },
+                      );
                     },
-                  );
-                },
-              ),
+                  ),
       ),
     );
   }

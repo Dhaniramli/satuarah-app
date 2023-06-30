@@ -73,7 +73,8 @@ class _HistoryViewState extends State<HistoryView>
       return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: controller.firestore
             .collection('trip')
-            .where("id_driver", isEqualTo: controller.auth.currentUser!.uid)
+            // .where("id_driver", isEqualTo: controller.auth.currentUser!.uid)
+            .where("rides", arrayContains: controller.auth.currentUser!.uid)
             .where("trip_status", isEqualTo: "Selesai")
             .snapshots(),
         // stream: controller.streamHistory(),
@@ -137,10 +138,10 @@ class _HistoryViewState extends State<HistoryView>
       return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
         stream: controller.firestore
             .collection('trip')
-            .where("id_driver", isEqualTo: controller.auth.currentUser!.uid)
-            .where('trip_status',
-                whereIn: ['Menunggu', 'Dalam Perjalanan']).snapshots(),
-        // stream: controller.streamHistory(),
+            // .where("id_driver", isEqualTo: controller.auth.currentUser!.uid)
+            .where("rides", arrayContains: controller.auth.currentUser!.uid)
+            .where('trip_status', whereIn: ['Menunggu', 'Dalam Perjalanan'])
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(

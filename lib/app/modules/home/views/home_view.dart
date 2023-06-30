@@ -194,7 +194,8 @@ class HomeView extends GetView<HomeController> {
                                   fit: BoxFit.fill,
                                 ),
                                 const SizedBox(height: 10),
-                                Text("Tidak ada tebengan", style: textGrayStyle.copyWith(fontWeight: semiBold),)
+                                Text("Tidak ada tebengan", style: textGrayStyle.copyWith(fontWeight: semiBold),),
+                                Text("berangkat hari ini", style: textGrayStyle.copyWith(fontWeight: semiBold),),
                               ],
                             ),
                           );

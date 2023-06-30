@@ -8,6 +8,7 @@ class SearchRideController extends GetxController {
 
   var queryAwal = [].obs;
   var tempSearch = [].obs;
+  RxBool isLoading = false.obs;
 
   late FocusNode textFormFieldFocusNode;
 
@@ -21,6 +22,8 @@ class SearchRideController extends GetxController {
       queryAwal.value = [];
       tempSearch.value = [];
     } else {
+      isLoading(true);
+
       var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
 
       if (queryAwal.isEmpty && data.length == 1) {
@@ -35,10 +38,12 @@ class SearchRideController extends GetxController {
           for (int i = 0; i < keyNameResult.docs.length; i++) {
             queryAwal.add(keyNameResult.docs[i].data() as Map<String, dynamic>);
           }
+          isLoading(false);
         } else {
+          isLoading(false);
           Get.snackbar(
-            "Terjadi Kesalahan",
-            "Tidak Ada Data",
+            "Tidak ditemukan",
+            "Tidak ada tebengan dengan tujuan ini",
             duration: const Duration(seconds: 1),
           );
         }
@@ -54,6 +59,7 @@ class SearchRideController extends GetxController {
       }
     }
 
+    isLoading(false);
     queryAwal.refresh();
     tempSearch.refresh();
   }
