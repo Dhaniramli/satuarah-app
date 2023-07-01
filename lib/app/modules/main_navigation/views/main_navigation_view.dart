@@ -182,7 +182,7 @@ class _MainNavigationViewState extends State<MainNavigationView>
                           ),
                         );
                       }
-                      if (snapshot.data!.data != null) {
+                      if (snapshot.data?.data != null) {
                         Map<String, dynamic>? data =
                             (snapshot.data!.data() as Map<String, dynamic>?);
                         data!["id"] = snapshot.data!.id;

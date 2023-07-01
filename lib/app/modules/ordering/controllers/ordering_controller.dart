@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/request/request.dart';
-import 'package:satuarah/app/data/models/user_model.dart';
 
 import '../../../../theme.dart';
 import '../../../data/models/trip_model.dart';
-import '../../chat_room/views/chat_room_view.dart';
 
 class OrderingController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
