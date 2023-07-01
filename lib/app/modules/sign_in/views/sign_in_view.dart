@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:satuarah/app/routes/app_pages.dart';
 
 import '../../../../theme.dart';
+import '../../disclaimer/disclaimer_view.dart';
 import '../../sign_up/views/sign_up_view.dart';
 import '../controllers/sign_in_controller.dart';
 
@@ -11,6 +12,39 @@ class SignInView extends GetView<SignInController> {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
+
+    Widget disclaimer() {
+      return Container(
+        margin: const EdgeInsets.only(top: 20),
+        child: GestureDetector(
+          onTap: () => Get.to(() => const DisclaimerView()),
+          child: Center(
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: grayDuaColor,
+                ),
+                children: <TextSpan>[
+                  const TextSpan(text: 'Dengan masuk, Anda menyetujui '),
+                  TextSpan(
+                    text: 'Syarat & Ketentuan\n',
+                    style: TextStyle(fontWeight: bold),
+                  ),
+                  const TextSpan(text: ' serta '),
+                  TextSpan(
+                    text: 'Privasi',
+                    style: TextStyle(fontWeight: bold),
+                  ),
+                  const TextSpan(text: ' Kofarma.'),
+                ],
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+    }
 
     Widget formEmail() {
       return TextFormField(
@@ -135,29 +169,32 @@ class SignInView extends GetView<SignInController> {
     }
 
     Widget footer() {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Belum Punya Akun?",
-            style: textGrayStyle.copyWith(
-              fontSize: 14,
-              fontWeight: regular,
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Get.to(() => const SignUpView());
-            },
-            child: Text(
-              'Daftar',
-              style: textPrimaryStyle.copyWith(
+      return SizedBox(
+        height: 30,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Belum Punya Akun?",
+              style: textGrayStyle.copyWith(
                 fontSize: 14,
                 fontWeight: regular,
               ),
             ),
-          )
-        ],
+            TextButton(
+              onPressed: () {
+                Get.to(() => const SignUpView());
+              },
+              child: Text(
+                'Daftar',
+                style: textPrimaryStyle.copyWith(
+                  fontSize: 14,
+                  fontWeight: regular,
+                ),
+              ),
+            )
+          ],
+        ),
       );
     }
 
@@ -203,6 +240,8 @@ class SignInView extends GetView<SignInController> {
               buttonSignIn(),
               const SizedBox(height: 16),
               footer(),
+              // const SizedBox(height: 5),
+              disclaimer(),
             ],
           ),
         ),

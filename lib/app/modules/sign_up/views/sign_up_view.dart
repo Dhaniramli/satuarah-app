@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme.dart';
+import '../../disclaimer/disclaimer_view.dart';
 import '../../loading/loading_view.dart';
 import '../controllers/sign_up_controller.dart';
 import 'widget/text_form_widget.dart';
@@ -13,6 +14,39 @@ class SignUpView extends GetView<SignUpController> {
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
     final formKey = GlobalKey<FormState>();
+
+    Widget disclaimer() {
+      return Container(
+        margin: const EdgeInsets.only(top: 20),
+        child: GestureDetector(
+          onTap: () => Get.to(() => const DisclaimerView()),
+          child: Center(
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: grayDuaColor,
+                ),
+                children: <TextSpan>[
+                  const TextSpan(text: 'Dengan masuk, Anda menyetujui '),
+                  TextSpan(
+                    text: 'Syarat & Ketentuan\n',
+                    style: TextStyle(fontWeight: bold),
+                  ),
+                  const TextSpan(text: ' serta '),
+                  TextSpan(
+                    text: 'Privasi',
+                    style: TextStyle(fontWeight: bold),
+                  ),
+                  const TextSpan(text: ' Kofarma.'),
+                ],
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      );
+    }
 
     PreferredSize header() {
       return PreferredSize(
@@ -136,12 +170,11 @@ class SignUpView extends GetView<SignUpController> {
               return 'Password wajib diisi';
             } else if (value.length < 6) {
               return 'Password harus minimal 6 karakter';
-            } else if (value != controller.password.text){
+            } else if (value != controller.password.text) {
               return 'Password tidak valid';
             }
             return null;
           },
-          
         ),
       );
     }
@@ -209,6 +242,7 @@ class SignUpView extends GetView<SignUpController> {
                         formPassConfir(),
                         const SizedBox(height: 109),
                         buttonSignIn(),
+                        disclaimer(),
                       ],
                     ),
                   ),
