@@ -17,24 +17,53 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
 
+    // Widget buttonDriver() {
+    //   return SizedBox(
+    //     width: double.infinity,
+    //     height: 42,
+    //     child: ElevatedButton(
+    //       onPressed: () {
+    //         Get.to(() => RegisterDriverView());
+    //       },
+    //       style: ElevatedButton.styleFrom(
+    //         backgroundColor: primaryColor,
+    //         shape: RoundedRectangleBorder(
+    //           // border: Border.all(color: primaryColor),
+    //           borderRadius: BorderRadius.circular(5),
+    //         ),
+    //       ),
+    //       child: Text(
+    //         "Daftar Driver",
+    //         style: textWhiteStyle.copyWith(
+    //           fontSize: 16,
+    //           fontWeight: semiBold,
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
     Widget buttonDriver() {
-      return SizedBox(
-        width: 145,
+      return Container(
+        width: double.infinity,
         height: 42,
+        decoration: BoxDecoration(
+          border: Border.all(color: primaryColor),
+          borderRadius: BorderRadius.circular(5),
+        ),
         child: ElevatedButton(
           onPressed: () {
             Get.to(() => RegisterDriverView());
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: primaryColor,
+            backgroundColor: white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5),
             ),
           ),
           child: Text(
             "Daftar Driver",
-            style: textWhiteStyle.copyWith(
-              fontSize: 16,
+            style: textPrimaryStyle.copyWith(
+              fontSize: 14,
               fontWeight: semiBold,
             ),
           ),
@@ -128,7 +157,24 @@ class ProfileView extends GetView<ProfileController> {
         ),
         child: ElevatedButton(
           onPressed: () {
-            controller.doLogout();
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Konfirmasi'),
+                content:
+                    const Text('Apakah Anda yakin ingin keluar dari aplikasi?'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Get.back(),
+                    child: const Text('Tidak'),
+                  ),
+                  TextButton(
+                    onPressed: () => controller.doLogout(),
+                    child: const Text('Ya'),
+                  ),
+                ],
+              ),
+            );
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: white,
@@ -311,7 +357,7 @@ class ProfileView extends GetView<ProfileController> {
                 user.userAs == "costumer" ? buttonDriver() : const SizedBox(),
                 // const SizedBox(height: 50),
                 // buttonSwitch(),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 buttonLogout(),
               ],
             ),

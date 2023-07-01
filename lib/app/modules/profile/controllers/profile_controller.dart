@@ -12,13 +12,23 @@ class ProfileController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   doLogout() async {
-    await auth.signOut();
-    Get.offAllNamed(Routes.signIn);
+    try {
+      final userRef = firestore.collection("users").doc(auth.currentUser?.uid);
+      userRef.update({
+        'status': false,
+      });
+      await auth.signOut();
+      Get.offAllNamed(Routes.signIn);
+    } on Exception catch (err) {
+      print(err);
+    }
   }
 
   DocumentReference get userCollection {
-  return FirebaseFirestore.instance.collection("users").doc(auth.currentUser!.uid);
-}
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(auth.currentUser?.uid);
+  }
 
   @override
   void onInit() {
