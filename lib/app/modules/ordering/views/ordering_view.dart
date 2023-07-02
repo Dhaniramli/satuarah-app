@@ -290,8 +290,20 @@ class _OrderingViewState extends State<OrderingView> {
                   stream: controller.streamPenumpang(trip!.idTrip),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return Row(
+                        children: [
+                          Image.asset(
+                            "assets/user2.png",
+                            width: 24,
+                            height: 24,
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            "0 Penumpang",
+                            style: textBlackDuaStyle.copyWith(
+                                fontSize: 15, fontWeight: medium),
+                          ),
+                        ],
                       );
                     }
 
@@ -326,16 +338,19 @@ class _OrderingViewState extends State<OrderingView> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 10),
-            child: Text(
-              'Permintaan',
-              style: textBlackDuaStyle.copyWith(
-                fontSize: 16,
-                fontWeight: medium,
-              ),
-            ),
-          ),
+          trip!.idDriver != controller.auth.currentUser!.uid
+              ? const SizedBox()
+              : Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 23, vertical: 10),
+                  child: Text(
+                    'Permintaan',
+                    style: textBlackDuaStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: medium,
+                    ),
+                  ),
+                ),
           Expanded(
             child: trip!.idDriver == controller.auth.currentUser!.uid
                 ? Container(
@@ -480,16 +495,35 @@ class _OrderingViewState extends State<OrderingView> {
                       trip!.tripStatus;
                     });
                   } else {
-                    setState(() {
-                      controller.addNewConnection(trip, userMap, trip!.idTrip);
-                    });
+                    if (trip!.rides
+                            .contains(controller.auth.currentUser!.uid) ==
+                        true) {
+                      if (trip!.tripStatus == "Selesai") {
+                      } else {
+                        controller.deleteRides(trip!.idTrip);
+                      }
+                    } else {
+                      if (trip!.requestField
+                              .contains(controller.auth.currentUser!.uid) ==
+                          true) {
+                      } else {
+                        setState(() {
+                          controller.addNewConnection(
+                              trip, userMap, trip!.idTrip);
+                        });
+                      }
+                    }
                   }
                   controller.isLoading(false);
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    trip!.tripStatus == "Selesai" ? grayColor : primaryColor,
+                backgroundColor: trip!.tripStatus == "Selesai"
+                    ? grayColor
+                    : trip!.requestField
+                            .contains(controller.auth.currentUser!.uid)
+                        ? grayColor
+                        : primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -503,7 +537,15 @@ class _OrderingViewState extends State<OrderingView> {
                               : trip!.tripStatus == "Dalam Perjalanan"
                                   ? "Akhiri Perjalanan"
                                   : "Selesai"
-                          : "Pesan"
+                          : trip!.requestField
+                                  .contains(controller.auth.currentUser!.uid)
+                              ? "Menunggu Persetujuan driver"
+                              : trip!.rides.contains(
+                                      controller.auth.currentUser!.uid)
+                                  ? trip!.tripStatus == "Selesai"
+                                      ? "Selesai"
+                                      : "Batal"
+                                  : "Pesan"
                       : "Memuat..",
                   style: textWhiteStyle.copyWith(
                     fontSize: 14,

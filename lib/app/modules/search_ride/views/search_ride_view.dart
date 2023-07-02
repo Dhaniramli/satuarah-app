@@ -115,7 +115,8 @@ class _SearchRideViewState extends State<SearchRideView> {
                             "${controller.tempSearch[index]["trip_status"]}",
                         tripTime:
                             "${controller.tempSearch[index]["trip_time"]}",
-                        rides: [
+                        rides: ["${controller.tempSearch[index][index]}"],
+                        requestField: [
                           "${controller.tempSearch[index][index]}"
                         ],
                       );

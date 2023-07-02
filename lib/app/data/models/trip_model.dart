@@ -15,6 +15,7 @@ class TripModel {
   final String idTrip;
   final String photo;
   final List<dynamic> rides;
+  final List<dynamic> requestField;
 
   TripModel({
     required this.chair,
@@ -33,6 +34,7 @@ class TripModel {
     required this.idTrip,
     required this.photo,
     required this.rides,
+    required this.requestField,
   });
 
   factory TripModel.fromJson(Map<String, dynamic> json) => TripModel(
@@ -52,6 +54,7 @@ class TripModel {
         idTrip: json["id_trip"] ?? "",
         photo: json["photo"] ?? "",
         rides: List<dynamic>.from(json["rides"].map((x) => x)),
+        requestField: List<dynamic>.from(json["request_field"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -71,5 +74,6 @@ class TripModel {
         "id_trip": idTrip,
         "photo": photo,
         "rides": List<dynamic>.from(rides.map((x) => x)),
+        "request_field": List<dynamic>.from(rides.map((x) => x)),
       };
 }

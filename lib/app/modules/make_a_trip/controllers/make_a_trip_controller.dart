@@ -49,6 +49,7 @@ class MakeATripController extends GetxController {
           "rides": [
             idDriver.text,
           ],
+          "request_field": [],
           "nomor_plat": nomorPlat.text,
           "merek_kendaraan": merekKendaraan.text,
           "chair": chair,

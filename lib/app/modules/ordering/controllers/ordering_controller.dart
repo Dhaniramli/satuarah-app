@@ -57,6 +57,44 @@ class OrderingController extends GetxController {
     }
   }
 
+  Future<void> deleteRides(String tripId) async {
+    try {
+      CollectionReference tripRef = _firestore.collection("trip");
+      await tripRef.doc(tripId).update({
+        "rides": FieldValue.arrayRemove([_auth.currentUser!.uid]),
+      });
+
+      await tripRef
+          .doc(tripId)
+          .collection("ride")
+          .doc(_auth.currentUser!.uid)
+          .delete();
+
+      Get.snackbar(
+        "Berhasil membatalkan",
+        "",
+        duration: const Duration(seconds: 2),
+        snackStyle: SnackStyle.FLOATING,
+        backgroundColor: white,
+        colorText: primaryColor,
+        borderRadius: 10,
+      );
+    } catch (e) {
+      // print("Error deleting trip: $e");
+      Get.snackbar(
+        "Terjadi Kesalahan",
+        "Error $e",
+        duration: const Duration(seconds: 2),
+        snackStyle: SnackStyle.FLOATING,
+        backgroundColor: white,
+        colorText: primaryColor,
+        borderRadius: 10,
+      );
+
+      // Tambahkan penanganan kesalahan sesuai kebutuhan Anda.
+    }
+  }
+
   Stream<QuerySnapshot<Map<String, dynamic>>> streamtrip(String tripId) async* {
     yield* firestore
         .collection('trip')
@@ -86,6 +124,13 @@ class OrderingController extends GetxController {
           "id_user": userMap["id_user"],
         },
       );
+      await tripRef.doc(tripId).update({
+        "request_field": FieldValue.arrayRemove([userId]),
+      });
+
+      await tripRef.doc(tripId).update({
+        "rides": FieldValue.arrayUnion([userId]),
+      });
       Get.snackbar(
         "Berhasil",
         "",
@@ -131,6 +176,10 @@ class OrderingController extends GetxController {
             "id_user": _auth.currentUser!.uid,
           },
         );
+        await tripRef.doc(tripId).update({
+          "request_field": FieldValue.arrayUnion([_auth.currentUser!.uid]),
+        });
+
         Get.snackbar(
           "Berhasil",
           "Menunggu di setujui oleh driver",
