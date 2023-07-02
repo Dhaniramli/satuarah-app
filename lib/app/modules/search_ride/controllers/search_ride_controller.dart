@@ -31,7 +31,7 @@ class SearchRideController extends GetxController {
         CollectionReference trips = firestore.collection("trip");
         final keyNameResult = await trips
             .where("trip_status", whereIn: ['Menunggu', 'Dalam Perjalanan'])
-            .where("keyFinish", isEqualTo: data.substring(0, 1).toUpperCase())
+            .where("key_finish", isEqualTo: data.substring(0, 1).toUpperCase())
             .get();
 
         if (keyNameResult.docs.isNotEmpty) {
@@ -41,11 +41,11 @@ class SearchRideController extends GetxController {
           isLoading(false);
         } else {
           isLoading(false);
-          Get.snackbar(
-            "Tidak ditemukan",
-            "Tidak ada tebengan dengan tujuan ini",
-            duration: const Duration(seconds: 1),
-          );
+          // Get.snackbar(
+          //   "Tidak ditemukan",
+          //   "Tidak ada tebengan dengan tujuan ini",
+          //   duration: const Duration(seconds: 1),
+          // );
         }
       }
 

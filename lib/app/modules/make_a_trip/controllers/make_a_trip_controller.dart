@@ -55,6 +55,7 @@ class MakeATripController extends GetxController {
           "chair": chair,
           "city_start": cityStart,
           "city_finish": cityFinish,
+          "key_finish": cityFinish.substring(0, 1).toUpperCase(),
           "photo": photo,
           "trip_status": "Menunggu",
         });
