@@ -458,103 +458,229 @@ class _OrderingViewState extends State<OrderingView> {
                   )
                 : Container(),
           ),
-          SizedBox(
-            width: double.infinity,
-            height: 42,
-            child: ElevatedButton(
-              onPressed: () async {
-                // var userMap;
-                await controller.firestore
-                    .collection('users')
-                    .where(
-                      "full_name",
-                      isEqualTo: trip!.fullName,
-                    )
-                    .get()
-                    .then((value) {
-                  if (value.docs.isNotEmpty) {
-                    userMap = value.docs[0].data();
-                    // Lanjutkan dengan kode lainnya
-                    setState(() {});
-                  } else {
-                    // Handle ketika list kosong
-                  }
-                });
-                if (controller.isLoading.isFalse) {
-                  controller.isLoading(true);
-                  if (trip!.idDriver == controller.auth.currentUser!.uid) {
-                    if (trip!.tripStatus == "Menunggu") {
-                      controller.doUpdateSatu(trip!.idTrip);
-                    } else if (trip!.tripStatus == "Dalam Perjalanan") {
-                      controller.doUpdateDua(trip!.idTrip);
-                    }
-                    Future.delayed(const Duration(seconds: 3), () {
-                      controller.isLoading.value = false;
-                    });
-                    setState(() {
-                      trip!.tripStatus;
-                    });
-                  } else {
-                    if (trip!.rides
-                            .contains(controller.auth.currentUser!.uid) ==
-                        true) {
-                      if (trip!.tripStatus == "Selesai") {
-                      } else {
-                        controller.deleteRides(trip!.idTrip);
-                      }
-                    } else {
-                      if (trip!.requestField
-                              .contains(controller.auth.currentUser!.uid) ==
-                          true) {
-                      } else {
-                        setState(() {
-                          controller.addNewConnection(
-                              trip, userMap, trip!.idTrip);
-                        });
-                      }
-                    }
-                  }
-                  controller.isLoading(false);
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: trip!.tripStatus == "Selesai"
-                    ? grayColor
-                    : trip!.requestField
-                            .contains(controller.auth.currentUser!.uid)
-                        ? grayColor
-                        : primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-              child: Obx(
-                () => Text(
-                  controller.isLoading.isFalse
-                      ? trip!.idDriver == controller.auth.currentUser!.uid
-                          ? trip!.tripStatus == "Menunggu"
-                              ? "Mulai Perjalanan"
-                              : trip!.tripStatus == "Dalam Perjalanan"
-                                  ? "Akhiri Perjalanan"
-                                  : "Selesai"
-                          : trip!.requestField
-                                  .contains(controller.auth.currentUser!.uid)
-                              ? "Menunggu Persetujuan driver"
-                              : trip!.rides.contains(
-                                      controller.auth.currentUser!.uid)
-                                  ? trip!.tripStatus == "Selesai"
-                                      ? "Selesai"
-                                      : "Batal"
-                                  : "Pesan"
-                      : "Memuat..",
-                  style: textWhiteStyle.copyWith(
+          StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+            stream: FirebaseFirestore.instance
+                .collection('trip')
+                .doc(trip!.idTrip)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              if (!snapshot.hasData) {
+                return const Text(
+                  'Data tidak ada',
+                  style: TextStyle(
+                    color: Colors.red,
                     fontSize: 14,
-                    fontWeight: semiBold,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              }
+
+              final data = snapshot.data!.data();
+
+              return SizedBox(
+                width: double.infinity,
+                height: 42,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    // var userMap;
+                    await controller.firestore
+                        .collection('users')
+                        .where(
+                          "full_name",
+                          isEqualTo: trip!.fullName,
+                        )
+                        .get()
+                        .then((value) {
+                      if (value.docs.isNotEmpty) {
+                        userMap = value.docs[0].data();
+                        // Lanjutkan dengan kode lainnya
+                        setState(() {});
+                      } else {
+                        // Handle ketika list kosong
+                      }
+                    });
+                    if (controller.isLoading.isFalse) {
+                      controller.isLoading(true);
+                      if (data['id_driver'] ==
+                          controller.auth.currentUser!.uid) {
+                        if (data['trip_status'] == "Menunggu") {
+                          controller.doUpdateSatu(trip!.idTrip);
+                        } else if (data['trip_status'] == "Dalam Perjalanan") {
+                          controller.doUpdateDua(trip!.idTrip);
+                        }
+                        Future.delayed(const Duration(seconds: 3), () {
+                          controller.isLoading.value = false;
+                        });
+                        setState(() {
+                          data['trip_status'];
+                        });
+                      } else {
+                        if (trip!.rides
+                                .contains(controller.auth.currentUser!.uid) ==
+                            true) {
+                          if (data['trip_status'] == "Selesai") {
+                          } else {
+                            controller.deleteRides(trip!.idTrip);
+                          }
+                        } else {
+                          if (trip!.requestField
+                                  .contains(controller.auth.currentUser!.uid) ==
+                              true) {
+                          } else {
+                            setState(() {
+                              controller.addNewConnection(
+                                  trip, userMap, trip!.idTrip);
+                            });
+                          }
+                        }
+                      }
+                      controller.isLoading(false);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: data!['trip_status'] == "Selesai"
+                        ? grayColor
+                        : trip!.requestField
+                                .contains(controller.auth.currentUser!.uid)
+                            ? grayColor
+                            : primaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                  child: Obx(
+                    () => Text(
+                      controller.isLoading.isFalse
+                          ? data['id_driver'] ==
+                                  controller.auth.currentUser!.uid
+                              ? data['trip_status'] == "Menunggu"
+                                  ? "Mulai Perjalanan"
+                                  : data['trip_status'] == "Dalam Perjalanan"
+                                      ? "Akhiri Perjalanan"
+                                      : "Selesai"
+                              : data['request_field'].contains(
+                                      controller.auth.currentUser!.uid)
+                                  ? "Menunggu Persetujuan driver"
+                                  : data['rides'].contains(
+                                          controller.auth.currentUser!.uid)
+                                      ? data['trip_status'] == "Selesai"
+                                          ? "Selesai"
+                                          : "Batal"
+                                      : "Pesan"
+                          : "Memuat..",
+                      style: textWhiteStyle.copyWith(
+                        fontSize: 14,
+                        fontWeight: semiBold,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
+          // SizedBox(
+          //   width: double.infinity,
+          //   height: 42,
+          //   child: ElevatedButton(
+          //     onPressed: () async {
+          //       // var userMap;
+          //       await controller.firestore
+          //           .collection('users')
+          //           .where(
+          //             "full_name",
+          //             isEqualTo: trip!.fullName,
+          //           )
+          //           .get()
+          //           .then((value) {
+          //         if (value.docs.isNotEmpty) {
+          //           userMap = value.docs[0].data();
+          //           // Lanjutkan dengan kode lainnya
+          //           setState(() {});
+          //         } else {
+          //           // Handle ketika list kosong
+          //         }
+          //       });
+          //       if (controller.isLoading.isFalse) {
+          //         controller.isLoading(true);
+          //         if (trip!.idDriver == controller.auth.currentUser!.uid) {
+          //           if (trip!.tripStatus == "Menunggu") {
+          //             controller.doUpdateSatu(trip!.idTrip);
+          //           } else if (trip!.tripStatus == "Dalam Perjalanan") {
+          //             controller.doUpdateDua(trip!.idTrip);
+          //           }
+          //           Future.delayed(const Duration(seconds: 3), () {
+          //             controller.isLoading.value = false;
+          //           });
+          //           setState(() {
+          //             trip!.tripStatus;
+          //           });
+          //         } else {
+          //           if (trip!.rides
+          //                   .contains(controller.auth.currentUser!.uid) ==
+          //               true) {
+          //             if (trip!.tripStatus == "Selesai") {
+          //             } else {
+          //               controller.deleteRides(trip!.idTrip);
+          //             }
+          //           } else {
+          //             if (trip!.requestField
+          //                     .contains(controller.auth.currentUser!.uid) ==
+          //                 true) {
+          //             } else {
+          //               setState(() {
+          //                 controller.addNewConnection(
+          //                     trip, userMap, trip!.idTrip);
+          //               });
+          //             }
+          //           }
+          //         }
+          //         controller.isLoading(false);
+          //       }
+          //     },
+          //     style: ElevatedButton.styleFrom(
+          //       backgroundColor: trip!.tripStatus == "Selesai"
+          //           ? grayColor
+          //           : trip!.requestField
+          //                   .contains(controller.auth.currentUser!.uid)
+          //               ? grayColor
+          //               : primaryColor,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(5),
+          //       ),
+          //     ),
+          //     child: Obx(
+          //       () => Text(
+          //         controller.isLoading.isFalse
+          //             ? trip!.idDriver == controller.auth.currentUser!.uid
+          //                 ? trip!.tripStatus == "Menunggu"
+          //                     ? "Mulai Perjalanan"
+          //                     : trip!.tripStatus == "Dalam Perjalanan"
+          //                         ? "Akhiri Perjalanan"
+          //                         : "Selesai"
+          //                 : trip!.requestField
+          //                         .contains(controller.auth.currentUser!.uid)
+          //                     ? "Menunggu Persetujuan driver"
+          //                     : trip!.rides.contains(
+          //                             controller.auth.currentUser!.uid)
+          //                         ? trip!.tripStatus == "Selesai"
+          //                             ? "Selesai"
+          //                             : "Batal"
+          //                         : "Pesan"
+          //             : "Memuat..",
+          //         style: textWhiteStyle.copyWith(
+          //           fontSize: 14,
+          //           fontWeight: semiBold,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
