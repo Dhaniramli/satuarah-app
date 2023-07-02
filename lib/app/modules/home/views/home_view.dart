@@ -129,7 +129,18 @@ class HomeView extends GetView<HomeController> {
                         ButtonBox(
                           icon: "assets/rutepopuler.png",
                           tittLe: "Rute Populer",
-                          onTap: () => Get.to(() => PopularRouteView()),
+                          onTap: () {
+                            // Get.to(() => PopularRouteView());
+                            Get.snackbar(
+                              "COMING SOON ",
+                              "",
+                              duration: const Duration(seconds: 2),
+                              snackStyle: SnackStyle.FLOATING,
+                              backgroundColor: white,
+                              colorText: primaryColor,
+                              borderRadius: 10,
+                            );
+                          },
                         ),
                         ButtonBox(
                           icon: "assets/bhi.png",
@@ -194,18 +205,26 @@ class HomeView extends GetView<HomeController> {
                                   fit: BoxFit.fill,
                                 ),
                                 const SizedBox(height: 10),
-                                Text("Tidak ada tebengan", style: textGrayStyle.copyWith(fontWeight: semiBold),),
-                                Text("berangkat hari ini", style: textGrayStyle.copyWith(fontWeight: semiBold),),
+                                Text(
+                                  "Tidak ada tebengan",
+                                  style: textGrayStyle.copyWith(
+                                      fontWeight: semiBold),
+                                ),
+                                Text(
+                                  "berangkat hari ini",
+                                  style: textGrayStyle.copyWith(
+                                      fontWeight: semiBold),
+                                ),
                               ],
                             ),
                           );
                         }
 
-                          List<TripModel> allTrip = [];
+                        List<TripModel> allTrip = [];
 
-                          for (var element in snapshot.data!.docs) {
-                            allTrip.add(TripModel.fromJson(element.data()));
-                          }
+                        for (var element in snapshot.data!.docs) {
+                          allTrip.add(TripModel.fromJson(element.data()));
+                        }
                         return ListView.builder(
                           itemCount: allTrip.length,
                           itemBuilder: (context, index) {

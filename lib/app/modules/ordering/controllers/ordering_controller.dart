@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../theme.dart';
 import '../../../data/models/trip_model.dart';
@@ -231,6 +232,7 @@ class OrderingController extends GetxController {
             "lastTime": date,
           },
         );
+
         // ignore: await_only_futures
         await chats.doc(newChatDoc.id).collection("chats");
 
@@ -257,6 +259,16 @@ class OrderingController extends GetxController {
       //     friendEmail: tripC.idDriver,
       //   ),
       // );
+
+      await chats.doc(chat_id).collection("chats").add({
+        "pengirim": _auth.currentUser!.uid,
+        "penerima": tripC.idDriver,
+        "msg": "Saya ingin ikut perjalanan anda \n ${tripC.cityStart}- ${tripC.cityFinish} ${tripC.tripDate} ${tripC.tripTime}",
+        "time": Timestamp.now(),
+        "isRead": false,
+        "jm": DateFormat.jm().format(DateTime.parse(date)),
+        "groupTime": DateFormat.yMMMMd('en_US').format(DateTime.parse(date)),
+      });
     } on Exception catch (err) {
       Get.snackbar("Terjadi kesalahan", "$err");
     }
