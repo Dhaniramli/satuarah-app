@@ -62,7 +62,16 @@ class SignUpController extends GetxController {
           passwordConfirmation.clear();
           Get.toNamed(Routes.mainNavigation);
         } else {
-          print("pass salah");
+          // print("pass salah");
+          Get.snackbar(
+            "Terjadi Kesalahan",
+            "Email atau Password salah",
+            duration: const Duration(seconds: 2),
+            snackStyle: SnackStyle.FLOATING,
+            backgroundColor: primaryColor,
+            colorText: Colors.white,
+            borderRadius: 10,
+          );
         }
       } else {
         Get.snackbar(
@@ -75,8 +84,8 @@ class SignUpController extends GetxController {
           borderRadius: 10,
         );
       }
-    } on Exception catch (err) {
-      print(err);
+    } on Exception {
+      // print(err);
       Get.snackbar(
         "Kesalahan Sistem",
         "Tidak dapat melakukan pendaftaran",

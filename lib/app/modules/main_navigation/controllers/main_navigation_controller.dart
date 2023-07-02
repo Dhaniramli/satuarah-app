@@ -14,15 +14,15 @@ class MainNavigationController extends GetxController {
         .doc(auth.currentUser!.uid);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 
   int selectedIndex = 0;
   void incrementCounter() {

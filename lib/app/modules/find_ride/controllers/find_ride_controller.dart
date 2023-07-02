@@ -1,23 +1,21 @@
 import 'package:get/get.dart';
 
 class FindRideController extends GetxController {
-  //TODO: Implement FindRideController
+  // final count = 0.obs;
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
+  // void increment() => count.value++;
 }

@@ -20,7 +20,7 @@ class ProfileController extends GetxController {
       await auth.signOut();
       Get.offAllNamed(Routes.signIn);
     } on Exception catch (err) {
-      print(err);
+      Get.snackbar("Terjadi kesalahan", "$err");
     }
   }
 
@@ -30,13 +30,13 @@ class ProfileController extends GetxController {
         .doc(auth.currentUser?.uid);
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 }

@@ -52,7 +52,7 @@ class ProfileView extends GetView<ProfileController> {
         ),
         child: ElevatedButton(
           onPressed: () {
-            Get.to(() => RegisterDriverView());
+            Get.to(() => const RegisterDriverView());
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: white,
@@ -71,81 +71,81 @@ class ProfileView extends GetView<ProfileController> {
       );
     }
 
-    Widget buttonSwitch() {
-      return Container(
-        height: 96.0,
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 13.0,
-          vertical: 6.0,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: primaryColor),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    "Äktifkan fitur Nebeng",
-                    style: textPrimaryStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: medium,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 26.0,
-                  width: 43.76,
-                  child: Obx(
-                    () => FlutterSwitch(
-                      value: controller.statusSwitch1.value,
-                      onToggle: (value) {
-                        controller.statusSwitch1.value = value;
-                      },
-                      activeColor: greenColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Divider(
-              thickness: 1.5,
-              color: primaryColor,
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    "Äktifkan Notifikasi",
-                    style: textPrimaryStyle.copyWith(
-                      fontSize: 14,
-                      fontWeight: medium,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 26.0,
-                  width: 43.76,
-                  child: Obx(
-                    () => FlutterSwitch(
-                      value: controller.statusSwitch2.value,
-                      onToggle: (value) {
-                        controller.statusSwitch2.value = value;
-                      },
-                      activeColor: greenColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      );
-    }
+    // Widget buttonSwitch() {
+    //   return Container(
+    //     height: 96.0,
+    //     width: double.infinity,
+    //     padding: const EdgeInsets.symmetric(
+    //       horizontal: 13.0,
+    //       vertical: 6.0,
+    //     ),
+    //     decoration: BoxDecoration(
+    //       border: Border.all(color: primaryColor),
+    //       borderRadius: BorderRadius.circular(5.0),
+    //     ),
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //       children: [
+    //         Row(
+    //           children: [
+    //             Expanded(
+    //               child: Text(
+    //                 "Äktifkan fitur Nebeng",
+    //                 style: textPrimaryStyle.copyWith(
+    //                   fontSize: 14,
+    //                   fontWeight: medium,
+    //                 ),
+    //               ),
+    //             ),
+    //             SizedBox(
+    //               height: 26.0,
+    //               width: 43.76,
+    //               child: Obx(
+    //                 () => FlutterSwitch(
+    //                   value: controller.statusSwitch1.value,
+    //                   onToggle: (value) {
+    //                     controller.statusSwitch1.value = value;
+    //                   },
+    //                   activeColor: greenColor,
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //         Divider(
+    //           thickness: 1.5,
+    //           color: primaryColor,
+    //         ),
+    //         Row(
+    //           children: [
+    //             Expanded(
+    //               child: Text(
+    //                 "Äktifkan Notifikasi",
+    //                 style: textPrimaryStyle.copyWith(
+    //                   fontSize: 14,
+    //                   fontWeight: medium,
+    //                 ),
+    //               ),
+    //             ),
+    //             SizedBox(
+    //               height: 26.0,
+    //               width: 43.76,
+    //               child: Obx(
+    //                 () => FlutterSwitch(
+    //                   value: controller.statusSwitch2.value,
+    //                   onToggle: (value) {
+    //                     controller.statusSwitch2.value = value;
+    //                   },
+    //                   activeColor: greenColor,
+    //                 ),
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
 
     Widget buttonLogout() {
       return Container(

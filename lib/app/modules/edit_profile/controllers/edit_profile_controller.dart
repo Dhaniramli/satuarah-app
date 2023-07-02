@@ -25,7 +25,7 @@ class EditProfileController extends GetxController {
   late TextEditingController nomorPlat;
   late TextEditingController merekKendaraan;
   late ImagePicker pickerC;
-  XFile? pickedImage = null;
+  XFile? pickedImage;
 
   updatePhotoUrl(String url) async {
     CollectionReference users = firestore.collection("users");
@@ -42,12 +42,12 @@ class EditProfileController extends GetxController {
     try {
       final dataUpload = await storageRef.putFile(file);
 
-      print(dataUpload);
+      // print(dataUpload);
       final photoUrl = await storageRef.getDownloadURL();
       deleteImage();
       return photoUrl;
     } catch (err) {
-      print(err);
+      // print(err);
       return null;
     }
   }
@@ -61,12 +61,12 @@ class EditProfileController extends GetxController {
     try {
       final dataImage = await pickerC.pickImage(source: ImageSource.gallery);
       if (dataImage != null) {
-        print(dataImage.name);
+        // print(dataImage.name);
         pickedImage = dataImage;
       }
       update();
     } catch (err) {
-      print(err);
+      // print(err);
       pickedImage = null;
       update();
     }
@@ -89,7 +89,7 @@ class EditProfileController extends GetxController {
         borderRadius: 10,
       );
     } on Exception catch (err) {
-      print(err);
+     Get.snackbar("Terjadi kesalahan", "$err");
     }
   }
 
@@ -114,7 +114,7 @@ class EditProfileController extends GetxController {
         borderRadius: 10,
       );
     } on Exception catch (err) {
-      print(err);
+      Get.snackbar("Terjadi kesalahan", "$err");
     }
   }
 

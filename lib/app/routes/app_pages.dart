@@ -32,6 +32,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/register_driver/bindings/register_driver_binding.dart';
 import '../modules/register_driver/views/register_driver_view.dart';
+import '../modules/reset_password/bindings/reset_password_binding.dart';
+import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/search_ride/bindings/search_ride_binding.dart';
 import '../modules/search_ride/views/search_ride_view.dart';
 import '../modules/sign_in/bindings/sign_in_binding.dart';
@@ -47,7 +49,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.home,
-      page: () => HomeView(),
+      page: () => const HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -72,7 +74,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LEAVING_TODAY,
-      page: () => LeavingTodayView(),
+      page: () => const LeavingTodayView(),
       binding: LeavingTodayBinding(),
     ),
     GetPage(
@@ -87,12 +89,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHAT,
-      page: () => ChatView(),
+      page: () => const ChatView(),
       binding: ChatBinding(),
     ),
     GetPage(
       name: _Paths.HISTORY,
-      page: () => HistoryView(),
+      page: () => const HistoryView(),
       binding: HistoryBinding(),
     ),
     GetPage(
@@ -102,7 +104,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ORDERING,
-      page: () => OrderingView(),
+      page: () => const OrderingView(),
       binding: OrderingBinding(),
     ),
     GetPage(
@@ -137,8 +139,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SEARCH_RIDE,
-      page: () => SearchRideView(),
+      page: () => const SearchRideView(),
       binding: SearchRideBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PASSWORD,
+      page: () => const ResetPasswordView(),
+      binding: ResetPasswordBinding(),
     ),
   ];
 }

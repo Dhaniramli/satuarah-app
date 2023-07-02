@@ -18,26 +18,28 @@ class OrderingView extends StatefulWidget {
 }
 
 class _OrderingViewState extends State<OrderingView> {
-  
   @override
   void initState() {
     super.initState();
     SystemChannels.textInput.invokeMethod('TextInput.hide');
   }
 
+  final TripModel? trip = Get.arguments;
+  final NumberFormat numberFormat = NumberFormat('#,###');
+  final controller = Get.put(OrderingController());
+  Map<String, dynamic> userMap = {};
   @override
   Widget build(BuildContext context) {
-    final TripModel trip = Get.arguments;
-    final NumberFormat numberFormat = NumberFormat('#,###');
-    final controller = Get.put(OrderingController());
-    Map<String, dynamic> userMap = {};
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).unfocus();
     });
+    if (trip == null) {
+      Get.back();
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: trip.idDriver == controller.auth.currentUser!.uid
+        title: trip?.idDriver == controller.auth.currentUser!.uid
             ? const Text('Detail')
             : const Text('Pesan'),
         centerTitle: true,
@@ -49,7 +51,7 @@ class _OrderingViewState extends State<OrderingView> {
           ),
         ),
         actions: [
-          trip.idDriver == controller.auth.currentUser!.uid
+          trip?.idDriver == controller.auth.currentUser!.uid
               ? IconButton(
                   onPressed: () {
                     showDialog(
@@ -64,7 +66,7 @@ class _OrderingViewState extends State<OrderingView> {
                             child: const Text('Tidak'),
                           ),
                           TextButton(
-                            onPressed: () => controller.doDelete(trip.idTrip),
+                            onPressed: () => controller.doDelete(trip!.idTrip),
                             child: const Text('Ya'),
                           ),
                         ],
@@ -78,7 +80,7 @@ class _OrderingViewState extends State<OrderingView> {
                 )
               : const SizedBox(),
           const SizedBox(width: 10),
-          trip.idDriver == controller.auth.currentUser!.uid
+          trip!.idDriver == controller.auth.currentUser!.uid
               ? IconButton(
                   onPressed: () {
                     Get.toNamed(Routes.EDIT_A_TRIP, arguments: trip);
@@ -117,7 +119,7 @@ class _OrderingViewState extends State<OrderingView> {
                               width: 40.51,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50)),
-                              child: trip.photo == ""
+                              child: trip!.photo == ""
                                   ? Image.asset(
                                       "assets/profile.png",
                                       width: 40.51,
@@ -127,7 +129,7 @@ class _OrderingViewState extends State<OrderingView> {
                                   : ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
                                       child: Image.network(
-                                        trip.photo,
+                                        trip!.photo,
                                         width: 40.51,
                                         height: 40.51,
                                         fit: BoxFit.fill,
@@ -139,7 +141,7 @@ class _OrderingViewState extends State<OrderingView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  trip.fullName,
+                                  trip!.fullName,
                                   style: textBlackDuaStyle.copyWith(
                                     fontSize: 16,
                                     fontWeight: medium,
@@ -179,12 +181,12 @@ class _OrderingViewState extends State<OrderingView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      trip.cityStart,
+                                      trip!.cityStart,
                                       style: textBlackDuaStyle.copyWith(
                                           fontSize: 16, fontWeight: medium),
                                     ),
                                     Text(
-                                      '${trip.tripDate}  ${trip.tripTime}',
+                                      '${trip!.tripDate}  ${trip!.tripTime}',
                                       style: textGrayStyle.copyWith(
                                           fontSize: 10, fontWeight: medium),
                                     ),
@@ -207,7 +209,7 @@ class _OrderingViewState extends State<OrderingView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      trip.cityFinish,
+                                      trip!.cityFinish,
                                       style: textBlackDuaStyle.copyWith(
                                           fontSize: 16, fontWeight: medium),
                                     ),
@@ -221,7 +223,7 @@ class _OrderingViewState extends State<OrderingView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Harga : Rp.${numberFormat.format(int.parse(trip.tripPrice))}',
+                              'Harga : Rp.${numberFormat.format(int.parse(trip!.tripPrice))}',
                               style: textBlackDuaStyle.copyWith(
                                   fontSize: 15, fontWeight: medium),
                             ),
@@ -259,7 +261,7 @@ class _OrderingViewState extends State<OrderingView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          trip.merekKendaraan,
+                          trip!.merekKendaraan,
                           style: textBlackDuaStyle.copyWith(
                               fontSize: 15, fontWeight: medium),
                         ),
@@ -277,7 +279,7 @@ class _OrderingViewState extends State<OrderingView> {
                     ),
                     const SizedBox(width: 6),
                     Text(
-                      "${trip.chair} Kursi",
+                      "${trip!.chair} Kursi",
                       style: textBlackDuaStyle.copyWith(
                           fontSize: 15, fontWeight: medium),
                     ),
@@ -285,7 +287,7 @@ class _OrderingViewState extends State<OrderingView> {
                 ),
                 const SizedBox(height: 22),
                 StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  stream: controller.streamPenumpang(trip.idTrip),
+                  stream: controller.streamPenumpang(trip!.idTrip),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(
@@ -335,11 +337,11 @@ class _OrderingViewState extends State<OrderingView> {
             ),
           ),
           Expanded(
-            child: trip.idDriver == controller.auth.currentUser!.uid
+            child: trip!.idDriver == controller.auth.currentUser!.uid
                 ? Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: controller.streamtrip(trip.idTrip),
+                      stream: controller.streamtrip(trip!.idTrip),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -405,7 +407,7 @@ class _OrderingViewState extends State<OrderingView> {
                                         onTap: () {
                                           controller.addNewRide(
                                             item,
-                                            trip.idTrip,
+                                            trip!.idTrip,
                                             item["id_user"],
                                           );
                                         },
@@ -420,7 +422,7 @@ class _OrderingViewState extends State<OrderingView> {
                                       GestureDetector(
                                         onTap: () {
                                           controller.deleteTrip(
-                                              trip.idTrip, item["id_user"]);
+                                              trip!.idTrip, item["id_user"]);
                                         },
                                         child: Image.asset(
                                           "assets/cancel.png",
@@ -451,36 +453,35 @@ class _OrderingViewState extends State<OrderingView> {
                     .collection('users')
                     .where(
                       "full_name",
-                      isEqualTo: trip.fullName,
+                      isEqualTo: trip!.fullName,
                     )
                     .get()
                     .then((value) {
-                  setState(() {
-                    if (value.docs.isNotEmpty) {
-                      userMap = value.docs[0].data();
-                      // Lanjutkan dengan kode lainnya
-                    } else {
-                      // Handle ketika list kosong
-                    }
-                  });
+                  if (value.docs.isNotEmpty) {
+                    userMap = value.docs[0].data();
+                    // Lanjutkan dengan kode lainnya
+                    setState(() {});
+                  } else {
+                    // Handle ketika list kosong
+                  }
                 });
                 if (controller.isLoading.isFalse) {
                   controller.isLoading(true);
-                  if (trip.idDriver == controller.auth.currentUser!.uid) {
-                    if (trip.tripStatus == "Menunggu") {
-                      controller.doUpdateSatu(trip.idTrip);
-                    } else if (trip.tripStatus == "Dalam Perjalanan") {
-                      controller.doUpdateDua(trip.idTrip);
+                  if (trip!.idDriver == controller.auth.currentUser!.uid) {
+                    if (trip!.tripStatus == "Menunggu") {
+                      controller.doUpdateSatu(trip!.idTrip);
+                    } else if (trip!.tripStatus == "Dalam Perjalanan") {
+                      controller.doUpdateDua(trip!.idTrip);
                     }
                     Future.delayed(const Duration(seconds: 3), () {
                       controller.isLoading.value = false;
                     });
                     setState(() {
-                      trip.tripStatus;
+                      trip!.tripStatus;
                     });
                   } else {
                     setState(() {
-                      controller.addNewConnection(trip, userMap, trip.idTrip);
+                      controller.addNewConnection(trip, userMap, trip!.idTrip);
                     });
                   }
                   controller.isLoading(false);
@@ -488,7 +489,7 @@ class _OrderingViewState extends State<OrderingView> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor:
-                    trip.tripStatus == "Selesai" ? grayColor : primaryColor,
+                    trip!.tripStatus == "Selesai" ? grayColor : primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -496,10 +497,10 @@ class _OrderingViewState extends State<OrderingView> {
               child: Obx(
                 () => Text(
                   controller.isLoading.isFalse
-                      ? trip.idDriver == controller.auth.currentUser!.uid
-                          ? trip.tripStatus == "Menunggu"
+                      ? trip!.idDriver == controller.auth.currentUser!.uid
+                          ? trip!.tripStatus == "Menunggu"
                               ? "Mulai Perjalanan"
-                              : trip.tripStatus == "Dalam Perjalanan"
+                              : trip!.tripStatus == "Dalam Perjalanan"
                                   ? "Akhiri Perjalanan"
                                   : "Selesai"
                           : "Pesan"

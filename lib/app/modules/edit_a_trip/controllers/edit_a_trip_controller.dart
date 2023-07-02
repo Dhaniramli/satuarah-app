@@ -60,10 +60,19 @@ class EditATripController extends GetxController {
           borderRadius: 10,
         );
       } else {
-        print("salah");
+        // print("salah");
+        Get.snackbar(
+          "Kesalahan Sistem",
+          "Lengkapi data",
+          duration: const Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+          backgroundColor: primaryColor,
+          colorText: Colors.white,
+          borderRadius: 10,
+        );
       }
-    } on Exception catch (err) {
-      print(err);
+    } on Exception {
+      // print(err);
       Get.snackbar(
         "Kesalahan Sistem",
         "Tidak dapat melakukan pendaftaran",

@@ -138,7 +138,7 @@ class CardFull extends StatelessWidget {
                   height: 29,
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.to(() => OrderingView());
+                      Get.to(() => const OrderingView());
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,

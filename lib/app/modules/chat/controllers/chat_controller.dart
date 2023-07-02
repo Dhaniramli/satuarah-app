@@ -83,7 +83,8 @@ class ChatController extends GetxController {
         ),
       );
     } on Exception catch (err) {
-      print(err);
+      // print(err);
+      Get.snackbar("Terjadi kesalahan", "$err");
     }
   }
   // AKHIR LOGIC CHAT
@@ -101,18 +102,18 @@ class ChatController extends GetxController {
     return firestore.collection("users").doc(email).snapshots();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 }

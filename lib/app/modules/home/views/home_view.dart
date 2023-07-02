@@ -77,7 +77,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                         const SizedBox(height: 42.85),
                         GestureDetector(
-                          onTap: () => Get.to(() => SearchRideView()),
+                          onTap: () => Get.to(() => const SearchRideView()),
                           child: Container(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 13.0),
@@ -134,7 +134,7 @@ class HomeView extends GetView<HomeController> {
                         ButtonBox(
                           icon: "assets/bhi.png",
                           tittLe: "Semua Tebengan",
-                          onTap: () => Get.to(() => LeavingTodayView()),
+                          onTap: () => Get.to(() => const LeavingTodayView()),
                         ),
                         ButtonBox(
                           icon: "assets/carit.png",

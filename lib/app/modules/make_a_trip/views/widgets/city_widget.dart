@@ -71,7 +71,7 @@ class _CityWidgetState extends State<CityWidget> {
             var models = City.fromJsonList(listAllCity);
             return models;
           } catch (err) {
-            print(err);
+            // print(err);
             return List<City>.empty();
           }
         },

@@ -16,17 +16,17 @@ class RatingBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _starList = [];
+    List<Widget> starList = [];
 
     int realNumber = rating.floor(); //3.55->3
     int partNumber = ((rating - realNumber) * 10).ceil(); //6
 
     for (int i = 0; i < 5; i++) {
       if (i < realNumber) {
-        _starList.add(Icon(Icons.star,
+        starList.add(Icon(Icons.star,
             color: yellowColor, size: size));
       } else if (i == realNumber) {
-        _starList.add(
+        starList.add(
           SizedBox(
             height: size,
             width: size,
@@ -51,7 +51,7 @@ class RatingBarView extends StatelessWidget {
           ),
         );
       } else {
-        _starList.add(
+        starList.add(
           Icon(
             Icons.star,
             color: Colors.grey,
@@ -63,7 +63,7 @@ class RatingBarView extends StatelessWidget {
 
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: _starList,
+      children: starList,
     );
   }
 }

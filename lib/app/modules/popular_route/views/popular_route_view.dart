@@ -16,7 +16,7 @@ class PopularRouteView extends GetView<PopularRouteController> {
       decoration: BoxDecoration(
           border: Border.all(color: grayDuaColor, width: 3),
           borderRadius: BorderRadius.circular(5)),
-      child: Container(
+      child: SizedBox(
         height: 98,
         width: double.infinity,
         child: Row(

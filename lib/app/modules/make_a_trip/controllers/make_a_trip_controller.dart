@@ -72,10 +72,9 @@ class MakeATripController extends GetxController {
         Get.back();
         Get.back();
       } else {
-        print("salah");
+        // Get.snackbar("Terjadi kesalahan", "Lengkapi semua");
       }
-    } on Exception catch (err) {
-      print(err);
+    } on Exception {
       Get.snackbar(
         "Kesalahan Sistem",
         "Tidak dapat melakukan pendaftaran",

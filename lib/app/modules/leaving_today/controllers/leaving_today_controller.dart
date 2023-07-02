@@ -9,13 +9,13 @@ class LeavingTodayController extends GetxController {
         whereIn: ['Menunggu', 'Dalam Perjalanan']).snapshots();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 }

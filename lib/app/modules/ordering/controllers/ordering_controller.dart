@@ -42,7 +42,17 @@ class OrderingController extends GetxController {
         borderRadius: 10,
       );
     } catch (e) {
-      print("Error deleting trip: $e");
+      // print("Error deleting trip: $e");
+      Get.snackbar(
+        "Terjadi Kesalahan",
+        "Error $e",
+        duration: const Duration(seconds: 2),
+        snackStyle: SnackStyle.FLOATING,
+        backgroundColor: white,
+        colorText: primaryColor,
+        borderRadius: 10,
+      );
+
       // Tambahkan penanganan kesalahan sesuai kebutuhan Anda.
     }
   }
@@ -199,7 +209,7 @@ class OrderingController extends GetxController {
       //   ),
       // );
     } on Exception catch (err) {
-      print(err);
+      Get.snackbar("Terjadi kesalahan", "$err");
     }
   }
   // AKHIR LOGIC CHAT
@@ -222,13 +232,13 @@ class OrderingController extends GetxController {
     });
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 }

@@ -71,7 +71,6 @@ class _MainNavigationViewState extends State<MainNavigationView>
             currentIndex: currentIndex,
             onTap: (value) {
               setState(() {
-                print(value);
                 currentIndex = value;
               });
             },
@@ -260,15 +259,15 @@ class _MainNavigationViewState extends State<MainNavigationView>
     Widget body() {
       switch (currentIndex) {
         case 0:
-          return HomeView();
+          return const HomeView();
         case 1:
-          return HistoryView();
+          return const HistoryView();
         case 2:
-          return ChatView();
+          return const ChatView();
         case 3:
           return const ProfileView();
         default:
-          return HomeView();
+          return const HomeView();
       }
     }
 

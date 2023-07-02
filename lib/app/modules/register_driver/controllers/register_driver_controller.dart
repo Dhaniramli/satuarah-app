@@ -45,10 +45,17 @@ class RegisterDriverController extends GetxController {
         merekKendaraan.clear();
         Get.back();
       } else {
-        print("pass salah");
+        Get.snackbar(
+          "Kesalahan",
+          "Email atau Password salah",
+          duration: const Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+          backgroundColor: primaryColor,
+          colorText: Colors.white,
+          borderRadius: 10,
+        );
       }
-    } on Exception catch (err) {
-      print(err);
+    } on Exception {
       Get.snackbar(
         "Kesalahan Sistem",
         "Tidak dapat melakukan pendaftaran",

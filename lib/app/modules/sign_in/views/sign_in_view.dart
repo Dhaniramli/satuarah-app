@@ -4,6 +4,7 @@ import 'package:satuarah/app/routes/app_pages.dart';
 
 import '../../../../theme.dart';
 import '../../disclaimer/disclaimer_view.dart';
+import '../../reset_password/views/reset_password_view.dart';
 import '../../sign_up/views/sign_up_view.dart';
 import '../controllers/sign_in_controller.dart';
 
@@ -36,7 +37,7 @@ class SignInView extends GetView<SignInController> {
                     text: 'Privasi',
                     style: TextStyle(fontWeight: bold),
                   ),
-                  const TextSpan(text: ' Kofarma.'),
+                  const TextSpan(text: ' Satuarah.'),
                 ],
               ),
               textAlign: TextAlign.center,
@@ -47,61 +48,68 @@ class SignInView extends GetView<SignInController> {
     }
 
     Widget formEmail() {
-      return TextFormField(
-        controller: controller.email,
-        decoration: InputDecoration(
-          icon: const ImageIcon(
-            AssetImage(
-              "assets/email.png",
+      return SizedBox(
+        height: 70,
+        child: TextFormField(
+          controller: controller.email,
+          decoration: InputDecoration(
+            icon: const ImageIcon(
+              AssetImage(
+                "assets/email.png",
+              ),
+              size: 20,
             ),
-            size: 20,
+            hintText: 'Email',
+            hintStyle: textGrayStyle.copyWith(fontSize: 15, fontWeight: medium),
           ),
-          hintText: 'Email',
-          hintStyle: textGrayStyle.copyWith(fontSize: 15, fontWeight: medium),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Email wajib diisi';
+            } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                .hasMatch(value)) {
+              return 'Format email tidak valid';
+            }
+            return null;
+          },
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Email wajib diisi';
-          } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-              .hasMatch(value)) {
-            return 'Format email tidak valid';
-          }
-          return null;
-        },
       );
     }
 
     Widget formPassword() {
       return Obx(
-        () => TextFormField(
-          controller: controller.password,
-          obscureText: controller.isHidden.value,
-          decoration: InputDecoration(
-            suffixIcon: IconButton(
-              onPressed: () {
-                controller.isHidden.toggle();
-              },
-              icon: Icon(
-                controller.isHidden.isFalse
-                    ? Icons.remove_red_eye
-                    : Icons.remove_red_eye_outlined,
+        () => SizedBox(
+          height: 70,
+          child: TextFormField(
+            controller: controller.password,
+            obscureText: controller.isHidden.value,
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                onPressed: () {
+                  controller.isHidden.toggle();
+                },
+                icon: Icon(
+                  controller.isHidden.isFalse
+                      ? Icons.remove_red_eye
+                      : Icons.remove_red_eye_outlined,
+                ),
               ),
-            ),
-            icon: const ImageIcon(
-              AssetImage(
-                "assets/password.png",
+              icon: const ImageIcon(
+                AssetImage(
+                  "assets/password.png",
+                ),
+                size: 20,
               ),
-              size: 20,
+              hintText: 'Password',
+              hintStyle:
+                  textGrayStyle.copyWith(fontSize: 15, fontWeight: medium),
             ),
-            hintText: 'Password',
-            hintStyle: textGrayStyle.copyWith(fontSize: 15, fontWeight: medium),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Password wajib diisi';
+              }
+              return null;
+            },
           ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'Password wajib diisi';
-            }
-            return null;
-          },
         ),
       );
     }
@@ -231,17 +239,32 @@ class SignInView extends GetView<SignInController> {
                     ),
                     const SizedBox(height: 38),
                     formEmail(),
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 30),
                     formPassword(),
                   ],
                 ),
               ),
-              const SizedBox(height: 197),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () => Get.to(() => const ResetPasswordView()),
+                      child: Text(
+                        "Lupa Password?",
+                        style: textPrimaryStyle.copyWith(
+                          fontSize: 14,
+                          fontWeight: regular,
+                        ),
+                      )),
+                ],
+              ),
+              const SizedBox(height: 80),
               buttonSignIn(),
               const SizedBox(height: 16),
               footer(),
               // const SizedBox(height: 5),
               disclaimer(),
+              const SizedBox(height: 16),
             ],
           ),
         ),

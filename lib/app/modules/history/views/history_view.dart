@@ -44,7 +44,7 @@ class _HistoryViewState extends State<HistoryView>
       ),
       child: ListTile(
         onTap: () {
-          Get.to(() => OrderDetailView());
+          Get.to(() => const OrderDetailView());
         },
         leading: CircleAvatar(
           radius: 30,
@@ -274,7 +274,7 @@ class _HistoryViewState extends State<HistoryView>
                     Border(bottom: BorderSide(color: primaryColor, width: 3))),
             labelStyle:
                 textPrimaryStyle.copyWith(fontSize: 16, fontWeight: semiBold),
-            tabs: <Widget>[
+            tabs: const <Widget>[
               Tab(
                 text: 'Jadwal',
               ),
