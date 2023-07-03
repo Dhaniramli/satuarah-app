@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:satuarah/app/controllers/auth_controller.dart';
+import 'package:satuarah/shared/splashscreen_view.dart';
 
 import 'app/modules/loading/loading_view.dart';
 import 'app/routes/app_pages.dart';
@@ -36,16 +37,25 @@ class MyApp extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: auth.authStateChanges(),
       builder: (context, snapAuth) {
-        if (snapAuth.connectionState == ConnectionState.waiting) {
-          return const LoadingView();
+        if (snapAuth.hasError) {
+          return const Center(
+            child: Text("Terjadi Kesalahan"),
+          );
         }
-
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Application",
-          initialRoute:
-              snapAuth.hasData ? Routes.mainNavigation : Routes.signIn,
-          getPages: AppPages.routes,
+        return FutureBuilder(
+          future: Future.delayed(const Duration(seconds: 3)),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: "Application",
+                initialRoute:
+                    snapAuth.hasData ? Routes.mainNavigation : Routes.signIn,
+                getPages: AppPages.routes,
+              );
+            }
+            return const SplachscreenView();
+          },
         );
       },
     );
