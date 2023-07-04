@@ -40,6 +40,24 @@ class ChatRoomView extends GetView<ChatRoomController> {
                   .update({
                 "total_unread": 0,
               });
+              final updateStatusChat = await controller.firestore
+                  .collection("chats")
+                  .doc(chatRoomid)
+                  .collection("chats")
+                  .where("isRead", isEqualTo: false)
+                  .where("penerima",
+                      isEqualTo: controller.auth.currentUser!.uid)
+                  .get();
+
+              updateStatusChat.docs.forEach((element) async {
+                await controller.firestore
+                    .collection("chats")
+                    .doc(chatRoomid)
+                    .collection("chats")
+                    .doc(element.id)
+                    .update({"isRead": true});
+              });
+
               Get.back();
             },
             icon: const Icon(

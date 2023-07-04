@@ -53,9 +53,9 @@ class ChatRoomController extends GetxController {
       Timer(Duration.zero,
           () => scrollC.jumpTo(scrollC.position.maxScrollExtent));
 
-      await users.doc(email).collection("chats").doc(chatId).update({
-        "lastTime": date,
-      });
+      // await users.doc(email).collection("chats").doc(chatId).update({
+      //   "lastTime": date,
+      // });
 
       final checkChatsFriend =
           await users.doc(friendEmail).collection("chats").doc(chatId).get();

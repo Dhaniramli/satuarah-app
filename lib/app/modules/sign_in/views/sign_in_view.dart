@@ -13,6 +13,7 @@ class SignInView extends GetView<SignInController> {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
+    final controller = Get.put(SignInController());
 
     Widget disclaimer() {
       return Container(

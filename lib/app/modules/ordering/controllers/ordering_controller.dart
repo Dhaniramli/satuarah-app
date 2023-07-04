@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,9 @@ class OrderingController extends GetxController {
   Map<String, dynamic>? userMap;
   late String roomId;
   var chat_id;
+  String? chatRoomIdC;
+  int totalUnread = 0;
+  DateTime now = DateTime.now();
 
   Stream<QuerySnapshot<Map<String, dynamic>>> streamPenumpang(
       String tripId) async* {
@@ -32,6 +37,10 @@ class OrderingController extends GetxController {
       CollectionReference tripRef = _firestore.collection("trip");
 
       await tripRef.doc(tripId).collection("request").doc(userId).delete();
+
+      await tripRef.doc(tripId).update({
+        "request_field": FieldValue.arrayRemove([userId]),
+      });
 
       Get.snackbar(
         "Berhasil",
@@ -260,15 +269,63 @@ class OrderingController extends GetxController {
       //   ),
       // );
 
+      // PESAN LOGIC
       await chats.doc(chat_id).collection("chats").add({
         "pengirim": _auth.currentUser!.uid,
         "penerima": tripC.idDriver,
-        "msg": "Saya ingin ikut perjalanan anda \n ${tripC.cityStart}- ${tripC.cityFinish} ${tripC.tripDate} ${tripC.tripTime}",
+        "msg":
+            "Saya ingin ikut perjalanan anda \n ${tripC.cityStart}- ${tripC.cityFinish} ${tripC.tripDate} ${tripC.tripTime}",
         "time": Timestamp.now(),
         "isRead": false,
         "jm": DateFormat.jm().format(DateTime.parse(date)),
         "groupTime": DateFormat.yMMMMd('en_US').format(DateTime.parse(date)),
       });
+
+      await users
+          .doc(_auth.currentUser!.uid)
+          .collection("chats")
+          .doc(chat_id)
+          .update({
+        "lastTime": date,
+      });
+
+      final checkChatsFriend = await users
+          .doc(tripC.idDriver)
+          .collection("chats")
+          .doc(chat_id)
+          .get();
+
+      if (checkChatsFriend.exists) {
+        // exist on friend DB
+        // first cek total unread
+
+        final checkTotalUnread = await chats
+            .doc(chat_id)
+            .collection("chats")
+            .where("isRead", isEqualTo: false)
+            .where("pengirim", isEqualTo: _auth.currentUser!.uid)
+            .get();
+
+        // total unread for friend
+        totalUnread = checkTotalUnread.docs.length;
+
+        await users
+            .doc(tripC.idDriver)
+            .collection("chats")
+            .doc(chat_id)
+            .update({
+          "lastTime": date,
+          "total_unread": totalUnread,
+        });
+      } else {
+        // not exist on friend DB
+        await users.doc(tripC.idDriver).collection("chats").doc(chat_id).set({
+          "connection": _auth.currentUser!.uid,
+          "chat_id": chat_id,
+          "total_unread": 1,
+          "lastTime": date,
+        });
+      }
     } on Exception catch (err) {
       Get.snackbar("Terjadi kesalahan", "$err");
     }

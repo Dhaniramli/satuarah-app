@@ -74,6 +74,24 @@ class ChatController extends GetxController {
       }
 
       // Get.toNamed(Routes.CHAT_ROOM, arguments: trip);
+      final updateStatusChat = await chats
+          .doc(chat_id)
+          .collection("chats")
+          .where("isRead", isEqualTo: false)
+          .where("penerima", isEqualTo: uidUser)
+          .get();
+
+      updateStatusChat.docs.forEach((element) async {
+        await chats
+            .doc(chat_id)
+            .collection("chats")
+            .doc(element.id)
+            .update({"isRead": true});
+      });
+
+      await users.doc(uidUser).collection("chats").doc(chat_id).update({
+        "total_unread": 0,
+      });
 
       Get.to(
         () => ChatRoomView(
@@ -100,6 +118,41 @@ class ChatController extends GetxController {
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> friendStream(String email) {
     return firestore.collection("users").doc(email).snapshots();
+  }
+
+  selectChat(String chatId, String email, Map<String, dynamic>? userMap,
+      String friendEmail) async {
+    CollectionReference chats = firestore.collection("chats");
+    CollectionReference users = firestore.collection("users");
+
+    Get.to(() => ChatRoomView(
+          userMap: userMap,
+          chatRoomid: chatId,
+          friendEmail: friendEmail,
+        ));
+
+    final updateStatusChat = await chats
+        .doc(chatId)
+        .collection("chats")
+        .where("isRead", isEqualTo: false)
+        .where("penerima", isEqualTo: auth.currentUser!.uid)
+        .get();
+
+    updateStatusChat.docs.forEach((element) async {
+      await chats
+          .doc(chatId)
+          .collection("chats")
+          .doc(element.id)
+          .update({"isRead": true});
+    });
+
+    await users
+        .doc(auth.currentUser!.uid)
+        .collection("chats")
+        .doc(chatId)
+        .update({
+      "total_unread": 0,
+    });
   }
 
   // @override

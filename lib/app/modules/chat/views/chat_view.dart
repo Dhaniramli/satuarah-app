@@ -62,16 +62,21 @@ class _ChatViewState extends State<ChatView> {
                               });
                             });
 
-                            // controller.selectChat(
-                            //     "${widget.chatId}",
-                            //     currentUser,
-                            //     userMap ?? {},
-                            //     "${widget.friendEmail}");
+                            // print("UID CHAT ${listDocsChats[index].id}");
+                            // print(controller.auth.currentUser!.uid);
+                            // print(userMap);
+                            // print("${data?["id_user"]}");
 
-                            controller.addNewConnection(
-                              "${data?["id_user"]}",
-                              userMap,
-                            );
+                            controller.selectChat(
+                                listDocsChats[index].id,
+                                controller.auth.currentUser!.uid,
+                                userMap,
+                                "${data?["id_user"]}");
+
+                            // controller.addNewConnection(
+                            //   "${data?["id_user"]}",
+                            //   userMap,
+                            // );
                           },
                           leading: CircleAvatar(
                             radius: 30,
