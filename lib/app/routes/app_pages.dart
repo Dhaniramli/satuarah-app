@@ -99,7 +99,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CEK,
-      page: () => CekView(),
+      page: () => const CekView("", ""),
       binding: CekBinding(),
     ),
     GetPage(

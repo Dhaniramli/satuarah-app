@@ -53,7 +53,7 @@ class LeavingTodayView extends GetView<LeavingTodayController> {
             itemBuilder: (context, index) {
               TripModel trip = allTrip[index];
               return CardFull(
-                fullNameC: "Belum Ada",
+                fullNameC: trip.fullName,
                 startC: trip.cityStart,
                 finishC: trip.cityFinish,
                 dateC: trip.tripDate,

@@ -21,24 +21,24 @@ class _MakeATripViewState extends State<MakeATripView> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MakeATripController());
-    final UserModel dataUser = Get.arguments;
+    final UserModel? dataUser = Get.arguments;
 
-    if (controller.idDriver.text == "") {
+    if (controller.idDriver.text == "" && dataUser != null) {
       controller.idDriver.text = dataUser.idUser;
     }
-    if (controller.email.text == "") {
+    if (controller.email.text == "" && dataUser != null) {
       controller.email.text = dataUser.email;
     }
-    if (controller.fullName.text == "") {
+    if (controller.fullName.text == "" && dataUser != null) {
       controller.fullName.text = dataUser.fullName;
     }
-    if (controller.merekKendaraan.text == "") {
+    if (controller.merekKendaraan.text == "" && dataUser != null) {
       controller.merekKendaraan.text = dataUser.merekKendaraan;
     }
-    if (controller.nomorPlat.text == "") {
+    if (controller.nomorPlat.text == "" && dataUser != null) {
       controller.nomorPlat.text = dataUser.nomorPlat;
     }
-    if (controller.photo == "") {
+    if (controller.photo == "" && dataUser != null) {
       controller.photo = dataUser.photo;
     }
 

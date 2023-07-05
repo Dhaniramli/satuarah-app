@@ -11,6 +11,7 @@ import '../../../routes/app_pages.dart';
 import '../../leaving_today/views/leaving_today_view.dart';
 import '../../loading/loading_view.dart';
 import '../../popular_route/views/popular_route_view.dart';
+import '../../register_driver/views/register_driver_view.dart';
 import '../../search_ride/views/search_ride_view.dart';
 import '../controllers/home_controller.dart';
 import 'widgets/button_box.dart';
@@ -130,16 +131,7 @@ class HomeView extends GetView<HomeController> {
                           icon: "assets/rutepopuler.png",
                           tittLe: "Rute Populer",
                           onTap: () {
-                            // Get.to(() => PopularRouteView());
-                            Get.snackbar(
-                              "COMING SOON ",
-                              "",
-                              duration: const Duration(seconds: 2),
-                              snackStyle: SnackStyle.FLOATING,
-                              backgroundColor: white,
-                              colorText: primaryColor,
-                              borderRadius: 10,
-                            );
+                            Get.to(() => const PopularRouteView());
                           },
                         ),
                         ButtonBox(
@@ -151,18 +143,19 @@ class HomeView extends GetView<HomeController> {
                           icon: "assets/carit.png",
                           tittLe: "Buat Tebengan",
                           onTap: () {
-                            if (user.userAs != "driver") {
+                            if (user.userAs == "driver") {
+                              Get.toNamed(Routes.MAKE_A_TRIP, arguments: user);
+                            } else {
                               Get.snackbar(
-                                "Kesalahan",
                                 "Anda Belum Terdaftar Sebagai Driver",
+                                "Silahkan lakukan pendaftaran terlebih dahulu",
                                 duration: const Duration(seconds: 2),
                                 snackStyle: SnackStyle.FLOATING,
                                 backgroundColor: white,
                                 colorText: primaryColor,
                                 borderRadius: 10,
                               );
-                            } else {
-                              Get.toNamed(Routes.MAKE_A_TRIP, arguments: user);
+                              Get.to(() => const RegisterDriverView());
                             }
                           },
                         ),
