@@ -148,17 +148,17 @@ class _EditProfileViewState extends State<EditProfileView> {
                                                 height: 200,
                                                 fit: BoxFit.cover,
                                               ),
-                                        Center(
-                                          child: GestureDetector(
-                                            onTap: () => c.deleteImage(),
-                                            child: const Icon(
-                                              Icons.delete,
-                                              size: 30.0,
-                                              color: Color.fromARGB(
-                                                  255, 159, 159, 159),
-                                            ),
-                                          ),
-                                        ),
+                                        // Center(
+                                        //   child: GestureDetector(
+                                        //     onTap: () => c.deleteImage(),
+                                        //     child: const Icon(
+                                        //       Icons.delete,
+                                        //       size: 30.0,
+                                        //       color: Color.fromARGB(
+                                        //           255, 159, 159, 159),
+                                        //     ),
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ),

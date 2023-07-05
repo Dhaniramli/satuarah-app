@@ -28,6 +28,10 @@ class _OrderingViewState extends State<OrderingView> {
   final NumberFormat numberFormat = NumberFormat('#,###');
   final controller = Get.put(OrderingController());
   Map<String, dynamic> userMap = {};
+
+  // var dataWaitingDriver;
+  // var dataDoneDriver;
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -51,6 +55,24 @@ class _OrderingViewState extends State<OrderingView> {
           ),
         ),
         actions: [
+          // dataWaitingDriver != null
+          //     ? IconButton(
+          //         onPressed: () {},
+          //         icon: const Icon(
+          //           Icons.chat,
+          //           size: 25.0,
+          //         ),
+          //       )
+          //     : const SizedBox(),
+          // dataDoneDriver != null
+          //     ? IconButton(
+          //         onPressed: () {},
+          //         icon: const Icon(
+          //           Icons.chat,
+          //           size: 25.0,
+          //         ),
+          //       )
+          //     : const SizedBox(),
           trip?.idDriver == controller.auth.currentUser!.uid
               ? IconButton(
                   onPressed: () {
@@ -482,6 +504,10 @@ class _OrderingViewState extends State<OrderingView> {
               }
 
               final data = snapshot.data!.data();
+              // dataWaitingDriver = data!['request_field']
+              //     .contains(controller.auth.currentUser!.uid);
+              // dataDoneDriver =
+              //     data['rides'].contains(controller.auth.currentUser!.uid);
 
               return SizedBox(
                 width: double.infinity,

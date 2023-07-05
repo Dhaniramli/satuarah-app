@@ -79,7 +79,7 @@ class _ChatViewState extends State<ChatView> {
                             // );
                           },
                           leading: CircleAvatar(
-                            radius: 30,
+                            radius: 25,
                             child: data?["photo"] == ""
                                 ? Image.asset(
                                     "assets/profile.png",
