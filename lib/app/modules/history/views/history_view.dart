@@ -140,12 +140,28 @@ class _HistoryViewState extends State<HistoryView>
             .collection('trip')
             // .where("id_driver", isEqualTo: controller.auth.currentUser!.uid)
             .where("rides", arrayContains: controller.auth.currentUser!.uid)
-            .where('trip_status', whereIn: ['Menunggu', 'Dalam Perjalanan'])
-            .snapshots(),
+            .where('trip_status',
+                whereIn: ['Menunggu', 'Dalam Perjalanan']).snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Center(
-              child: Text("Tidak Ada"),
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/nothing.png",
+                    width: 50.0,
+                    height: 90.0,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Tidak ada tebengan",
+                    style: textGrayStyle.copyWith(fontWeight: semiBold),
+                  )
+                ],
+              ),
             );
           }
 
@@ -204,8 +220,24 @@ class _HistoryViewState extends State<HistoryView>
         // stream: controller.streamHistory(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return const Center(
-              child: Text("Tidak Ada"),
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/nothing.png",
+                    width: 50.0,
+                    height: 90.0,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Tidak ada tebengan",
+                    style: textGrayStyle.copyWith(fontWeight: semiBold),
+                  )
+                ],
+              ),
             );
           }
 

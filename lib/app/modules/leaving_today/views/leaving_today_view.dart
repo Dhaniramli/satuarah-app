@@ -38,8 +38,24 @@ class LeavingTodayView extends GetView<LeavingTodayController> {
           }
 
           if (snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text("Tidak Ada Data"),
+            return Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/nothing.png",
+                    width: 50.0,
+                    height: 90.0,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Tidak ada tebengan",
+                    style: textGrayStyle.copyWith(fontWeight: semiBold),
+                  )
+                ],
+              ),
             );
           }
 

@@ -29,6 +29,29 @@ class _ChatViewState extends State<ChatView> {
         builder: (context, snapshot1) {
           if (snapshot1.connectionState == ConnectionState.active) {
             var listDocsChats = snapshot1.data!.docs;
+            if (listDocsChats.isEmpty) {
+              // Jika daftar chat kosong, tampilkan teks "Tidak ada tebengan"
+              return Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/nothing.png",
+                      width: 50.0,
+                      height: 90.0,
+                      fit: BoxFit.fill,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      "Belum ada chat",
+                      style: textGrayStyle.copyWith(fontWeight: semiBold),
+                    )
+                  ],
+                ),
+              );
+            }
+
             return ListView.builder(
               // padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               itemCount: listDocsChats.length,
@@ -122,25 +145,7 @@ class _ChatViewState extends State<ChatView> {
                         ),
                       );
                     }
-                    return Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/nothing.png",
-                            width: 50.0,
-                            height: 90.0,
-                            fit: BoxFit.fill,
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            "Tidak ada tebengan",
-                            style: textGrayStyle.copyWith(fontWeight: semiBold),
-                          )
-                        ],
-                      ),
-                    );
+                    return const Center(child: CircularProgressIndicator());
                   },
                 );
               },
