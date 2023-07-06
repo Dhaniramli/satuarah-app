@@ -73,7 +73,7 @@ class PopularRouteView extends GetView<PopularRouteController> {
                       SizedBox(
                         height: double.infinity,
                         child: Image.asset(
-                          "assets/no_image.jpg",
+                          "assets/logo.png",
                           width: 98.0,
                           height: 98.0,
                           fit: BoxFit.fill,

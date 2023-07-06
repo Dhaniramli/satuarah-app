@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:satuarah/app/routes/app_pages.dart';
 
@@ -53,6 +54,9 @@ class SignInView extends GetView<SignInController> {
         height: 70,
         child: TextFormField(
           controller: controller.email,
+          inputFormatters: [
+            FilteringTextInputFormatter.deny(RegExp(r'\s')), // Menolak spasi
+          ],
           decoration: InputDecoration(
             icon: const ImageIcon(
               AssetImage(
@@ -82,6 +86,9 @@ class SignInView extends GetView<SignInController> {
           height: 70,
           child: TextFormField(
             controller: controller.password,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r'\s')), // Menolak spasi
+            ],
             obscureText: controller.isHidden.value,
             decoration: InputDecoration(
               suffixIcon: IconButton(

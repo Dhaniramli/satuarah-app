@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme.dart';
@@ -91,6 +92,9 @@ class SignUpView extends GetView<SignUpController> {
       return TextFormWidget(
         label: "Email",
         controller: controller.email,
+        inputFormatters: [
+          FilteringTextInputFormatter.deny(RegExp(r'\s')), // Menolak spasi
+        ],
         obscureText: false,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -108,6 +112,9 @@ class SignUpView extends GetView<SignUpController> {
       return TextFormWidget(
         label: "Nomor Telepon",
         controller: controller.phoneNumber,
+        inputFormatters: [
+          FilteringTextInputFormatter.deny(RegExp(r'\s')), // Menolak spasi
+        ],
         obscureText: false,
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -126,6 +133,9 @@ class SignUpView extends GetView<SignUpController> {
         () => TextFormWidget(
           label: "Password",
           controller: controller.password,
+          inputFormatters: [
+            FilteringTextInputFormatter.deny(RegExp(r'\s')), // Menolak spasi
+          ],
           obscureText: controller.isHiddenOne.value,
           suffixIcon: IconButton(
             onPressed: () {
@@ -154,6 +164,9 @@ class SignUpView extends GetView<SignUpController> {
         () => TextFormWidget(
           label: "Konfirmasi Password",
           controller: controller.passwordConfirmation,
+          inputFormatters: [
+            FilteringTextInputFormatter.deny(RegExp(r'\s')), // Menolak spasi
+          ],
           obscureText: controller.isHiddenTwo.value,
           suffixIcon: IconButton(
             onPressed: () {
