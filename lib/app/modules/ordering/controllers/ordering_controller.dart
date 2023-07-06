@@ -32,15 +32,91 @@ class OrderingController extends GetxController {
         .snapshots();
   }
 
-  Future<void> deleteTrip(String tripId, String userId) async {
+  Future<void> deleteTrip(String tripId, String userId, dynamic trip,
+      Map<String, dynamic>? userMap) async {
     try {
       CollectionReference tripRef = _firestore.collection("trip");
+      String date = DateTime.now().toIso8601String();
+
+      CollectionReference chats = _firestore.collection("chats");
+      CollectionReference users = _firestore.collection("users");
+      final TripModel tripC = trip;
 
       await tripRef.doc(tripId).collection("request").doc(userId).delete();
 
       await tripRef.doc(tripId).update({
         "request_field": FieldValue.arrayRemove([userId]),
       });
+
+      final doChats =
+          await users.doc(_auth.currentUser!.uid).collection("chats").get();
+      final checkConnection = await users
+          .doc(_auth.currentUser!.uid)
+          .collection("chats")
+          .where("connection", isEqualTo: userMap!["id_user"])
+          .get();
+
+      // PESAN LOGIC
+      await chats.doc(checkConnection.docs[0].id).collection("chats").add({
+        "pengirim": _auth.currentUser!.uid,
+        "penerima": userMap!["id_user"],
+        "msg":
+            "Maaf, kita tidak jadi berangkat bareng, ${tripC.cityStart}- ${tripC.cityFinish}, ${tripC.tripDate} ${tripC.tripTime}",
+        "time": Timestamp.now(),
+        "isRead": false,
+        "jm": DateFormat.jm().format(DateTime.parse(date)),
+        "groupTime": DateFormat.yMMMMd('en_US').format(DateTime.parse(date)),
+      });
+
+      await users
+          .doc(_auth.currentUser!.uid)
+          .collection("chats")
+          .doc(checkConnection.docs[0].id)
+          .update({
+        "lastTime": date,
+      });
+
+      final checkChatsFriend = await users
+          .doc(userMap["id_user"])
+          .collection("chats")
+          .doc(checkConnection.docs[0].id)
+          .get();
+
+      if (checkChatsFriend.exists) {
+        // exist on friend DB
+        // first cek total unread
+
+        final checkTotalUnread = await chats
+            .doc(checkConnection.docs[0].id)
+            .collection("chats")
+            .where("isRead", isEqualTo: false)
+            .where("pengirim", isEqualTo: _auth.currentUser!.uid)
+            .get();
+
+        // total unread for friend
+        totalUnread = checkTotalUnread.docs.length;
+
+        await users
+            .doc(userMap["id_user"])
+            .collection("chats")
+            .doc(checkConnection.docs[0].id)
+            .update({
+          "lastTime": date,
+          "total_unread": totalUnread,
+        });
+      } else {
+        // not exist on friend DB
+        await users
+            .doc(userMap["id_user"])
+            .collection("chats")
+            .doc(checkConnection.docs[0].id)
+            .set({
+          "connection": _auth.currentUser!.uid,
+          "chat_id": checkConnection.docs[0].id,
+          "total_unread": 1,
+          "lastTime": date,
+        });
+      }
 
       Get.snackbar(
         "Berhasil",
@@ -113,9 +189,21 @@ class OrderingController extends GetxController {
         .snapshots();
   }
 
-  void addNewRide(
-      Map<String, dynamic>? userMap, String tripId, String userId) async {
+  void addNewRide(Map<String, dynamic>? userMap, String tripId, String userId,
+      dynamic trip) async {
+    String date = DateTime.now().toIso8601String();
     CollectionReference tripRef = _firestore.collection("trip");
+    CollectionReference chats = _firestore.collection("chats");
+    CollectionReference users = _firestore.collection("users");
+    final TripModel tripC = trip;
+
+    final doChats =
+        await users.doc(_auth.currentUser!.uid).collection("chats").get();
+    final checkConnection = await users
+        .doc(_auth.currentUser!.uid)
+        .collection("chats")
+        .where("connection", isEqualTo: userMap!["id_user"])
+        .get();
 
     final requestMe = await tripRef
         .doc(tripId)
@@ -127,7 +215,7 @@ class OrderingController extends GetxController {
     if (requestMe != true) {
       await tripRef.doc(tripId).collection("request").doc(userId).delete();
 
-      await tripRef.doc(tripId).collection("ride").doc(userMap!["id_user"]).set(
+      await tripRef.doc(tripId).collection("ride").doc(userMap["id_user"]).set(
         {
           "full_name": userMap["full_name"],
           "photo": userMap["photo"],
@@ -141,6 +229,69 @@ class OrderingController extends GetxController {
       await tripRef.doc(tripId).update({
         "rides": FieldValue.arrayUnion([userId]),
       });
+
+      // PESAN LOGIC
+      await chats.doc(checkConnection.docs[0].id).collection("chats").add({
+        "pengirim": _auth.currentUser!.uid,
+        "penerima": userMap["id_user"],
+        "msg":
+            "Ayo, kita berangkat bareng, ${tripC.cityStart}- ${tripC.cityFinish}, ${tripC.tripDate} ${tripC.tripTime}",
+        "time": Timestamp.now(),
+        "isRead": false,
+        "jm": DateFormat.jm().format(DateTime.parse(date)),
+        "groupTime": DateFormat.yMMMMd('en_US').format(DateTime.parse(date)),
+      });
+
+      await users
+          .doc(_auth.currentUser!.uid)
+          .collection("chats")
+          .doc(checkConnection.docs[0].id)
+          .update({
+        "lastTime": date,
+      });
+
+      final checkChatsFriend = await users
+          .doc(userMap["id_user"])
+          .collection("chats")
+          .doc(checkConnection.docs[0].id)
+          .get();
+
+      if (checkChatsFriend.exists) {
+        // exist on friend DB
+        // first cek total unread
+
+        final checkTotalUnread = await chats
+            .doc(checkConnection.docs[0].id)
+            .collection("chats")
+            .where("isRead", isEqualTo: false)
+            .where("pengirim", isEqualTo: _auth.currentUser!.uid)
+            .get();
+
+        // total unread for friend
+        totalUnread = checkTotalUnread.docs.length;
+
+        await users
+            .doc(userMap["id_user"])
+            .collection("chats")
+            .doc(checkConnection.docs[0].id)
+            .update({
+          "lastTime": date,
+          "total_unread": totalUnread,
+        });
+      } else {
+        // not exist on friend DB
+        await users
+            .doc(userMap["id_user"])
+            .collection("chats")
+            .doc(checkConnection.docs[0].id)
+            .set({
+          "connection": _auth.currentUser!.uid,
+          "chat_id": checkConnection.docs[0].id,
+          "total_unread": 1,
+          "lastTime": date,
+        });
+      }
+
       Get.snackbar(
         "Berhasil",
         "",
@@ -274,7 +425,7 @@ class OrderingController extends GetxController {
         "pengirim": _auth.currentUser!.uid,
         "penerima": tripC.idDriver,
         "msg":
-            "Saya ingin ikut perjalanan anda \n ${tripC.cityStart}- ${tripC.cityFinish} ${tripC.tripDate} ${tripC.tripTime}",
+            "Saya ingin ikut perjalanan anda, ${tripC.cityStart}- ${tripC.cityFinish}, ${tripC.tripDate} ${tripC.tripTime}",
         "time": Timestamp.now(),
         "isRead": false,
         "jm": DateFormat.jm().format(DateTime.parse(date)),

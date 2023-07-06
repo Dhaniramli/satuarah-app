@@ -446,6 +446,7 @@ class _OrderingViewState extends State<OrderingView> {
                                             item,
                                             trip!.idTrip,
                                             item["id_user"],
+                                            trip,
                                           );
                                         },
                                         child: Image.asset(
@@ -459,7 +460,10 @@ class _OrderingViewState extends State<OrderingView> {
                                       GestureDetector(
                                         onTap: () {
                                           controller.deleteTrip(
-                                              trip!.idTrip, item["id_user"]);
+                                            trip!.idTrip,
+                                            item["id_user"],
+                                            trip, item,
+                                          );
                                         },
                                         child: Image.asset(
                                           "assets/cancel.png",
