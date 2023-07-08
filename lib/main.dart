@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           future: Future.delayed(const Duration(seconds: 3)),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              // Get.testMode = true;
+              Get.testMode = true;
               return GetMaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: "Application",
