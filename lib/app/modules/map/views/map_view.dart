@@ -76,22 +76,27 @@ class _MapViewState extends State<MapView> {
             ),
         ],
       ),
-      body: GoogleMap(
-        mapType: MapType.terrain,
-        myLocationButtonEnabled: false,
-        zoomControlsEnabled: false,
-        initialCameraPosition: _initialCameraPosition,
-        onMapCreated: (controller) =>
-            controllerC.googleMapController = controller,
-        markers: {
-          if (controllerC.origin != null) controllerC.origin!,
-          if (controllerC.detination != null) controllerC.detination!,
-        },
-        onTap: (LatLng location) {
-          _addMarker(location);
-          _getPlaceName(location);
-        },
-        // onLongPress: addMarker,
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          GoogleMap(
+            mapType: MapType.terrain,
+            myLocationButtonEnabled: false,
+            zoomControlsEnabled: false,
+            initialCameraPosition: _initialCameraPosition,
+            onMapCreated: (controller) =>
+                controllerC.googleMapController = controller,
+            markers: {
+              if (controllerC.origin != null) controllerC.origin!,
+              if (controllerC.detination != null) controllerC.detination!,
+            },
+            onTap: (LatLng location) {
+              _addMarker(location);
+              _getPlaceName(location);
+            },
+            // onLongPress: addMarker,
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
