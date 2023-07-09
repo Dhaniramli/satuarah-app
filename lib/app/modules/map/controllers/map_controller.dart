@@ -4,10 +4,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../data/models/directions_model.dart';
 
 class MapController extends GetxController {
-  late GoogleMapController googleMapController;
+  late GoogleMapController? googleMapController;
   late Marker? origin = null;
   late Marker? detination = null;
   // late Directions? info = null;
+
+  
 
   @override
   void onInit() {
@@ -21,7 +23,7 @@ class MapController extends GetxController {
 
   @override
   void onClose() {
-    googleMapController.dispose();
+    googleMapController!.dispose();
     super.onClose();
   }
 

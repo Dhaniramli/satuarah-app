@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:satuarah/theme.dart';
 
+import '../../../../theme.dart';
 import '../controllers/map_controller.dart';
 
 class MapView extends StatefulWidget {
-  const MapView({super.key});
+  const MapView({Key? key}) : super(key: key);
 
   @override
-  State<MapView> createState() => _MapViewState();
+  _MapViewState createState() => _MapViewState();
 }
 
 const _initialCameraPosition = CameraPosition(
@@ -19,11 +19,17 @@ const _initialCameraPosition = CameraPosition(
 );
 
 class _MapViewState extends State<MapView> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late GoogleMapController _mapController;
+  Set<Marker> _markers = {};
+  LatLng? _selectedLocation;
+
   @override
   Widget build(BuildContext context) {
     final controllerC = Get.put(MapController());
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: white,
         title: Text(
@@ -35,7 +41,7 @@ class _MapViewState extends State<MapView> {
           if (controllerC.origin != null)
             TextButton(
               onPressed: () {
-                controllerC.googleMapController.animateCamera(
+                controllerC.googleMapController!.animateCamera(
                   CameraUpdate.newCameraPosition(
                     CameraPosition(
                       target: controllerC.origin!.position,
@@ -53,7 +59,7 @@ class _MapViewState extends State<MapView> {
           if (controllerC.detination != null)
             TextButton(
               onPressed: () {
-                controllerC.googleMapController.animateCamera(
+                controllerC.googleMapController!.animateCamera(
                   CameraUpdate.newCameraPosition(
                     CameraPosition(
                       target: controllerC.detination!.position,
@@ -71,6 +77,7 @@ class _MapViewState extends State<MapView> {
         ],
       ),
       body: GoogleMap(
+        mapType: MapType.terrain,
         myLocationButtonEnabled: false,
         zoomControlsEnabled: false,
         initialCameraPosition: _initialCameraPosition,
@@ -80,13 +87,16 @@ class _MapViewState extends State<MapView> {
           if (controllerC.origin != null) controllerC.origin!,
           if (controllerC.detination != null) controllerC.detination!,
         },
-        onTap: addMarker,
+        onTap: (LatLng location) {
+          _addMarker(location);
+          _getPlaceName(location);
+        },
         // onLongPress: addMarker,
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
         onPressed: () {
-          controllerC.googleMapController.animateCamera(
+          controllerC.googleMapController!.animateCamera(
             CameraUpdate.newCameraPosition(_initialCameraPosition),
           );
         },
@@ -95,8 +105,9 @@ class _MapViewState extends State<MapView> {
     );
   }
 
-  void addMarker(LatLng pos) async {
+  void _addMarker(LatLng location) {
     final controllerC = Get.put(MapController());
+
     if (controllerC.origin == null ||
         (controllerC.origin != null && controllerC.detination != null)) {
       setState(() {
@@ -107,7 +118,7 @@ class _MapViewState extends State<MapView> {
           infoWindow: const InfoWindow(title: 'Origin'),
           icon:
               BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          position: pos,
+          position: location,
         );
         // reset destination
         controllerC.detination = null;
@@ -118,9 +129,56 @@ class _MapViewState extends State<MapView> {
           markerId: const MarkerId('destination'),
           infoWindow: const InfoWindow(title: 'Destination'),
           icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          position: pos,
+          position: location,
         );
       });
     }
+
+    setState(() {
+      _markers.clear();
+      _markers.add(
+        Marker(
+          markerId: MarkerId('selectedLocation'),
+          position: location,
+        ),
+      );
+    });
+  }
+
+  void _getPlaceName(LatLng location) async {
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        location.latitude,
+        location.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        Placemark placemark = placemarks.first;
+        String placeName = placemark.locality ?? '';
+        // String placeName = placemark.subAdministrativeArea ?? '';
+
+        double latitude = location.latitude;
+        double longitude = location.longitude;
+
+        setState(() {
+          _selectedLocation = LatLng(latitude, longitude);
+        });
+
+        _showSnackbar('Nama: $placeName');
+        _showSnackbar('Latitude: $latitude');
+        _showSnackbar('Longitude: $longitude');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  void _showSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+      ),
+    );
   }
 }
