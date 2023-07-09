@@ -23,6 +23,7 @@ abstract class Routes {
   static const EDIT_A_TRIP = _Paths.EDIT_A_TRIP;
   static const SEARCH_RIDE = _Paths.SEARCH_RIDE;
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
+  static const MAP = _Paths.MAP;
 }
 
 abstract class _Paths {
@@ -47,4 +48,5 @@ abstract class _Paths {
   static const EDIT_A_TRIP = '/edit-a-trip';
   static const SEARCH_RIDE = '/search-ride';
   static const RESET_PASSWORD = '/reset-password';
+  static const MAP = '/map';
 }

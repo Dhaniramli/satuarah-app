@@ -22,6 +22,8 @@ import '../modules/main_navigation/bindings/main_navigation_binding.dart';
 import '../modules/main_navigation/views/main_navigation_view.dart';
 import '../modules/make_a_trip/bindings/make_a_trip_binding.dart';
 import '../modules/make_a_trip/views/make_a_trip_view.dart';
+import '../modules/map/bindings/map_binding.dart';
+import '../modules/map/views/map_view.dart';
 import '../modules/order_detail/bindings/order_detail_binding.dart';
 import '../modules/order_detail/views/order_detail_view.dart';
 import '../modules/ordering/bindings/ordering_binding.dart';
@@ -146,6 +148,11 @@ class AppPages {
       name: _Paths.RESET_PASSWORD,
       page: () => const ResetPasswordView(),
       binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAP,
+      page: () => const MapView(),
+      binding: MapBinding(),
     ),
   ];
 }
