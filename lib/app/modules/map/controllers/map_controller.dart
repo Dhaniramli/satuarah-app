@@ -7,7 +7,7 @@ class MapController extends GetxController {
   late GoogleMapController googleMapController;
   late Marker? origin = null;
   late Marker? detination = null;
-  late Directions? info = null;
+  // late Directions? info = null;
 
   @override
   void onInit() {
