@@ -5,11 +5,32 @@ import '../../../data/models/directions_model.dart';
 
 class MapController extends GetxController {
   late GoogleMapController? googleMapController;
-  late Marker? origin = null;
-  late Marker? detination = null;
-  // late Directions? info = null;
+  Marker? origin;
+  Marker? detination;
+  Directions? info;
 
-  
+  String placeName = '';
+  String placeNamesubAdministrativeArea = '';
+  String placeNamethoroughfare = '';
+  String placesubLocality = '';
+
+  double latitude = 0.0;
+  double longitude = 0.0;
+
+  String placeNameStart = '';
+  String placeNamesubAdministrativeAreaStart = '';
+  String placeNamethoroughfareStart = '';
+  String placesubLocalityStart = '';
+
+  String placeNameFinish = '';
+  String placeNamesubAdministrativeAreaFinish = '';
+  String placeNamethoroughfareFinish = '';
+  String placesubLocalityFinish = '';
+
+  double latitudeStart = 0.0;
+  double longitudeStart = 0.0;
+  double latitudeFinish = 0.0;
+  double longitudeFinish = 0.0;
 
   @override
   void onInit() {
@@ -26,6 +47,4 @@ class MapController extends GetxController {
     googleMapController!.dispose();
     super.onClose();
   }
-
-
 }
