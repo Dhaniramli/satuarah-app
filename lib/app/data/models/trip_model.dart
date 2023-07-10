@@ -1,7 +1,5 @@
 class TripModel {
   final String chair;
-  final String cityFinish;
-  final String cityStart;
   final String otherInformation;
   final String tripDate;
   final String tripPrice;
@@ -16,11 +14,33 @@ class TripModel {
   final String photo;
   final List<dynamic> rides;
   final List<dynamic> requestField;
+  final double latitudeStart;
+  final double latitudeFinish;
+  final double longitudeStart;
+  final double longitudeFinish;
+  final String localityStart;
+  final String localityFinish;
+  final String subAdministrativeAreaStart;
+  final String subAdministrativeAreaFinish;
+  final String thoroughfareStart;
+  final String thoroughfareFinish;
+  final String subLocalityStart;
+  final String subLocalityFinish;
 
   TripModel({
+    required this.latitudeStart,
+    required this.latitudeFinish,
+    required this.longitudeStart,
+    required this.longitudeFinish,
+    required this.localityStart,
+    required this.localityFinish,
+    required this.subAdministrativeAreaStart,
+    required this.subAdministrativeAreaFinish,
+    required this.thoroughfareStart,
+    required this.thoroughfareFinish,
+    required this.subLocalityStart,
+    required this.subLocalityFinish,
     required this.chair,
-    required this.cityFinish,
-    required this.cityStart,
     required this.otherInformation,
     required this.tripDate,
     required this.tripPrice,
@@ -39,8 +59,6 @@ class TripModel {
 
   factory TripModel.fromJson(Map<String, dynamic> json) => TripModel(
         chair: json["chair"] ?? "",
-        cityFinish: json["city_finish"] ?? "",
-        cityStart: json["city_start"] ?? "",
         otherInformation: json["other_information"] ?? "",
         tripDate: json["trip_date"] ?? "",
         tripPrice: json["trip_price"] ?? "",
@@ -55,12 +73,22 @@ class TripModel {
         photo: json["photo"] ?? "",
         rides: List<dynamic>.from(json["rides"].map((x) => x)),
         requestField: List<dynamic>.from(json["request_field"].map((x) => x)),
+        latitudeStart: json["latitude_start"] ?? "",
+        latitudeFinish: json["latitude_finish"] ?? "",
+        longitudeStart: json["longitude_start"] ?? "",
+        longitudeFinish: json["longitude_finish"] ?? "",
+        localityStart: json["locality_start"] ?? "",
+        localityFinish: json["locality_finish"] ?? "",
+        subAdministrativeAreaStart: json["subAdministrativeArea_start"] ?? "",
+        subAdministrativeAreaFinish: json["subAdministrativeArea_finish"] ?? "",
+        thoroughfareStart: json["thoroughfare_start"] ?? "",
+        thoroughfareFinish: json["thoroughfare_finish"] ?? "",
+        subLocalityStart: json["subLocality_start"] ?? "",
+        subLocalityFinish: json["subLocality_finish"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
         "chair": chair,
-        "city_finish": cityFinish,
-        "city_start": cityStart,
         "other_information": otherInformation,
         "trip_date": tripDate,
         "trip_price": tripPrice,

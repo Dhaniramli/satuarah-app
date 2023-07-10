@@ -6,24 +6,45 @@ import '../../../../../theme.dart';
 
 class CardFull extends StatelessWidget {
   final String fullNameC;
-  final String startC;
-  final String finishC;
   final String dateC;
   final String timeC;
   final String priceC;
   final String photoC;
   final void Function()? onPressed;
+  final double latitudeStartC;
+  final double longitudeStartC;
+  final String localityStartC;
+  final String subAdministrativeAreaStartC;
+  final String thoroughfareStartC;
+  final String subLocalityStartC;
+
+  final double latitudeFinishC;
+  final double longitudeFinishC;
+  final String localityFinishC;
+  final String subAdministrativeAreaFinishC;
+  final String thoroughfareFinishC;
+  final String subLocalityFinishC;
 
   const CardFull({
     super.key,
     required this.fullNameC,
-    required this.startC,
-    required this.finishC,
     required this.dateC,
     required this.timeC,
     required this.priceC,
     this.onPressed,
     required this.photoC,
+      required this.latitudeStartC,
+    required this.latitudeFinishC,
+    required this.longitudeStartC,
+    required this.longitudeFinishC,
+    required this.localityStartC,
+    required this.localityFinishC,
+    required this.subAdministrativeAreaStartC,
+    required this.subAdministrativeAreaFinishC,
+    required this.thoroughfareStartC,
+    required this.thoroughfareFinishC,
+    required this.subLocalityStartC,
+    required this.subLocalityFinishC,
   });
 
   @override
@@ -60,14 +81,14 @@ class CardFull extends StatelessWidget {
                                 fit: BoxFit.fill,
                               )
                             : ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: Image.network(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.network(
                                   photoC,
                                   width: 25.0,
                                   height: 25.0,
                                   fit: BoxFit.fill,
                                 ),
-                              ),
+                            ),
                       ),
                       const SizedBox(width: 4),
                       Column(
@@ -114,7 +135,7 @@ class CardFull extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                startC,
+                                subAdministrativeAreaStartC,
                                 style: textBlackDuaStyle.copyWith(
                                     fontSize: 9.83, fontWeight: medium),
                               ),
@@ -139,7 +160,7 @@ class CardFull extends StatelessWidget {
                           Icon(Icons.location_on_outlined,
                               color: grayTigaColor),
                           Text(
-                            finishC,
+                            subAdministrativeAreaFinishC,
                             style: textBlackDuaStyle.copyWith(
                                 fontSize: 9.83, fontWeight: medium),
                           ),

@@ -61,7 +61,7 @@ class OrderingController extends GetxController {
         "pengirim": _auth.currentUser!.uid,
         "penerima": userMap!["id_user"],
         "msg":
-            "Maaf, kita tidak jadi berangkat bareng, ${tripC.cityStart}- ${tripC.cityFinish}, ${tripC.tripDate} ${tripC.tripTime}",
+            "Maaf, kita tidak jadi berangkat bareng, ${tripC.subAdministrativeAreaStart}- ${tripC.subAdministrativeAreaFinish}, ${tripC.tripDate} ${tripC.tripTime}",
         "time": Timestamp.now(),
         "isRead": false,
         "jm": DateFormat.jm().format(DateTime.parse(date)),
@@ -235,7 +235,7 @@ class OrderingController extends GetxController {
         "pengirim": _auth.currentUser!.uid,
         "penerima": userMap["id_user"],
         "msg":
-            "Ayo, kita berangkat bareng, ${tripC.cityStart}- ${tripC.cityFinish}, ${tripC.tripDate} ${tripC.tripTime}",
+            "Ayo, kita berangkat bareng, ${tripC.subAdministrativeAreaStart}- ${tripC.subAdministrativeAreaFinish}, ${tripC.tripDate} ${tripC.tripTime}",
         "time": Timestamp.now(),
         "isRead": false,
         "jm": DateFormat.jm().format(DateTime.parse(date)),
@@ -425,7 +425,7 @@ class OrderingController extends GetxController {
         "pengirim": _auth.currentUser!.uid,
         "penerima": tripC.idDriver,
         "msg":
-            "Saya ingin ikut perjalanan anda, ${tripC.cityStart}- ${tripC.cityFinish}, ${tripC.tripDate} ${tripC.tripTime}",
+            "Saya ingin ikut perjalanan anda, ${tripC.subAdministrativeAreaStart}- ${tripC.subAdministrativeAreaFinish}, ${tripC.tripDate} ${tripC.tripTime}",
         "time": Timestamp.now(),
         "isRead": false,
         "jm": DateFormat.jm().format(DateTime.parse(date)),

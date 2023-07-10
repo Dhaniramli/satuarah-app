@@ -144,7 +144,7 @@ class HomeView extends GetView<HomeController> {
                           tittLe: "Buat Tebengan",
                           onTap: () {
                             if (user.userAs == "driver") {
-                              Get.toNamed(Routes.MAKE_A_TRIP, arguments: user);
+                              Get.toNamed(Routes.MAP, arguments: user);
                             } else {
                               Get.snackbar(
                                 "Anda Belum Terdaftar Sebagai Driver",
@@ -223,9 +223,19 @@ class HomeView extends GetView<HomeController> {
                           itemBuilder: (context, index) {
                             TripModel trip = allTrip[index];
                             return CardFull(
+                              latitudeStartC: trip.latitudeStart,
+                              latitudeFinishC: trip.latitudeFinish,
+                              longitudeStartC: trip.longitudeStart,
+                              longitudeFinishC: trip.longitudeFinish,
+                              localityStartC: trip.localityStart,
+                              localityFinishC: trip.localityFinish,
+                              subAdministrativeAreaStartC: trip.subAdministrativeAreaStart,
+                              subAdministrativeAreaFinishC: trip.subAdministrativeAreaFinish,
+                              subLocalityStartC: trip.subLocalityStart,
+                              subLocalityFinishC: trip.subLocalityFinish,
+                              thoroughfareStartC: trip.thoroughfareStart,
+                              thoroughfareFinishC: trip.thoroughfareFinish,
                               fullNameC: trip.fullName,
-                              startC: trip.cityStart,
-                              finishC: trip.cityFinish,
                               dateC: trip.tripDate,
                               timeC: trip.tripTime,
                               priceC: trip.tripPrice,

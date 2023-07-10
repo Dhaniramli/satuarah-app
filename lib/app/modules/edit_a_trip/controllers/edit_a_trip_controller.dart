@@ -21,8 +21,6 @@ class EditATripController extends GetxController {
   late TextEditingController nomorPlat;
   late TextEditingController merekKendaraan;
   late String chair;
-  late String cityStart;
-  late String cityFinish;
 
   doEditATrip(String idTrip) async {
     try {
@@ -33,9 +31,7 @@ class EditATripController extends GetxController {
           idDriver.text.isNotEmpty &&
           nomorPlat.text.isNotEmpty &&
           merekKendaraan.text.isNotEmpty &&
-          chair.isNotEmpty &&
-          cityStart.isNotEmpty &&
-          cityFinish.isNotEmpty) {
+          chair.isNotEmpty) {
         await firestore.collection("trip").doc(idTrip).update({
           "trip_date": tripDate.text,
           "trip_time": tripTime.text,
@@ -46,8 +42,6 @@ class EditATripController extends GetxController {
           "nomor_plat": nomorPlat.text,
           "merek_kendaraan": merekKendaraan.text,
           "chair": chair,
-          "city_start": cityStart,
-          "city_finish": cityFinish,
           "id_trip": idTrip,
         });
         Get.snackbar(
@@ -97,8 +91,6 @@ class EditATripController extends GetxController {
     nomorPlat = TextEditingController();
     merekKendaraan = TextEditingController();
     chair = "";
-    cityStart = "";
-    cityFinish = "";
     super.onInit();
   }
 

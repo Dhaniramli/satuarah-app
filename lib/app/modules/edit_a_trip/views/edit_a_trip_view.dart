@@ -36,12 +36,6 @@ class _EditATripViewState extends State<EditATripView> {
     if (controller.nomorPlat.text == "") {
       controller.nomorPlat.text = dataTrip.nomorPlat;
     }
-    if (controller.cityStart == "") {
-      controller.cityStart = dataTrip.cityStart;
-    }
-    if (controller.cityFinish == "") {
-      controller.cityFinish = dataTrip.cityFinish;
-    }
     if (controller.chair == "") {
       controller.chair = dataTrip.chair;
     }
@@ -119,96 +113,6 @@ class _EditATripViewState extends State<EditATripView> {
                     return 'Plat wajib diisi';
                   }
                   return null;
-                },
-              ),
-              const SizedBox(height: 15),
-              Text(
-                "Kota/Kabupaten Awal",
-                style: textBlackDuaStyle.copyWith(
-                  fontSize: 12,
-                  fontWeight: regular,
-                ),
-              ),
-              const SizedBox(height: 7),
-              DropdownWidget(
-                hintText: "Kota/Kabupaten Tujuan",
-                selectItem:
-                    controller.cityStart != "" ? controller.cityStart : null,
-                items: const [
-                  "Bantaeng",
-                  "Barru",
-                  "Bone",
-                  "Bulukumba",
-                  "Enrekang",
-                  "Gowa",
-                  "Jeneponto",
-                  "Kepulauan Selayar",
-                  "Luwu",
-                  "Luwu Utara",
-                  "Luwu Timur",
-                  "Maros",
-                  "Sinjai",
-                  "Sidrap",
-                  "Pinrang",
-                  "Pangkep",
-                  "Soppeng",
-                  "Takalar",
-                  "Tana Toraja",
-                  "Toraja",
-                  "Wajo",
-                  "Kota Makassar",
-                  "Kota Parepare",
-                  "Kota Palopo",
-                ],
-                valueC: (value) {
-                  if (value != null) {
-                    controller.cityStart = value;
-                  }
-                },
-              ),
-              const SizedBox(height: 15),
-              Text(
-                "Kota/Kabupaten Tujuan",
-                style: textBlackDuaStyle.copyWith(
-                  fontSize: 12,
-                  fontWeight: regular,
-                ),
-              ),
-              const SizedBox(height: 7),
-              DropdownWidget(
-                hintText: "Kota/Kabupaten Tujuan",
-                selectItem:
-                    controller.cityFinish != "" ? controller.cityFinish : null,
-                items: const [
-                  "Bantaeng",
-                  "Barru",
-                  "Bone",
-                  "Bulukumba",
-                  "Enrekang",
-                  "Gowa",
-                  "Jeneponto",
-                  "Kepulauan Selayar",
-                  "Luwu",
-                  "Luwu Utara",
-                  "Luwu Timur",
-                  "Maros",
-                  "Sinjai",
-                  "Sidrap",
-                  "Pinrang",
-                  "Pangkep",
-                  "Soppeng",
-                  "Takalar",
-                  "Tana Toraja",
-                  "Toraja",
-                  "Wajo",
-                  "Makassar",
-                  "Parepare",
-                  "Palopo",
-                ],
-                valueC: (value) {
-                  if (value != null) {
-                    controller.cityFinish = value;
-                  }
                 },
               ),
               const SizedBox(height: 15),

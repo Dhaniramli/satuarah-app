@@ -203,7 +203,7 @@ class _OrderingViewState extends State<OrderingView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      trip!.cityStart,
+                                      trip!.subAdministrativeAreaStart,
                                       style: textBlackDuaStyle.copyWith(
                                           fontSize: 16, fontWeight: medium),
                                     ),
@@ -231,7 +231,7 @@ class _OrderingViewState extends State<OrderingView> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      trip!.cityFinish,
+                                      trip!.subAdministrativeAreaFinish,
                                       style: textBlackDuaStyle.copyWith(
                                           fontSize: 16, fontWeight: medium),
                                     ),
@@ -462,7 +462,8 @@ class _OrderingViewState extends State<OrderingView> {
                                           controller.deleteTrip(
                                             trip!.idTrip,
                                             item["id_user"],
-                                            trip, item,
+                                            trip,
+                                            item,
                                           );
                                         },
                                         child: Image.asset(

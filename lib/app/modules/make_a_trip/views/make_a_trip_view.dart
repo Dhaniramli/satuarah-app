@@ -11,7 +11,37 @@ import 'widgets/dropdown_widget.dart';
 import 'widgets/text_form_widget.dart';
 
 class MakeATripView extends StatefulWidget {
-  const MakeATripView({Key? key}) : super(key: key);
+  final UserModel? dataUser;
+  final double? latitudeStart;
+  final double? longitudeStart;
+  final String? placeNameStart;
+  final String? placeNamesubAdministrativeAreaStart;
+  final String? placeNamethoroughfareStart;
+  final String? placesubLocalityStart;
+
+  final double? longitudeFinish;
+  final double? latitudeFinish;
+  final String? placeNameFinish;
+  final String? placeNamesubAdministrativeAreaFinish;
+  final String? placeNamethoroughfareFinish;
+  final String? placesubLocalityFinish;
+
+  const MakeATripView(
+      {Key? key,
+      this.dataUser,
+      this.latitudeStart,
+      this.longitudeStart,
+      this.placeNameStart,
+      this.placeNamesubAdministrativeAreaStart,
+      this.placeNamethoroughfareStart,
+      this.placesubLocalityStart,
+      this.longitudeFinish,
+      this.latitudeFinish,
+      this.placeNameFinish,
+      this.placeNamesubAdministrativeAreaFinish,
+      this.placeNamethoroughfareFinish,
+      this.placesubLocalityFinish})
+      : super(key: key);
 
   @override
   State<MakeATripView> createState() => _MakeATripViewState();
@@ -21,7 +51,21 @@ class _MakeATripViewState extends State<MakeATripView> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(MakeATripController());
-    final UserModel? dataUser = Get.arguments;
+
+    final UserModel? dataUser = widget.dataUser;
+    controller.latitudeStartC = widget.latitudeStart;
+    controller.longitudeStartC = widget.longitudeStart;
+    controller.placeNameStartC = widget.placeNameStart;
+    controller.placeNamesubAdministrativeAreaStartC = widget.placeNamesubAdministrativeAreaStart;
+    controller.placeNamethoroughfareStartC = widget.placeNamethoroughfareStart;
+    controller.placesubLocalityStartC = widget.placesubLocalityStart;
+
+    controller.latitudeFinishC = widget.latitudeFinish;
+    controller.longitudeFinishC = widget.longitudeFinish;
+    controller.placeNameFinishC = widget.placeNameFinish;
+    controller.placeNamesubAdministrativeAreaFinishC = widget.placeNamesubAdministrativeAreaFinish;
+    controller.placeNamethoroughfareFinishC = widget.placeNamethoroughfareFinish;
+    controller.placesubLocalityFinishC = widget.placesubLocalityFinish;
 
     if (controller.idDriver.text == "" && dataUser != null) {
       controller.idDriver.text = dataUser.idUser;
@@ -104,40 +148,6 @@ class _MakeATripViewState extends State<MakeATripView> {
                   }
                   return null;
                 },
-              ),
-              const SizedBox(height: 15),
-              Text(
-                "Kota/Kabupaten Awal",
-                style: textBlackDuaStyle.copyWith(
-                  fontSize: 12,
-                  fontWeight: regular,
-                ),
-              ),
-              const SizedBox(height: 7),
-              CityWidget(
-                onChanged: (City? city) {
-                  setState(() {
-                    controller.cityStart = city!.cityName ?? "";
-                  });
-                },
-                hintText: "Kota/Kabupaten Awal",
-              ),
-              const SizedBox(height: 15),
-              Text(
-                "Kota/Kabupaten Tujuan",
-                style: textBlackDuaStyle.copyWith(
-                  fontSize: 12,
-                  fontWeight: regular,
-                ),
-              ),
-              const SizedBox(height: 7),
-              CityWidget(
-                onChanged: (City? city) {
-                  setState(() {
-                    controller.cityFinish = city!.cityName ?? "";
-                  });
-                },
-                hintText: "Kota/Kabupaten Tujuan",
               ),
               const SizedBox(height: 15),
               Text(

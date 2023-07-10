@@ -22,8 +22,20 @@ class MakeATripController extends GetxController {
   late TextEditingController merekKendaraan;
   late String photo;
   late String chair;
-  late String cityStart;
-  late String cityFinish;
+
+  late double? latitudeStartC;
+  late double? longitudeStartC;
+  late String? placeNameStartC;
+  late String? placeNamesubAdministrativeAreaStartC;
+  late String? placeNamethoroughfareStartC;
+  late String? placesubLocalityStartC;
+
+  late double? latitudeFinishC;
+  late double? longitudeFinishC;
+  late String? placeNameFinishC;
+  late String? placeNamesubAdministrativeAreaFinishC;
+  late String? placeNamethoroughfareFinishC;
+  late String? placesubLocalityFinishC;
 
   doMakeATrip() async {
     try {
@@ -35,9 +47,7 @@ class MakeATripController extends GetxController {
           idDriver.text.isNotEmpty &&
           nomorPlat.text.isNotEmpty &&
           merekKendaraan.text.isNotEmpty &&
-          chair.isNotEmpty &&
-          cityStart.isNotEmpty &&
-          cityFinish.isNotEmpty) {
+          chair.isNotEmpty) {
         var docRef = await firestore.collection("trip").add({
           "trip_date": tripDate.text,
           "trip_time": tripTime.text,
@@ -53,11 +63,22 @@ class MakeATripController extends GetxController {
           "nomor_plat": nomorPlat.text,
           "merek_kendaraan": merekKendaraan.text,
           "chair": chair,
-          "city_start": cityStart,
-          "city_finish": cityFinish,
-          "key_finish": cityFinish.substring(0, 1).toUpperCase(),
           "photo": photo,
           "trip_status": "Menunggu",
+          "latitude_start": latitudeStartC,
+          "longitude_start": longitudeStartC,
+          "locality_start": placeNameStartC,
+          "subAdministrativeArea_start": placeNamesubAdministrativeAreaStartC,
+          "thoroughfare_start": placeNamethoroughfareStartC,
+          "subLocality_start": placesubLocalityStartC,
+
+          "longitude_finish": longitudeFinishC,
+          "latitude_finish": latitudeFinishC,
+          "locality_finish": placeNameFinishC,
+          "subAdministrativeArea_finish": placeNamesubAdministrativeAreaFinishC,
+          "key_finish": placeNamesubAdministrativeAreaFinishC!.substring(0, 1).toUpperCase(),
+          "thoroughfare_finish": placeNamethoroughfareFinishC,
+          "subLocality_finish": placesubLocalityFinishC,
         });
 
         firestore.collection("trip").doc(docRef.id).update({
@@ -69,8 +90,7 @@ class MakeATripController extends GetxController {
         tripPrice.clear();
         otherInformation.clear();
         chair = "";
-        cityStart = "";
-        cityFinish = "";
+
         Get.back();
         Get.back();
       } else {
@@ -102,8 +122,6 @@ class MakeATripController extends GetxController {
     merekKendaraan = TextEditingController();
     photo = "";
     chair = "";
-    cityStart = "";
-    cityFinish = "";
     super.onInit();
   }
 

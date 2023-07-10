@@ -27,38 +27,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: "Application",
-          initialRoute: Routes.MAP,
-          getPages: AppPages.routes,
-        );
-
-    // return StreamBuilder<User?>(
-    //   stream: auth.authStateChanges(),
-    //   builder: (context, snapAuth) {
-    //     if (snapAuth.hasError) {
-    //       return const Center(
-    //         child: Text("Terjadi Kesalahan"),
-    //       );
-    //     }
-    //     return FutureBuilder(
-    //       future: Future.delayed(const Duration(seconds: 3)),
-    //       builder: (context, snapshot) {
-    //         if (snapshot.connectionState == ConnectionState.done) {
-    //           Get.testMode = true;
-    //           return GetMaterialApp(
-    //             debugShowCheckedModeBanner: false,
-    //             title: "Application",
-    //             initialRoute:
-    //                 snapAuth.hasData ? Routes.mainNavigation : Routes.signIn,
-    //             getPages: AppPages.routes,
-    //           );
-    //         }
-    //         return const SplachscreenView();
-    //       },
+    // return GetMaterialApp(
+    //       debugShowCheckedModeBanner: false,
+    //       title: "Application",
+    //       initialRoute: Routes.MAP,
+    //       getPages: AppPages.routes,
     //     );
-    //   },
-    // );
+
+    return StreamBuilder<User?>(
+      stream: auth.authStateChanges(),
+      builder: (context, snapAuth) {
+        if (snapAuth.hasError) {
+          return const Center(
+            child: Text("Terjadi Kesalahan"),
+          );
+        }
+        return FutureBuilder(
+          future: Future.delayed(const Duration(seconds: 3)),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              Get.testMode = true;
+              return GetMaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: "Application",
+                initialRoute:
+                    snapAuth.hasData ? Routes.mainNavigation : Routes.signIn,
+                getPages: AppPages.routes,
+              );
+            }
+            return const SplachscreenView();
+          },
+        );
+      },
+    );
   }
 }

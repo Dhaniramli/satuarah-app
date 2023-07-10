@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:satuarah/app/modules/make_a_trip/views/make_a_trip_view.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../theme.dart';
+import '../../../data/models/user_model.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/map_controller.dart';
 
 class MapView extends StatefulWidget {
@@ -22,18 +26,66 @@ const _initialCameraPosition = CameraPosition(
 class _MapViewState extends State<MapView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final Set<Marker> _markers = {};
+  Map<PolylineId, Polyline> polylines = {};
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints = PolylinePoints();
+
+  void _addPolyline() {
+    PolylineId id = const PolylineId("poly");
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Colors.red,
+      points: polylineCoordinates,
+    );
+    polylines[id] = polyline;
+    setState(() {});
+  }
+
+  Future<void> _getPolyline() async {
+    final controllerC = Get.put(MapController());
+
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      'AIzaSyDmdU24RknAfHnoYzuA2ekpD4yvGOTI9vQ', // Ganti dengan kunci API Google Maps yang valid -5.291972, 119.427223
+      PointLatLng(controllerC.latitudeStart, controllerC.longitudeStart),
+      PointLatLng(controllerC.latitudeFinish, controllerC.longitudeFinish),
+      travelMode: TravelMode.driving,
+    );
+    if (result.points.isNotEmpty) {
+      for (var point in result.points) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+    }
+    setState(() {
+      _addPolyline();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getPolyline();
+  }
 
   @override
   Widget build(BuildContext context) {
     final controllerC = Get.put(MapController());
+    final UserModel? dataUser = Get.arguments;
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: white,
-        title: Text(
-          'MapView',
-          style: textPrimaryStyle.copyWith(),
+        title: Text('Pilih Rute',
+            style: textPrimaryStyle.copyWith(fontWeight: FontWeight.normal)),
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: primaryColor,
+          ),
         ),
         centerTitle: false,
         actions: [
@@ -79,13 +131,18 @@ class _MapViewState extends State<MapView> {
         alignment: Alignment.center,
         children: [
           GoogleMap(
+            polylines: Set<Polyline>.of(polylines.values),
             compassEnabled: false,
-            mapType: MapType.terrain,
+            mapType: MapType.normal,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
             initialCameraPosition: _initialCameraPosition,
-            onMapCreated: (controller) =>
-                controllerC.googleMapController = controller,
+            onMapCreated: (controller) {
+              controllerC.googleMapController = controller;
+              setState(() {
+                _addPolyline();
+              });
+            },
             markers: {
               if (controllerC.origin != null) controllerC.origin!,
               if (controllerC.detination != null) controllerC.detination!,
@@ -222,10 +279,42 @@ class _MapViewState extends State<MapView> {
                           controllerC.latitudeFinish = controllerC.latitude;
                           controllerC.longitudeFinish = controllerC.longitude;
                         });
+                      } else {
+                       Get.to(() => MakeATripView(
+                                dataUser: dataUser,
+                                latitudeStart: controllerC.latitudeStart,
+                                longitudeStart: controllerC.longitudeStart,
+                                placeNameStart: controllerC.placeNameStart,
+                                placeNamesubAdministrativeAreaStart: controllerC.placeNamesubAdministrativeAreaStart,
+                                placeNamethoroughfareStart: controllerC.placeNamethoroughfareStart,
+                                placesubLocalityStart: controllerC.placesubLocalityStart,
+                                latitudeFinish: controllerC.latitudeFinish,
+                                longitudeFinish: controllerC.longitudeFinish,
+                                placeNameFinish: controllerC.placeNameFinish,
+                                placeNamesubAdministrativeAreaFinish: controllerC.placeNamesubAdministrativeAreaFinish,
+                                placeNamethoroughfareFinish: controllerC.placeNamethoroughfareFinish,
+                                placesubLocalityFinish: controllerC.placesubLocalityFinish,
+                              ));
                       }
                     }
                   : controllerC.placeNameFinish != ''
-                      ? () {}
+                      ? () {
+                          Get.to(() => MakeATripView(
+                                dataUser: dataUser,
+                                latitudeStart: controllerC.latitudeStart,
+                                longitudeStart: controllerC.longitudeStart,
+                                placeNameStart: controllerC.placeNameStart,
+                                placeNamesubAdministrativeAreaStart: controllerC.placeNamesubAdministrativeAreaStart,
+                                placeNamethoroughfareStart: controllerC.placeNamethoroughfareStart,
+                                placesubLocalityStart: controllerC.placesubLocalityStart,
+                                latitudeFinish: controllerC.latitudeFinish,
+                                longitudeFinish: controllerC.longitudeFinish,
+                                placeNameFinish: controllerC.placeNameFinish,
+                                placeNamesubAdministrativeAreaFinish: controllerC.placeNamesubAdministrativeAreaFinish,
+                                placeNamethoroughfareFinish: controllerC.placeNamethoroughfareFinish,
+                                placesubLocalityFinish: controllerC.placesubLocalityFinish,
+                              ));
+                        }
                       : null,
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(120.0, 48.0),
