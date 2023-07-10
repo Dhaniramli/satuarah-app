@@ -14,10 +14,10 @@ class TripModel {
   final String photo;
   final List<dynamic> rides;
   final List<dynamic> requestField;
-  final double latitudeStart;
-  final double latitudeFinish;
-  final double longitudeStart;
-  final double longitudeFinish;
+  final String latitudeStart;
+  final String latitudeFinish;
+  final String longitudeStart;
+  final String longitudeFinish;
   final String localityStart;
   final String localityFinish;
   final String subAdministrativeAreaStart;
@@ -88,6 +88,18 @@ class TripModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "latitude_start": latitudeStart,
+        "latitude_finish": latitudeFinish,
+        "longitude_start": longitudeStart,
+        "longitude_finish": longitudeFinish,
+        "locality_start": localityStart,
+        "locality_finish": localityFinish,
+        "subAdministrativeArea_start": subAdministrativeAreaStart,
+        "subAdministrativeArea_finish": subAdministrativeAreaFinish,
+        "thoroughfare_start": thoroughfareStart,
+        "thoroughfare_finish": thoroughfareFinish,
+        "subLocality_start": subLocalityStart,
+        "subLocality_finish": subLocalityFinish,
         "chair": chair,
         "other_information": otherInformation,
         "trip_date": tripDate,

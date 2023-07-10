@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geocoding/geocoding.dart';
+
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../make_a_trip/views/make_a_trip_view.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../theme.dart';
+import '../../../data/models/trip_model.dart';
 import '../../../data/models/user_model.dart';
-import '../controllers/map_controller.dart';
+import '../controllers/ordering_map_controller.dart';
 
-class MapView extends StatefulWidget {
-  const MapView({Key? key}) : super(key: key);
+class OrderingMapView extends StatefulWidget {
+  const OrderingMapView({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _MapViewState createState() => _MapViewState();
+  _OrderingMapViewState createState() => _OrderingMapViewState();
 }
 
-const _initialCameraPosition = CameraPosition(
-  target: LatLng(-5.161635, 119.435995),
+final TripModel? trip = Get.arguments;
+CameraPosition _initialCameraPosition = CameraPosition(
+  target: LatLng(
+    double.parse(trip!.latitudeStart),
+    double.parse(trip!.longitudeStart),
+  ),
   zoom: 11.5,
 );
 
-class _MapViewState extends State<MapView> {
+class _OrderingMapViewState extends State<OrderingMapView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final Set<Marker> _markers = {};
   Map<PolylineId, Polyline> polylines = {};
@@ -41,12 +48,12 @@ class _MapViewState extends State<MapView> {
   }
 
   Future<void> _getPolyline() async {
-    final controllerC = Get.put(MapController());
-
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       'AIzaSyDmdU24RknAfHnoYzuA2ekpD4yvGOTI9vQ', // Ganti dengan kunci API Google Maps yang valid -5.291972, 119.427223
-      PointLatLng(controllerC.latitudeStart, controllerC.longitudeStart),
-      PointLatLng(controllerC.latitudeFinish, controllerC.longitudeFinish),
+      PointLatLng(double.parse(trip!.latitudeStart),
+          double.parse(trip!.longitudeStart)),
+      PointLatLng(double.parse(trip!.latitudeFinish),
+          double.parse(trip!.longitudeFinish)),
       travelMode: TravelMode.driving,
     );
     if (result.points.isNotEmpty) {
@@ -67,18 +74,16 @@ class _MapViewState extends State<MapView> {
 
   @override
   Widget build(BuildContext context) {
-    final controllerC = Get.put(MapController());
-    final UserModel? dataUser = Get.arguments;
+    final controllerC = Get.put(OrderingMapController());
 
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: white,
-        title: Text('Pilih Rute',
+        title: Text('Rute',
             style: textPrimaryStyle.copyWith(fontWeight: FontWeight.normal)),
         leading: IconButton(
           onPressed: () {
-            Get.back();
             Get.back();
           },
           icon: Icon(
@@ -278,42 +283,10 @@ class _MapViewState extends State<MapView> {
                           controllerC.latitudeFinish = controllerC.latitude;
                           controllerC.longitudeFinish = controllerC.longitude;
                         });
-                      } else {
-                       Get.to(() => MakeATripView(
-                                dataUser: dataUser,
-                                latitudeStart: controllerC.latitudeStart,
-                                longitudeStart: controllerC.longitudeStart,
-                                placeNameStart: controllerC.placeNameStart,
-                                placeNamesubAdministrativeAreaStart: controllerC.placeNamesubAdministrativeAreaStart,
-                                placeNamethoroughfareStart: controllerC.placeNamethoroughfareStart,
-                                placesubLocalityStart: controllerC.placesubLocalityStart,
-                                latitudeFinish: controllerC.latitudeFinish,
-                                longitudeFinish: controllerC.longitudeFinish,
-                                placeNameFinish: controllerC.placeNameFinish,
-                                placeNamesubAdministrativeAreaFinish: controllerC.placeNamesubAdministrativeAreaFinish,
-                                placeNamethoroughfareFinish: controllerC.placeNamethoroughfareFinish,
-                                placesubLocalityFinish: controllerC.placesubLocalityFinish,
-                              ));
-                      }
+                      } else {}
                     }
                   : controllerC.placeNameFinish != ''
-                      ? () {
-                          Get.to(() => MakeATripView(
-                                dataUser: dataUser,
-                                latitudeStart: controllerC.latitudeStart,
-                                longitudeStart: controllerC.longitudeStart,
-                                placeNameStart: controllerC.placeNameStart,
-                                placeNamesubAdministrativeAreaStart: controllerC.placeNamesubAdministrativeAreaStart,
-                                placeNamethoroughfareStart: controllerC.placeNamethoroughfareStart,
-                                placesubLocalityStart: controllerC.placesubLocalityStart,
-                                latitudeFinish: controllerC.latitudeFinish,
-                                longitudeFinish: controllerC.longitudeFinish,
-                                placeNameFinish: controllerC.placeNameFinish,
-                                placeNamesubAdministrativeAreaFinish: controllerC.placeNamesubAdministrativeAreaFinish,
-                                placeNamethoroughfareFinish: controllerC.placeNamethoroughfareFinish,
-                                placesubLocalityFinish: controllerC.placesubLocalityFinish,
-                              ));
-                        }
+                      ? () {}
                       : null,
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(120.0, 48.0),
@@ -353,7 +326,7 @@ class _MapViewState extends State<MapView> {
   }
 
   void _addMarker(LatLng location) {
-    final controllerC = Get.put(MapController());
+    final controllerC = Get.put(OrderingMapController());
 
     // if (controllerC.origin == null ||
     //     (controllerC.origin != null && controllerC.detination != null)) {
@@ -394,7 +367,7 @@ class _MapViewState extends State<MapView> {
   }
 
   void _getPlaceName(LatLng location) async {
-    final controllerC = Get.put(MapController());
+    final controllerC = Get.put(OrderingMapController());
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(
         location.latitude,

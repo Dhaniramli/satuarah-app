@@ -65,20 +65,21 @@ class MakeATripController extends GetxController {
           "chair": chair,
           "photo": photo,
           "trip_status": "Menunggu",
-          "latitude_start": latitudeStartC,
-          "longitude_start": longitudeStartC,
+          "latitude_start": "$latitudeStartC",
+          "latitude_finish": "$latitudeFinishC",
+          "longitude_start": "$longitudeStartC",
+          "longitude_finish": "$longitudeFinishC",
           "locality_start": placeNameStartC,
-          "subAdministrativeArea_start": placeNamesubAdministrativeAreaStartC,
-          "thoroughfare_start": placeNamethoroughfareStartC,
-          "subLocality_start": placesubLocalityStartC,
-
-          "longitude_finish": longitudeFinishC,
-          "latitude_finish": latitudeFinishC,
           "locality_finish": placeNameFinishC,
+          "subAdministrativeArea_start": placeNamesubAdministrativeAreaStartC,
           "subAdministrativeArea_finish": placeNamesubAdministrativeAreaFinishC,
-          "key_finish": placeNamesubAdministrativeAreaFinishC!.substring(0, 1).toUpperCase(),
+          "thoroughfare_start": placeNamethoroughfareStartC,
           "thoroughfare_finish": placeNamethoroughfareFinishC,
+          "subLocality_start": placesubLocalityStartC,
           "subLocality_finish": placesubLocalityFinishC,
+          "key_finish": placeNamesubAdministrativeAreaFinishC!
+              .substring(0, 1)
+              .toUpperCase(),
         });
 
         firestore.collection("trip").doc(docRef.id).update({

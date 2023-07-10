@@ -8,6 +8,7 @@ import '../../../../shared/rating_bar.dart';
 import '../../../../theme.dart';
 import '../../../data/models/trip_model.dart';
 import '../../../routes/app_pages.dart';
+import '../../ordering_map/views/ordering_map_view.dart';
 import '../controllers/ordering_controller.dart';
 
 class OrderingView extends StatefulWidget {
@@ -249,6 +250,12 @@ class _OrderingViewState extends State<OrderingView> {
                               style: textBlackDuaStyle.copyWith(
                                   fontSize: 15, fontWeight: medium),
                             ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  Get.toNamed(Routes.ORDERING_MAP,
+                                      arguments: trip);
+                                },
+                                child: Text('Rute')),
                           ],
                         )
                       ],

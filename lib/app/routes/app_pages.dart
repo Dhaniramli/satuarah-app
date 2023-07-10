@@ -28,6 +28,8 @@ import '../modules/order_detail/bindings/order_detail_binding.dart';
 import '../modules/order_detail/views/order_detail_view.dart';
 import '../modules/ordering/bindings/ordering_binding.dart';
 import '../modules/ordering/views/ordering_view.dart';
+import '../modules/ordering_map/bindings/ordering_map_binding.dart';
+import '../modules/ordering_map/views/ordering_map_view.dart';
 import '../modules/popular_route/bindings/popular_route_binding.dart';
 import '../modules/popular_route/views/popular_route_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -153,6 +155,11 @@ class AppPages {
       name: _Paths.MAP,
       page: () => const MapView(),
       binding: MapBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDERING_MAP,
+      page: () => const OrderingMapView(),
+      binding: OrderingMapBinding(),
     ),
   ];
 }

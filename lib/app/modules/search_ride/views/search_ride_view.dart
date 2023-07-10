@@ -125,31 +125,53 @@ class _SearchRideViewState extends State<SearchRideView> {
                         itemCount: controller.tempSearch.length,
                         itemBuilder: (BuildContext context, int index) {
                           TripModel trip = TripModel(
-                            latitudeStart:controller.tempSearch[index]["latitude_start"],
-                            latitudeFinish:controller.tempSearch[index]["latitude_finish"],
-                            longitudeStart:controller.tempSearch[index]["longitude_start"],
-                            longitudeFinish:controller.tempSearch[index]["longitude_finish"],
-                            subLocalityStart:controller.tempSearch[index]["subLocality_start"],
-                            subLocalityFinish:controller.tempSearch[index]["subLocality_finish"],
-                            localityStart:controller.tempSearch[index]["locality_start"],
-                            localityFinish:controller.tempSearch[index]["locality_finish"],
-                            thoroughfareStart:controller.tempSearch[index]["thoroughfare_start"],
-                            thoroughfareFinish:controller.tempSearch[index]["thoroughfare_finish"],
-                            subAdministrativeAreaFinish:"${controller.tempSearch[index]["subAdministrativeArea_start"]}",
-                            subAdministrativeAreaStart:"${controller.tempSearch[index]["subAdministrativeArea_finish"]}",
+                            latitudeStart: controller.tempSearch[index]
+                                ["latitude_start"],
+                            latitudeFinish: controller.tempSearch[index]
+                                ["latitude_finish"],
+                            longitudeStart: controller.tempSearch[index]
+                                ["longitude_start"],
+                            longitudeFinish: controller.tempSearch[index]
+                                ["longitude_finish"],
+                            subLocalityStart: controller.tempSearch[index]
+                                ["subLocality_start"],
+                            subLocalityFinish: controller.tempSearch[index]
+                                ["subLocality_finish"],
+                            localityStart: controller.tempSearch[index]
+                                ["locality_start"],
+                            localityFinish: controller.tempSearch[index]
+                                ["locality_finish"],
+                            thoroughfareStart: controller.tempSearch[index]
+                                ["thoroughfare_start"],
+                            thoroughfareFinish: controller.tempSearch[index]
+                                ["thoroughfare_finish"],
+                            subAdministrativeAreaFinish:
+                                "${controller.tempSearch[index]["subAdministrativeArea_start"]}",
+                            subAdministrativeAreaStart:
+                                "${controller.tempSearch[index]["subAdministrativeArea_finish"]}",
                             chair: "${controller.tempSearch[index]["chair"]}",
                             email: "${controller.tempSearch[index]["email"]}",
-                            fullName:"${controller.tempSearch[index]["full_name"]}",
-                            idDriver:"${controller.tempSearch[index]["id_driver"]}",
-                            idTrip:"${controller.tempSearch[index]["id_trip"]}",
-                            merekKendaraan:"${controller.tempSearch[index]["merek_kendaraan"]}",
-                            nomorPlat:"${controller.tempSearch[index]["nomor_plat"]}",
-                            otherInformation:"${controller.tempSearch[index]["other_information"]}",
+                            fullName:
+                                "${controller.tempSearch[index]["full_name"]}",
+                            idDriver:
+                                "${controller.tempSearch[index]["id_driver"]}",
+                            idTrip:
+                                "${controller.tempSearch[index]["id_trip"]}",
+                            merekKendaraan:
+                                "${controller.tempSearch[index]["merek_kendaraan"]}",
+                            nomorPlat:
+                                "${controller.tempSearch[index]["nomor_plat"]}",
+                            otherInformation:
+                                "${controller.tempSearch[index]["other_information"]}",
                             photo: "${controller.tempSearch[index]["photo"]}",
-                            tripDate:"${controller.tempSearch[index]["trip_date"]}",
-                            tripPrice:"${controller.tempSearch[index]["trip_price"]}",
-                            tripStatus:"${controller.tempSearch[index]["trip_status"]}",
-                            tripTime:"${controller.tempSearch[index]["trip_time"]}",
+                            tripDate:
+                                "${controller.tempSearch[index]["trip_date"]}",
+                            tripPrice:
+                                "${controller.tempSearch[index]["trip_price"]}",
+                            tripStatus:
+                                "${controller.tempSearch[index]["trip_status"]}",
+                            tripTime:
+                                "${controller.tempSearch[index]["trip_time"]}",
                             rides: ["${controller.tempSearch[index][index]}"],
                             requestField: [
                               "${controller.tempSearch[index][index]}"
@@ -157,10 +179,11 @@ class _SearchRideViewState extends State<SearchRideView> {
                           );
 
                           return CardFull(
-                            latitudeStartC: trip.latitudeStart,
-                            latitudeFinishC: trip.latitudeFinish,
-                            longitudeStartC: trip.longitudeStart,
-                            longitudeFinishC: trip.longitudeFinish,
+                            latitudeStartC: double.parse(trip.latitudeStart),
+                            latitudeFinishC: double.parse(trip.latitudeFinish),
+                            longitudeStartC: double.parse(trip.longitudeStart),
+                            longitudeFinishC:
+                                double.parse(trip.longitudeFinish),
                             localityStartC: trip.localityStart,
                             localityFinishC: trip.localityFinish,
                             subAdministrativeAreaStartC:

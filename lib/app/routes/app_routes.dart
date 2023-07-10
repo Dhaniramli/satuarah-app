@@ -24,6 +24,7 @@ abstract class Routes {
   static const SEARCH_RIDE = _Paths.SEARCH_RIDE;
   static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
   static const MAP = _Paths.MAP;
+  static const ORDERING_MAP = _Paths.ORDERING_MAP;
 }
 
 abstract class _Paths {
@@ -49,4 +50,5 @@ abstract class _Paths {
   static const SEARCH_RIDE = '/search-ride';
   static const RESET_PASSWORD = '/reset-password';
   static const MAP = '/map';
+  static const ORDERING_MAP = '/ordering-map';
 }

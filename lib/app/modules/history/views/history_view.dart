@@ -117,10 +117,10 @@ class _HistoryViewState extends State<HistoryView>
             itemBuilder: (context, index) {
               TripModel trip = allTrip[index];
               return CardFull(
-                latitudeStartC: trip.latitudeStart,
-                latitudeFinishC: trip.latitudeFinish,
-                longitudeStartC: trip.longitudeStart,
-                longitudeFinishC: trip.longitudeFinish,
+                latitudeStartC: double.parse(trip.latitudeStart),
+                latitudeFinishC: double.parse(trip.latitudeFinish),
+                longitudeStartC: double.parse(trip.longitudeStart),
+                longitudeFinishC: double.parse(trip.longitudeFinish),
                 localityStartC: trip.localityStart,
                 localityFinishC: trip.localityFinish,
                 subAdministrativeAreaStartC: trip.subAdministrativeAreaStart,
@@ -207,10 +207,10 @@ class _HistoryViewState extends State<HistoryView>
             itemBuilder: (context, index) {
               TripModel trip = allTrip[index];
               return CardFull(
-                latitudeStartC: trip.latitudeStart,
-                latitudeFinishC: trip.latitudeFinish,
-                longitudeStartC: trip.longitudeStart,
-                longitudeFinishC: trip.longitudeFinish,
+                latitudeStartC: double.parse(trip.latitudeStart),
+                latitudeFinishC: double.parse(trip.latitudeFinish),
+                longitudeStartC: double.parse(trip.longitudeStart),
+                longitudeFinishC: double.parse(trip.longitudeFinish),
                 localityStartC: trip.localityStart,
                 localityFinishC: trip.localityFinish,
                 subAdministrativeAreaStartC: trip.subAdministrativeAreaStart,
@@ -293,10 +293,10 @@ class _HistoryViewState extends State<HistoryView>
             itemBuilder: (context, index) {
               TripModel trip = allTrip[index];
               return CardFull(
-                latitudeStartC: trip.latitudeStart,
-                latitudeFinishC: trip.latitudeFinish,
-                longitudeStartC: trip.longitudeStart,
-                longitudeFinishC: trip.longitudeFinish,
+                latitudeStartC: double.parse(trip.latitudeStart),
+                latitudeFinishC: double.parse(trip.latitudeFinish),
+                longitudeStartC: double.parse(trip.longitudeStart),
+                longitudeFinishC: double.parse(trip.longitudeFinish),
                 localityStartC: trip.localityStart,
                 localityFinishC: trip.localityFinish,
                 subAdministrativeAreaStartC: trip.subAdministrativeAreaStart,
