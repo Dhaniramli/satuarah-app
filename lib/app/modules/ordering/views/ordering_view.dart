@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../shared/rating_bar.dart';
 import '../../../../theme.dart';
@@ -193,54 +194,69 @@ class _OrderingViewState extends State<OrderingView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.location_on_outlined,
-                                    color: grayTigaColor),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      trip!.subAdministrativeAreaStart,
-                                      style: textBlackDuaStyle.copyWith(
-                                          fontSize: 16, fontWeight: medium),
+                        SizedBox(
+                          width: Get.width / 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on_outlined,
+                                      color: grayTigaColor),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextScroll(
+                                          trip!.subAdministrativeAreaStart,
+                                          mode: TextScrollMode.endless,
+                                          velocity: const Velocity(
+                                              pixelsPerSecond: Offset(50, 0)),
+                                          style: textBlackDuaStyle.copyWith(
+                                              fontSize: 16, fontWeight: medium),
+                                        ),
+                                        Text(
+                                          '${trip!.tripDate}  ${trip!.tripTime}',
+                                          style: textGrayStyle.copyWith(
+                                              fontSize: 10, fontWeight: medium),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      '${trip!.tripDate}  ${trip!.tripTime}',
-                                      style: textGrayStyle.copyWith(
-                                          fontSize: 10, fontWeight: medium),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                width: 1,
+                                height: 20,
+                                color: grayTigaColor,
+                                margin: const EdgeInsets.only(
+                                    left: 11, top: 3.79, bottom: 3.79),
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on_outlined,
+                                      color: grayTigaColor),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextScroll(
+                                          trip!.subAdministrativeAreaFinish,
+                                          mode: TextScrollMode.endless,
+                                          velocity: const Velocity(
+                                              pixelsPerSecond: Offset(50, 0)),
+                                          style: textBlackDuaStyle.copyWith(
+                                              fontSize: 16, fontWeight: medium),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Container(
-                              width: 1,
-                              height: 20,
-                              color: grayTigaColor,
-                              margin: const EdgeInsets.only(
-                                  left: 11, top: 3.79, bottom: 3.79),
-                            ),
-                            Row(
-                              children: [
-                                Icon(Icons.location_on_outlined,
-                                    color: grayTigaColor),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      trip!.subAdministrativeAreaFinish,
-                                      style: textBlackDuaStyle.copyWith(
-                                          fontSize: 16, fontWeight: medium),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -250,14 +266,20 @@ class _OrderingViewState extends State<OrderingView> {
                               style: textBlackDuaStyle.copyWith(
                                   fontSize: 15, fontWeight: medium),
                             ),
+                            const SizedBox(height: 5),
                             ElevatedButton(
-                                onPressed: () {
-                                  Get.toNamed(Routes.ORDERING_MAP,
-                                      arguments: trip);
-                                },
-                                child: Text('Rute')),
+                              onPressed: () {
+                                Get.toNamed(Routes.ORDERING_MAP,
+                                    arguments: trip);
+                              },
+                              child: Text(
+                                'Peta',
+                                style:
+                                    textWhiteStyle.copyWith(fontWeight: bold),
+                              ),
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
