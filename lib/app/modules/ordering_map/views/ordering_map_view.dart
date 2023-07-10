@@ -12,22 +12,38 @@ import '../../../data/models/user_model.dart';
 import '../controllers/ordering_map_controller.dart';
 
 class OrderingMapView extends StatefulWidget {
+  final String? latitudeStart;
+  final String? latitudeFinish;
+  final String? longitudeStart;
+  final String? longitudeFinish;
+  final String? localityStart;
+  final String? localityFinish;
+  final String? subAdministrativeAreaStart;
+  final String? subAdministrativeAreaFinish;
+  final String? thoroughfareStart;
+  final String? thoroughfareFinish;
+  final String? subLocalityStart;
+  final String? subLocalityFinish;
+
   const OrderingMapView({
     Key? key,
+    this.latitudeStart,
+    this.latitudeFinish,
+    this.longitudeStart,
+    this.longitudeFinish,
+    this.localityStart,
+    this.localityFinish,
+    this.subAdministrativeAreaStart,
+    this.subAdministrativeAreaFinish,
+    this.thoroughfareStart,
+    this.thoroughfareFinish,
+    this.subLocalityStart,
+    this.subLocalityFinish,
   }) : super(key: key);
 
   @override
   _OrderingMapViewState createState() => _OrderingMapViewState();
 }
-
-final TripModel? trip = Get.arguments;
-CameraPosition _initialCameraPosition = CameraPosition(
-  target: LatLng(
-    double.parse(trip!.latitudeStart),
-    double.parse(trip!.longitudeStart),
-  ),
-  zoom: 11.5,
-);
 
 class _OrderingMapViewState extends State<OrderingMapView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -50,10 +66,10 @@ class _OrderingMapViewState extends State<OrderingMapView> {
   Future<void> _getPolyline() async {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       'AIzaSyDmdU24RknAfHnoYzuA2ekpD4yvGOTI9vQ', // Ganti dengan kunci API Google Maps yang valid -5.291972, 119.427223
-      PointLatLng(double.parse(trip!.latitudeStart),
-          double.parse(trip!.longitudeStart)),
-      PointLatLng(double.parse(trip!.latitudeFinish),
-          double.parse(trip!.longitudeFinish)),
+      PointLatLng(double.parse(widget.latitudeStart!),
+          double.parse(widget.longitudeStart!)),
+      PointLatLng(double.parse(widget.latitudeFinish!),
+          double.parse(widget.longitudeFinish!)),
       travelMode: TravelMode.driving,
     );
     if (result.points.isNotEmpty) {
@@ -99,8 +115,8 @@ class _OrderingMapViewState extends State<OrderingMapView> {
                 CameraUpdate.newCameraPosition(
                   CameraPosition(
                     target: LatLng(
-                      double.parse(trip!.latitudeStart),
-                      double.parse(trip!.longitudeStart),
+                      double.parse(widget.latitudeStart!),
+                      double.parse(widget.longitudeStart!),
                     ),
                     zoom: 14.5,
                     tilt: 50.0,
@@ -119,8 +135,8 @@ class _OrderingMapViewState extends State<OrderingMapView> {
                 CameraUpdate.newCameraPosition(
                   CameraPosition(
                     target: LatLng(
-                      double.parse(trip!.latitudeFinish),
-                      double.parse(trip!.longitudeFinish),
+                      double.parse(widget.latitudeFinish!),
+                      double.parse(widget.longitudeFinish!),
                     ),
                     zoom: 14.5,
                     tilt: 50.0,
@@ -144,7 +160,13 @@ class _OrderingMapViewState extends State<OrderingMapView> {
             mapType: MapType.normal,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
-            initialCameraPosition: _initialCameraPosition,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                double.parse(widget.latitudeStart!),
+                double.parse(widget.longitudeStart!),
+              ),
+              zoom: 11.5,
+            ),
             onMapCreated: (controller) {
               controllerC.googleMapController = controller;
               setState(() {
@@ -160,8 +182,8 @@ class _OrderingMapViewState extends State<OrderingMapView> {
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueGreen),
                 position: LatLng(
-                  double.parse(trip!.latitudeStart),
-                  double.parse(trip!.longitudeStart),
+                  double.parse(widget.latitudeStart!),
+                  double.parse(widget.longitudeStart!),
                 ),
               ),
               Marker(
@@ -170,8 +192,8 @@ class _OrderingMapViewState extends State<OrderingMapView> {
                 icon: BitmapDescriptor.defaultMarkerWithHue(
                     BitmapDescriptor.hueBlue),
                 position: LatLng(
-                  double.parse(trip!.latitudeFinish),
-                  double.parse(trip!.longitudeFinish),
+                  double.parse(widget.latitudeFinish!),
+                  double.parse(widget.longitudeFinish!),
                 ),
               ),
             },
@@ -206,7 +228,7 @@ class _OrderingMapViewState extends State<OrderingMapView> {
                         ),
                       ),
                       TextScroll(
-                        '          ${trip!.thoroughfareStart}, ${trip!.subLocalityStart}, ${trip!.localityStart}, ${trip!.subAdministrativeAreaStart}, ',
+                        '          ${widget.thoroughfareStart}, ${widget.subLocalityStart}, ${widget.localityStart}, ${widget.subAdministrativeAreaStart}, ',
                         mode: TextScrollMode.endless,
                         velocity:
                             const Velocity(pixelsPerSecond: Offset(50, 0)),
@@ -245,7 +267,7 @@ class _OrderingMapViewState extends State<OrderingMapView> {
                         ),
                       ),
                       TextScroll(
-                        '          ${trip!.thoroughfareFinish}, ${trip!.subLocalityFinish}, ${trip!.localityFinish}, ${trip!.subAdministrativeAreaFinish}, ',
+                        '          ${widget.thoroughfareFinish}, ${widget.subLocalityFinish}, ${widget.localityFinish}, ${widget.subAdministrativeAreaFinish}, ',
                         mode: TextScrollMode.endless,
                         velocity:
                             const Velocity(pixelsPerSecond: Offset(50, 0)),

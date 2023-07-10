@@ -269,8 +269,25 @@ class _OrderingViewState extends State<OrderingView> {
                             const SizedBox(height: 5),
                             ElevatedButton(
                               onPressed: () {
-                                Get.toNamed(Routes.ORDERING_MAP,
-                                    arguments: trip);
+                                Get.to(() => OrderingMapView(
+                                      latitudeStart: trip!.latitudeStart,
+                                      latitudeFinish: trip!.latitudeFinish,
+                                      longitudeStart: trip!.longitudeStart,
+                                      longitudeFinish: trip!.longitudeFinish,
+                                      localityStart: trip!.localityStart,
+                                      localityFinish: trip!.localityFinish,
+                                      subAdministrativeAreaStart:
+                                          trip!.subAdministrativeAreaStart,
+                                      subAdministrativeAreaFinish:
+                                          trip!.subAdministrativeAreaFinish,
+                                      thoroughfareStart:
+                                          trip!.thoroughfareStart,
+                                      thoroughfareFinish:
+                                          trip!.thoroughfareFinish,
+                                      subLocalityStart: trip!.subLocalityStart,
+                                      subLocalityFinish:
+                                          trip!.subLocalityFinish,
+                                    ));
                               },
                               child: Text(
                                 'Peta',
