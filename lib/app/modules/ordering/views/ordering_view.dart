@@ -406,7 +406,7 @@ class _OrderingViewState extends State<OrderingView> {
           Container(
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(color: black, width: 1),
+                bottom: BorderSide(color: black, width: 2),
               ),
             ),
           ),
@@ -438,8 +438,13 @@ class _OrderingViewState extends State<OrderingView> {
                         }
 
                         if (snapshot.data!.docs.isEmpty) {
-                          return const Center(
-                            child: Text("Tidak Ada Data"),
+                          return Center(
+                            child: Image.asset(
+                              "assets/nothing.png",
+                              width: 50.0,
+                              height: 90.0,
+                              fit: BoxFit.fill,
+                            ),
                           );
                         }
                         final data = snapshot.data!;

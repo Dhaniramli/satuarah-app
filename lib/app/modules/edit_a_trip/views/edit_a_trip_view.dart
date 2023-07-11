@@ -59,7 +59,6 @@ class _EditATripViewState extends State<EditATripView> {
         leading: IconButton(
           onPressed: () {
             Get.back();
-            Get.back();
           },
           icon: const Icon(
             Icons.arrow_back_ios,
