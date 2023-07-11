@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../../theme.dart';
 
@@ -9,6 +10,7 @@ class TextFormWidget extends StatelessWidget {
   final bool obscureText;
   final Widget? suffixIcon;
   final String? Function(String?)? validator;
+  final List<TextInputFormatter>? inputFormatters;
 
   const TextFormWidget({
     super.key,
@@ -18,6 +20,7 @@ class TextFormWidget extends StatelessWidget {
     required this.obscureText,
     this.suffixIcon,
     this.validator,
+    this.inputFormatters,
   });
 
   @override
@@ -34,6 +37,7 @@ class TextFormWidget extends StatelessWidget {
         ),
         const SizedBox(height: 7),
         TextFormField(
+          inputFormatters: inputFormatters,
           controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(

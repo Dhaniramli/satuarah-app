@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -56,15 +57,18 @@ class _MakeATripViewState extends State<MakeATripView> {
     controller.latitudeStartC = widget.latitudeStart;
     controller.longitudeStartC = widget.longitudeStart;
     controller.placeNameStartC = widget.placeNameStart;
-    controller.placeNamesubAdministrativeAreaStartC = widget.placeNamesubAdministrativeAreaStart;
+    controller.placeNamesubAdministrativeAreaStartC =
+        widget.placeNamesubAdministrativeAreaStart;
     controller.placeNamethoroughfareStartC = widget.placeNamethoroughfareStart;
     controller.placesubLocalityStartC = widget.placesubLocalityStart;
 
     controller.latitudeFinishC = widget.latitudeFinish;
     controller.longitudeFinishC = widget.longitudeFinish;
     controller.placeNameFinishC = widget.placeNameFinish;
-    controller.placeNamesubAdministrativeAreaFinishC = widget.placeNamesubAdministrativeAreaFinish;
-    controller.placeNamethoroughfareFinishC = widget.placeNamethoroughfareFinish;
+    controller.placeNamesubAdministrativeAreaFinishC =
+        widget.placeNamesubAdministrativeAreaFinish;
+    controller.placeNamethoroughfareFinishC =
+        widget.placeNamethoroughfareFinish;
     controller.placesubLocalityFinishC = widget.placesubLocalityFinish;
 
     if (controller.idDriver.text == "" && dataUser != null) {
@@ -264,6 +268,10 @@ class _MakeATripViewState extends State<MakeATripView> {
               ),
               const SizedBox(height: 15),
               TextFormWidget(
+                inputFormatters: [
+                  FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
                 label: "Biaya",
                 hintText: "Biaya Perjalanan",
                 controller: controller.tripPrice,

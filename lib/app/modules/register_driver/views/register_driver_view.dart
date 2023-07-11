@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
@@ -92,6 +93,10 @@ class RegisterDriverView extends GetView<RegisterDriverController> {
                       ),
                       const SizedBox(height: 38),
                       TextFormWidget(
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                         label: "KTP",
                         hintText: "Nomor KTP",
                         controller: controller.nomorKtp,
