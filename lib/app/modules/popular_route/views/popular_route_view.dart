@@ -87,7 +87,7 @@ class PopularRouteView extends GetView<PopularRouteController> {
                             velocity:
                                 const Velocity(pixelsPerSecond: Offset(50, 0)),
                             style: textBlackDuaStyle.copyWith(
-                              fontSize: 13,
+                              fontSize: 15,
                               fontWeight: semiBold,
                             ),
                           ),
