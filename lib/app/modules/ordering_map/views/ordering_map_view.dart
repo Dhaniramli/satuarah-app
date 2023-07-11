@@ -91,8 +91,8 @@ class _OrderingMapViewState extends State<OrderingMapView> {
       key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: white,
-        title: Text('Peta',
-            style: textPrimaryStyle.copyWith(fontWeight: FontWeight.normal)),
+        title: Text('Rute',
+            style: textPrimaryStyle.copyWith(fontWeight: bold)),
         leading: IconButton(
           onPressed: () {
             Get.back();

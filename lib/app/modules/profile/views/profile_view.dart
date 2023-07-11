@@ -176,7 +176,16 @@ class ProfileView extends GetView<ProfileController> {
         stream: controller.userCollection.snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) return const Text("Error");
-          if (!snapshot.hasData) return const Text("No Data");
+          if (!snapshot.hasData) {
+            return Center(
+              child: Image.asset(
+                "assets/nothing.png",
+                width: 50.0,
+                height: 90.0,
+                fit: BoxFit.fill,
+              ),
+            );
+          }
           Map<String, dynamic>? data =
               (snapshot.data!.data() as Map<String, dynamic>?);
           data!["id"] = snapshot.data!.id;

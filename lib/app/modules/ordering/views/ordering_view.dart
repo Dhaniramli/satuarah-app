@@ -294,7 +294,7 @@ class _OrderingViewState extends State<OrderingView> {
                                 padding: const EdgeInsets.all(10),
                               ),
                               child: Text(
-                                'Cek Peta',
+                                'Cek Rute',
                                 style:
                                     textWhiteStyle.copyWith(fontWeight: bold),
                               ),
