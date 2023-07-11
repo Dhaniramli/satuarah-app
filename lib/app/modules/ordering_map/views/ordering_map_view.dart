@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:geocoding/geocoding.dart';
-
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../theme.dart';
-import '../../../data/models/trip_model.dart';
-import '../../../data/models/user_model.dart';
 import '../controllers/ordering_map_controller.dart';
 
 class OrderingMapView extends StatefulWidget {
@@ -47,7 +43,6 @@ class OrderingMapView extends StatefulWidget {
 
 class _OrderingMapViewState extends State<OrderingMapView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final Set<Marker> _markers = {};
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
@@ -65,7 +60,7 @@ class _OrderingMapViewState extends State<OrderingMapView> {
 
   Future<void> _getPolyline() async {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyDmdU24RknAfHnoYzuA2ekpD4yvGOTI9vQ', // Ganti dengan kunci API Google Maps yang valid -5.291972, 119.427223
+      'AIzaSyDmdU24RknAfHnoYzuA2ekpD4yvGOTI9vQ',
       PointLatLng(double.parse(widget.latitudeStart!),
           double.parse(widget.longitudeStart!)),
       PointLatLng(double.parse(widget.latitudeFinish!),

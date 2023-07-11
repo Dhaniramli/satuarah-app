@@ -7,7 +7,7 @@ class MapController extends GetxController {
   late GoogleMapController? googleMapController;
   Marker? origin;
   Marker? detination;
-  Directions? info;
+  // Directions? info;
 
   String placeName = '';
   String placeNamesubAdministrativeArea = '';

@@ -36,23 +36,27 @@ class _MapViewState extends State<MapView> {
       color: Colors.red,
       points: polylineCoordinates,
     );
-    polylines[id] = polyline;
-    setState(() {});
+    setState(() {
+      polylines[id] = polyline;
+    });
   }
 
   Future<void> _getPolyline() async {
     final controllerC = Get.put(MapController());
 
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyDmdU24RknAfHnoYzuA2ekpD4yvGOTI9vQ', // Ganti dengan kunci API Google Maps yang valid -5.291972, 119.427223
+      'AIzaSyDmdU24RknAfHnoYzuA2ekpD4yvGOTI9vQ',
       PointLatLng(controllerC.latitudeStart, controllerC.longitudeStart),
       PointLatLng(controllerC.latitudeFinish, controllerC.longitudeFinish),
       travelMode: TravelMode.driving,
     );
     if (result.points.isNotEmpty) {
-      for (var point in result.points) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      }
+      setState(() {
+        polylineCoordinates = result.points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList();
+        _addPolyline();
+      });
     }
     setState(() {
       _addPolyline();
@@ -62,7 +66,6 @@ class _MapViewState extends State<MapView> {
   @override
   void initState() {
     super.initState();
-    _getPolyline();
   }
 
   @override
@@ -138,9 +141,7 @@ class _MapViewState extends State<MapView> {
             initialCameraPosition: _initialCameraPosition,
             onMapCreated: (controller) {
               controllerC.googleMapController = controller;
-              setState(() {
-                _addPolyline();
-              });
+              _addPolyline();
             },
             markers: {
               if (controllerC.origin != null) controllerC.origin!,
@@ -150,7 +151,6 @@ class _MapViewState extends State<MapView> {
               _addMarker(location);
               _getPlaceName(location);
             },
-            // onLongPress: addMarker,
           ),
           Positioned(
             top: 20.0,
@@ -277,23 +277,30 @@ class _MapViewState extends State<MapView> {
 
                           controllerC.latitudeFinish = controllerC.latitude;
                           controllerC.longitudeFinish = controllerC.longitude;
+                          _getPolyline();
                         });
                       } else {
-                       Get.to(() => MakeATripView(
-                                dataUser: dataUser,
-                                latitudeStart: controllerC.latitudeStart,
-                                longitudeStart: controllerC.longitudeStart,
-                                placeNameStart: controllerC.placeNameStart,
-                                placeNamesubAdministrativeAreaStart: controllerC.placeNamesubAdministrativeAreaStart,
-                                placeNamethoroughfareStart: controllerC.placeNamethoroughfareStart,
-                                placesubLocalityStart: controllerC.placesubLocalityStart,
-                                latitudeFinish: controllerC.latitudeFinish,
-                                longitudeFinish: controllerC.longitudeFinish,
-                                placeNameFinish: controllerC.placeNameFinish,
-                                placeNamesubAdministrativeAreaFinish: controllerC.placeNamesubAdministrativeAreaFinish,
-                                placeNamethoroughfareFinish: controllerC.placeNamethoroughfareFinish,
-                                placesubLocalityFinish: controllerC.placesubLocalityFinish,
-                              ));
+                        Get.to(() => MakeATripView(
+                              dataUser: dataUser,
+                              latitudeStart: controllerC.latitudeStart,
+                              longitudeStart: controllerC.longitudeStart,
+                              placeNameStart: controllerC.placeNameStart,
+                              placeNamesubAdministrativeAreaStart: controllerC
+                                  .placeNamesubAdministrativeAreaStart,
+                              placeNamethoroughfareStart:
+                                  controllerC.placeNamethoroughfareStart,
+                              placesubLocalityStart:
+                                  controllerC.placesubLocalityStart,
+                              latitudeFinish: controllerC.latitudeFinish,
+                              longitudeFinish: controllerC.longitudeFinish,
+                              placeNameFinish: controllerC.placeNameFinish,
+                              placeNamesubAdministrativeAreaFinish: controllerC
+                                  .placeNamesubAdministrativeAreaFinish,
+                              placeNamethoroughfareFinish:
+                                  controllerC.placeNamethoroughfareFinish,
+                              placesubLocalityFinish:
+                                  controllerC.placesubLocalityFinish,
+                            ));
                       }
                     }
                   : controllerC.placeNameFinish != ''
@@ -303,15 +310,22 @@ class _MapViewState extends State<MapView> {
                                 latitudeStart: controllerC.latitudeStart,
                                 longitudeStart: controllerC.longitudeStart,
                                 placeNameStart: controllerC.placeNameStart,
-                                placeNamesubAdministrativeAreaStart: controllerC.placeNamesubAdministrativeAreaStart,
-                                placeNamethoroughfareStart: controllerC.placeNamethoroughfareStart,
-                                placesubLocalityStart: controllerC.placesubLocalityStart,
+                                placeNamesubAdministrativeAreaStart: controllerC
+                                    .placeNamesubAdministrativeAreaStart,
+                                placeNamethoroughfareStart:
+                                    controllerC.placeNamethoroughfareStart,
+                                placesubLocalityStart:
+                                    controllerC.placesubLocalityStart,
                                 latitudeFinish: controllerC.latitudeFinish,
                                 longitudeFinish: controllerC.longitudeFinish,
                                 placeNameFinish: controllerC.placeNameFinish,
-                                placeNamesubAdministrativeAreaFinish: controllerC.placeNamesubAdministrativeAreaFinish,
-                                placeNamethoroughfareFinish: controllerC.placeNamethoroughfareFinish,
-                                placesubLocalityFinish: controllerC.placesubLocalityFinish,
+                                placeNamesubAdministrativeAreaFinish:
+                                    controllerC
+                                        .placeNamesubAdministrativeAreaFinish,
+                                placeNamethoroughfareFinish:
+                                    controllerC.placeNamethoroughfareFinish,
+                                placesubLocalityFinish:
+                                    controllerC.placesubLocalityFinish,
                               ));
                         }
                       : null,
@@ -355,8 +369,6 @@ class _MapViewState extends State<MapView> {
   void _addMarker(LatLng location) {
     final controllerC = Get.put(MapController());
 
-    // if (controllerC.origin == null ||
-    //     (controllerC.origin != null && controllerC.detination != null)) {
     if (controllerC.placeNameStart == '') {
       setState(() {
         controllerC.origin = Marker(
@@ -419,16 +431,24 @@ class _MapViewState extends State<MapView> {
         // _showSnackbar('Longitude: ${controllerC.longitude}');
       }
     } catch (e) {
-      print('Error: $e');
+      Get.snackbar(
+        "Terjadi Kesalahan",
+        "$e",
+        duration: const Duration(seconds: 2),
+        snackStyle: SnackStyle.FLOATING,
+        backgroundColor: primaryColor,
+        colorText: Colors.white,
+        borderRadius: 10,
+      );
     }
   }
 
-  void _showSnackbar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
+  // void _showSnackbar(String message) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Text(message),
+  //       duration: const Duration(seconds: 2),
+  //     ),
+  //   );
+  // }
 }

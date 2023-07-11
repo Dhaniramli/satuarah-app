@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
+import '../../../../theme.dart';
 import '../../chat_room/views/chat_room_view.dart';
 
 class ChatController extends GetxController {
@@ -102,7 +103,15 @@ class ChatController extends GetxController {
       );
     } on Exception catch (err) {
       // print(err);
-      Get.snackbar("Terjadi kesalahan", "$err");
+      Get.snackbar(
+        "Terjadi kesalahan",
+        "$err",
+        duration: const Duration(seconds: 2),
+        snackStyle: SnackStyle.FLOATING,
+        backgroundColor: primaryColor,
+        colorText: white,
+        borderRadius: 10,
+      );
     }
   }
   // AKHIR LOGIC CHAT
