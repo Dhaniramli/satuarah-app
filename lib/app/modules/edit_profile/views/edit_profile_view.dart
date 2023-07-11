@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
@@ -189,6 +190,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                 ),
                 const SizedBox(height: 10),
                 TextFormWidget(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  ],
                   label: "Email",
                   hintText: "Email",
                   controller: controller.email,
@@ -218,6 +222,10 @@ class _EditProfileViewState extends State<EditProfileView> {
                 ),
                 const SizedBox(height: 15),
                 TextFormWidget(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   label: "Nomor Telepon",
                   hintText: "Nomor Telepon",
                   controller: controller.phoneNumber,

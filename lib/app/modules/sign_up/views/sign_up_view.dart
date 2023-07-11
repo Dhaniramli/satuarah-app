@@ -113,7 +113,8 @@ class SignUpView extends GetView<SignUpController> {
         label: "Nomor Telepon",
         controller: controller.phoneNumber,
         inputFormatters: [
-          FilteringTextInputFormatter.deny(RegExp(r'\s')), // Menolak spasi
+          FilteringTextInputFormatter.deny(RegExp(r'\s')),
+          FilteringTextInputFormatter.digitsOnly,
         ],
         obscureText: false,
         validator: (value) {
