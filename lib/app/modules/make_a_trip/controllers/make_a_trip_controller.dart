@@ -38,7 +38,33 @@ class MakeATripController extends GetxController {
   late String? placesubLocalityFinishC;
 
   doMakeATrip() async {
+    List<String> subadministrativeareaFinishArray = [];
     try {
+      String nameSub =
+          placeNamesubAdministrativeAreaFinishC!.substring(0, 4).toLowerCase();
+
+      if (nameSub == 'kota') {
+        String substring =
+            placeNamesubAdministrativeAreaFinishC!.substring(5).toLowerCase();
+
+        String temp = '';
+
+        for (int i = 0; i < substring.length; i++) {
+          temp += substring[i];
+          subadministrativeareaFinishArray.add(temp);
+        }
+      } else {
+        String substring2 =
+            placeNamesubAdministrativeAreaFinishC!.substring(10).toLowerCase();
+
+        String temp = '';
+
+        for (int i = 0; i < substring2.length; i++) {
+          temp += substring2[i];
+          subadministrativeareaFinishArray.add(temp);
+        }
+      }
+
       if (tripDate.text.isNotEmpty &&
           tripTime.text.isNotEmpty &&
           tripPrice.text.isNotEmpty &&
@@ -77,9 +103,8 @@ class MakeATripController extends GetxController {
           "thoroughfare_finish": placeNamethoroughfareFinishC,
           "subLocality_start": placesubLocalityStartC,
           "subLocality_finish": placesubLocalityFinishC,
-          "key_finish": placeNameFinishC != '' ?
-              placeNameFinishC!.substring(10, 11)
-              .toUpperCase() : 'A',
+          "subAdministrativeArea_finish_array":
+              subadministrativeareaFinishArray,
         });
 
         firestore.collection("trip").doc(docRef.id).update({
@@ -95,7 +120,15 @@ class MakeATripController extends GetxController {
         Get.back();
         Get.back();
       } else {
-        // Get.snackbar("Terjadi kesalahan", "Lengkapi semua");
+        Get.snackbar(
+          "Terjadi kesalahan",
+          "Lengkapi semua",
+          duration: const Duration(seconds: 2),
+          snackStyle: SnackStyle.FLOATING,
+          backgroundColor: primaryColor,
+          colorText: Colors.white,
+          borderRadius: 10,
+        );
       }
     } on Exception {
       Get.snackbar(

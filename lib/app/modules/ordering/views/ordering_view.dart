@@ -209,7 +209,7 @@ class _OrderingViewState extends State<OrderingView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         TextScroll(
-                                          trip!.subAdministrativeAreaStart,
+                                          '       ${trip!.thoroughfareStart}, ${trip!.subLocalityStart}, ${trip!.localityStart}, ${trip!.subAdministrativeAreaStart}',
                                           mode: TextScrollMode.endless,
                                           velocity: const Velocity(
                                               pixelsPerSecond: Offset(50, 0)),
@@ -243,7 +243,7 @@ class _OrderingViewState extends State<OrderingView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         TextScroll(
-                                          trip!.subAdministrativeAreaFinish,
+                                          '       ${trip!.thoroughfareFinish}, ${trip!.subLocalityFinish}, ${trip!.localityFinish}, ${trip!.subAdministrativeAreaFinish}',
                                           mode: TextScrollMode.endless,
                                           velocity: const Velocity(
                                               pixelsPerSecond: Offset(50, 0)),

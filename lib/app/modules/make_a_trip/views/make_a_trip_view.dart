@@ -278,7 +278,7 @@ class _MakeATripViewState extends State<MakeATripView> {
               ),
               const SizedBox(height: 15),
               TextFormWidget(
-                label: "Keterangan Lain",
+                label: "Keterangan Lain (opsional)",
                 hintText: "Contoh: gantian nyetir, sharing biaya tol dll",
                 controller: controller.otherInformation,
                 obscureText: false,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,14 +17,39 @@ class SearchRideView extends StatefulWidget {
 }
 
 class _SearchRideViewState extends State<SearchRideView> {
+  List searchResult = [];
+
+  void searchFromFirebase(String query) async {
+    final controller = Get.put(SearchRideController());
+    try {
+      controller.isLoading(true);
+      final result = await FirebaseFirestore.instance
+          .collection('trip')
+          .where("trip_status", whereIn: ['Menunggu', 'Dalam Perjalanan'])
+          .where("subAdministrativeArea_finish_array", arrayContains: query.toLowerCase())
+          .get();
+
+      setState(() {
+        searchResult = result.docs.map((e) => e.data()).toList();
+      });
+      controller.isLoading(false);
+    } on Exception catch (err) {
+      controller.isLoading(false);
+      Get.snackbar(
+        "Terjadi kesalahan",
+        "$err",
+        duration: const Duration(seconds: 2),
+        snackStyle: SnackStyle.FLOATING,
+        backgroundColor: primaryColor,
+        colorText: Colors.white,
+        borderRadius: 10,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SearchRideController());
-
-    // Setelah widget terbangun, fokus diberikan ke TextFormField
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   FocusScope.of(context).requestFocus(controller.textFormFieldFocusNode);
-    // });
 
     return Scaffold(
       appBar: AppBar(
@@ -42,10 +68,9 @@ class _SearchRideViewState extends State<SearchRideView> {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
               child: TextFormField(
-                focusNode: controller.textFormFieldFocusNode,
                 controller: controller.inputan,
                 decoration: InputDecoration(
-                  hintText: 'ketikkan tujuan anda',
+                  hintText: 'ketikkan kota/kabupaten tujuan anda',
                   hintStyle: TextStyle(color: primaryColor),
                   filled: true,
                   fillColor: Colors.transparent,
@@ -54,12 +79,12 @@ class _SearchRideViewState extends State<SearchRideView> {
                 style: TextStyle(color: primaryColor),
                 onChanged: (value) {
                   setState(() {
-                    controller.searchTrip(value);
+                    searchFromFirebase(value);
                   });
                 },
                 onFieldSubmitted: (value) {
                   setState(() {
-                    controller.searchTrip(value);
+                    searchFromFirebase(value);
                   });
                 },
               ),
@@ -85,7 +110,7 @@ class _SearchRideViewState extends State<SearchRideView> {
                       ),
                     ),
                   )
-                : controller.tempSearch.isEmpty
+                : searchResult.isEmpty
                     ? SingleChildScrollView(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 200),
@@ -110,72 +135,52 @@ class _SearchRideViewState extends State<SearchRideView> {
                             ),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 200),
-                        //   child: Center(
-                        //     child: Icon(
-                        //       Icons.search,
-                        //       size: 70,
-                        //       color: primaryColor,
-                        //     ),
-                        //   ),
-                        // ),
                       )
                     : ListView.builder(
-                        itemCount: controller.tempSearch.length,
+                        itemCount: searchResult.length,
                         itemBuilder: (BuildContext context, int index) {
                           TripModel trip = TripModel(
-                            latitudeStart: controller.tempSearch[index]
+                            latitudeStart: searchResult[index]
                                 ["latitude_start"],
-                            latitudeFinish: controller.tempSearch[index]
+                            latitudeFinish: searchResult[index]
                                 ["latitude_finish"],
-                            longitudeStart: controller.tempSearch[index]
+                            longitudeStart: searchResult[index]
                                 ["longitude_start"],
-                            longitudeFinish: controller.tempSearch[index]
+                            longitudeFinish: searchResult[index]
                                 ["longitude_finish"],
-                            subLocalityStart: controller.tempSearch[index]
+                            subLocalityStart: searchResult[index]
                                 ["subLocality_start"],
-                            subLocalityFinish: controller.tempSearch[index]
+                            subLocalityFinish: searchResult[index]
                                 ["subLocality_finish"],
-                            localityStart: controller.tempSearch[index]
+                            localityStart: searchResult[index]
                                 ["locality_start"],
-                            localityFinish: controller.tempSearch[index]
+                            localityFinish: searchResult[index]
                                 ["locality_finish"],
-                            thoroughfareStart: controller.tempSearch[index]
+                            thoroughfareStart: searchResult[index]
                                 ["thoroughfare_start"],
-                            thoroughfareFinish: controller.tempSearch[index]
+                            thoroughfareFinish: searchResult[index]
                                 ["thoroughfare_finish"],
-                            subAdministrativeAreaFinish:
-                                "${controller.tempSearch[index]["subAdministrativeArea_start"]}",
                             subAdministrativeAreaStart:
-                                "${controller.tempSearch[index]["subAdministrativeArea_finish"]}",
-                            chair: "${controller.tempSearch[index]["chair"]}",
-                            email: "${controller.tempSearch[index]["email"]}",
-                            fullName:
-                                "${controller.tempSearch[index]["full_name"]}",
-                            idDriver:
-                                "${controller.tempSearch[index]["id_driver"]}",
-                            idTrip:
-                                "${controller.tempSearch[index]["id_trip"]}",
+                                "${searchResult[index]["subAdministrativeArea_start"]}",
+                            subAdministrativeAreaFinish:
+                                "${searchResult[index]["subAdministrativeArea_finish"]}",
+                            chair: "${searchResult[index]["chair"]}",
+                            email: "${searchResult[index]["email"]}",
+                            fullName: "${searchResult[index]["full_name"]}",
+                            idDriver: "${searchResult[index]["id_driver"]}",
+                            idTrip: "${searchResult[index]["id_trip"]}",
                             merekKendaraan:
-                                "${controller.tempSearch[index]["merek_kendaraan"]}",
-                            nomorPlat:
-                                "${controller.tempSearch[index]["nomor_plat"]}",
+                                "${searchResult[index]["merek_kendaraan"]}",
+                            nomorPlat: "${searchResult[index]["nomor_plat"]}",
                             otherInformation:
-                                "${controller.tempSearch[index]["other_information"]}",
-                            photo: "${controller.tempSearch[index]["photo"]}",
-                            tripDate:
-                                "${controller.tempSearch[index]["trip_date"]}",
-                            tripPrice:
-                                "${controller.tempSearch[index]["trip_price"]}",
-                            tripStatus:
-                                "${controller.tempSearch[index]["trip_status"]}",
-                            tripTime:
-                                "${controller.tempSearch[index]["trip_time"]}",
-                            rides: ["${controller.tempSearch[index][index]}"],
-                            requestField: [
-                              "${controller.tempSearch[index][index]}"
-                            ],
+                                "${searchResult[index]["other_information"]}",
+                            photo: "${searchResult[index]["photo"]}",
+                            tripDate: "${searchResult[index]["trip_date"]}",
+                            tripPrice: "${searchResult[index]["trip_price"]}",
+                            tripStatus: "${searchResult[index]["trip_status"]}",
+                            tripTime: "${searchResult[index]["trip_time"]}",
+                            rides: ["${searchResult[index][index]}"],
+                            requestField: ["${searchResult[index][index]}"],
                           );
 
                           return CardFull(
