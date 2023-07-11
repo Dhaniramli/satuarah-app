@@ -6,15 +6,15 @@ class OrderingMapController extends GetxController {
   Marker? origin;
   Marker? detination;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
   @override
   void onClose() {

@@ -18,7 +18,7 @@ class OrderingController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Map<String, dynamic>? userMap;
   late String roomId;
-  var chat_id;
+  String chatId = '';
   String? chatRoomIdC;
   int totalUnread = 0;
   DateTime now = DateTime.now();
@@ -112,7 +112,7 @@ class OrderingController extends GetxController {
             .doc(checkConnection.docs[0].id)
             .set({
           "connection": _auth.currentUser!.uid,
-          "chat_id": checkConnection.docs[0].id,
+          "chatId": checkConnection.docs[0].id,
           "total_unread": 1,
           "lastTime": date,
         });
@@ -285,7 +285,7 @@ class OrderingController extends GetxController {
             .doc(checkConnection.docs[0].id)
             .set({
           "connection": _auth.currentUser!.uid,
-          "chat_id": checkConnection.docs[0].id,
+          "chatId": checkConnection.docs[0].id,
           "total_unread": 1,
           "lastTime": date,
         });
@@ -371,8 +371,8 @@ class OrderingController extends GetxController {
         if (checkConnection.docs.isNotEmpty) {
           flagNewConnection = false;
 
-          //chat_id from chats collection
-          chat_id = checkConnection.docs[0].id;
+          //chatId from chats collection
+          chatId = checkConnection.docs[0].id;
         } else {
           flagNewConnection = true;
           // belum pernah chat dengan driver
@@ -401,12 +401,12 @@ class OrderingController extends GetxController {
             .doc(newChatDoc.id)
             .set({
           "connection": tripC.idDriver,
-          "chat_id": newChatDoc,
+          "chatId": newChatDoc,
           "total_unread": 0,
           "lastTime": date,
         });
 
-        chat_id = newChatDoc.id;
+        chatId = newChatDoc.id;
       }
 
       // Get.toNamed(Routes.CHAT_ROOM, arguments: trip);
@@ -414,13 +414,13 @@ class OrderingController extends GetxController {
       // Get.to(
       //   () => ChatRoomView(
       //     userMap: userMap,
-      //     chatRoomid: chat_id,
+      //     chatRoomid: chatId,
       //     friendEmail: tripC.idDriver,
       //   ),
       // );
 
       // PESAN LOGIC
-      await chats.doc(chat_id).collection("chats").add({
+      await chats.doc(chatId).collection("chats").add({
         "pengirim": _auth.currentUser!.uid,
         "penerima": tripC.idDriver,
         "msg":
@@ -434,7 +434,7 @@ class OrderingController extends GetxController {
       await users
           .doc(_auth.currentUser!.uid)
           .collection("chats")
-          .doc(chat_id)
+          .doc(chatId)
           .update({
         "lastTime": date,
       });
@@ -442,7 +442,7 @@ class OrderingController extends GetxController {
       final checkChatsFriend = await users
           .doc(tripC.idDriver)
           .collection("chats")
-          .doc(chat_id)
+          .doc(chatId)
           .get();
 
       if (checkChatsFriend.exists) {
@@ -450,7 +450,7 @@ class OrderingController extends GetxController {
         // first cek total unread
 
         final checkTotalUnread = await chats
-            .doc(chat_id)
+            .doc(chatId)
             .collection("chats")
             .where("isRead", isEqualTo: false)
             .where("pengirim", isEqualTo: _auth.currentUser!.uid)
@@ -462,16 +462,16 @@ class OrderingController extends GetxController {
         await users
             .doc(tripC.idDriver)
             .collection("chats")
-            .doc(chat_id)
+            .doc(chatId)
             .update({
           "lastTime": date,
           "total_unread": totalUnread,
         });
       } else {
         // not exist on friend DB
-        await users.doc(tripC.idDriver).collection("chats").doc(chat_id).set({
+        await users.doc(tripC.idDriver).collection("chats").doc(chatId).set({
           "connection": _auth.currentUser!.uid,
-          "chat_id": chat_id,
+          "chatId": chatId,
           "total_unread": 1,
           "lastTime": date,
         });

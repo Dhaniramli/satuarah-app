@@ -15,7 +15,7 @@ class ChatController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Map<String, dynamic>? userMap;
   late String roomId;
-  var chat_id;
+  String chatId = '';
   // LOGIC CHAT
   void addNewConnection(String uidUser, Map<String, dynamic> userMap) async {
     try {
@@ -37,8 +37,8 @@ class ChatController extends GetxController {
         if (checkConnection.docs.isNotEmpty) {
           flagNewConnection = false;
 
-          //chat_id from chats collection
-          chat_id = checkConnection.docs[0].id;
+          //chatId from chats collection
+          chatId = checkConnection.docs[0].id;
         } else {
           flagNewConnection = true;
           // belum pernah chat dengan driver
@@ -66,17 +66,17 @@ class ChatController extends GetxController {
             .doc(newChatDoc.id)
             .set({
           "connection": uidUser,
-          "chat_id": newChatDoc,
+          "chatId": newChatDoc,
           "total_unread": 0,
           "lastTime": date,
         });
 
-        chat_id = newChatDoc.id;
+        chatId = newChatDoc.id;
       }
 
       // Get.toNamed(Routes.CHAT_ROOM, arguments: trip);
       final updateStatusChat = await chats
-          .doc(chat_id)
+          .doc(chatId)
           .collection("chats")
           .where("isRead", isEqualTo: false)
           .where("penerima", isEqualTo: uidUser)
@@ -84,20 +84,20 @@ class ChatController extends GetxController {
 
       updateStatusChat.docs.forEach((element) async {
         await chats
-            .doc(chat_id)
+            .doc(chatId)
             .collection("chats")
             .doc(element.id)
             .update({"isRead": true});
       });
 
-      await users.doc(uidUser).collection("chats").doc(chat_id).update({
+      await users.doc(uidUser).collection("chats").doc(chatId).update({
         "total_unread": 0,
       });
 
       Get.to(
         () => ChatRoomView(
           userMap: userMap,
-          chatRoomid: chat_id,
+          chatRoomid: chatId,
           friendEmail: uidUser,
         ),
       );

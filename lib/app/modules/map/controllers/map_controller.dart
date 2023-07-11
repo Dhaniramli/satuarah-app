@@ -30,15 +30,15 @@ class MapController extends GetxController {
   double latitudeFinish = 0.0;
   double longitudeFinish = 0.0;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
   @override
   void onClose() {
