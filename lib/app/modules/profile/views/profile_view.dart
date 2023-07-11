@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 
 import '../../../../theme.dart';
@@ -17,31 +16,6 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
 
-    // Widget buttonDriver() {
-    //   return SizedBox(
-    //     width: double.infinity,
-    //     height: 42,
-    //     child: ElevatedButton(
-    //       onPressed: () {
-    //         Get.to(() => RegisterDriverView());
-    //       },
-    //       style: ElevatedButton.styleFrom(
-    //         backgroundColor: primaryColor,
-    //         shape: RoundedRectangleBorder(
-    //           // border: Border.all(color: primaryColor),
-    //           borderRadius: BorderRadius.circular(5),
-    //         ),
-    //       ),
-    //       child: Text(
-    //         "Daftar Driver",
-    //         style: textWhiteStyle.copyWith(
-    //           fontSize: 16,
-    //           fontWeight: semiBold,
-    //         ),
-    //       ),
-    //     ),
-    //   );
-    // }
     Widget buttonDriver() {
       return Container(
         width: double.infinity,

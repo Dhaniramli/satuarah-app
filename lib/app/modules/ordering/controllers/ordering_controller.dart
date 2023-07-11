@@ -61,7 +61,7 @@ class OrderingController extends GetxController {
         "pengirim": _auth.currentUser!.uid,
         "penerima": userMap["id_user"],
         "msg":
-            "Maaf, kita tidak jadi berangkat bareng, ${tripC.thoroughfareStart}, ${tripC.subLocalityStart}, ${tripC.localityStart}, ${tripC.subAdministrativeAreaStart} - ${tripC.thoroughfareFinish}, ${tripC.subLocalityFinish}, ${tripC.localityFinish}, ${tripC.subAdministrativeAreaFinish}, ${tripC.tripDate} ${tripC.tripTime}",
+            "Maaf, kita tidak jadi berangkat bareng, \n->Berangkat dari ${tripC.thoroughfareStart}, ${tripC.subLocalityStart}, ${tripC.localityStart}, ${tripC.subAdministrativeAreaStart}, \n->Berhenti di ${tripC.thoroughfareFinish}, ${tripC.subLocalityFinish}, ${tripC.localityFinish}, ${tripC.subAdministrativeAreaFinish}, \n->${tripC.tripDate} ${tripC.tripTime}",
         "time": Timestamp.now(),
         "isRead": false,
         "jm": DateFormat.jm().format(DateTime.parse(date)),
@@ -197,8 +197,7 @@ class OrderingController extends GetxController {
     CollectionReference users = _firestore.collection("users");
     final TripModel tripC = trip;
 
-    final doChats =
-        await users.doc(_auth.currentUser!.uid).collection("chats").get();
+   await users.doc(_auth.currentUser!.uid).collection("chats").get();
     final checkConnection = await users
         .doc(_auth.currentUser!.uid)
         .collection("chats")
@@ -235,7 +234,7 @@ class OrderingController extends GetxController {
         "pengirim": _auth.currentUser!.uid,
         "penerima": userMap["id_user"],
         "msg":
-            "Ayo, kita berangkat bareng, ${tripC.thoroughfareStart}, ${tripC.subLocalityStart}, ${tripC.localityStart}, ${tripC.subAdministrativeAreaStart} - ${tripC.thoroughfareFinish}, ${tripC.subLocalityFinish}, ${tripC.localityFinish}, ${tripC.subAdministrativeAreaFinish}, ${tripC.tripDate} ${tripC.tripTime}",
+            "Ayo, kita berangkat bareng, \n->Berangkat dari ${tripC.thoroughfareStart}, ${tripC.subLocalityStart}, ${tripC.localityStart}, ${tripC.subAdministrativeAreaStart}, \n->Berhenti di ${tripC.thoroughfareFinish}, ${tripC.subLocalityFinish}, ${tripC.localityFinish}, ${tripC.subAdministrativeAreaFinish}, \n->${tripC.tripDate} ${tripC.tripTime}",
         "time": Timestamp.now(),
         "isRead": false,
         "jm": DateFormat.jm().format(DateTime.parse(date)),
@@ -425,7 +424,7 @@ class OrderingController extends GetxController {
         "pengirim": _auth.currentUser!.uid,
         "penerima": tripC.idDriver,
         "msg":
-            "Saya ingin ikut perjalanan anda, ${tripC.thoroughfareStart}, ${tripC.subLocalityStart}, ${tripC.localityStart}, ${tripC.subAdministrativeAreaStart} - ${tripC.thoroughfareFinish}, ${tripC.subLocalityFinish}, ${tripC.localityFinish}, ${tripC.subAdministrativeAreaFinish}, ${tripC.tripDate} ${tripC.tripTime}",
+            "Saya ingin ikut perjalanan anda,\n->Berangkat dari ${tripC.thoroughfareStart}, ${tripC.subLocalityStart}, ${tripC.localityStart}, ${tripC.subAdministrativeAreaStart}, \n->Berhenti di ${tripC.thoroughfareFinish}, ${tripC.subLocalityFinish}, ${tripC.localityFinish}, ${tripC.subAdministrativeAreaFinish}, \n->${tripC.tripDate} ${tripC.tripTime}",
         "time": Timestamp.now(),
         "isRead": false,
         "jm": DateFormat.jm().format(DateTime.parse(date)),

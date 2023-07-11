@@ -38,10 +38,9 @@ class EditProfileController extends GetxController {
   Future<String?> uploadImage(String uid) async {
     Reference storageRef = storage.ref("$uid.png");
     File file = File(pickedImage!.path);
+    await storageRef.putFile(file);
 
     try {
-      final dataUpload = await storageRef.putFile(file);
-
       // print(dataUpload);
       final photoUrl = await storageRef.getDownloadURL();
       deleteImage();
@@ -89,7 +88,7 @@ class EditProfileController extends GetxController {
         borderRadius: 10,
       );
     } on Exception catch (err) {
-     Get.snackbar("Terjadi kesalahan", "$err");
+      Get.snackbar("Terjadi kesalahan", "$err");
     }
   }
 

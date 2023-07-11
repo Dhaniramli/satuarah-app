@@ -4,10 +4,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../theme.dart';
-import '../../../data/models/city_model.dart';
 import '../../../data/models/user_model.dart';
 import '../controllers/make_a_trip_controller.dart';
-import 'widgets/city_widget.dart';
 import 'widgets/dropdown_widget.dart';
 import 'widgets/text_form_widget.dart';
 

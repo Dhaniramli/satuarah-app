@@ -289,7 +289,6 @@ Widget messages(BuildContext context, Map<String, dynamic> map) {
     alignment: map['pengirim'] == controller.auth.currentUser!.uid
         ? Alignment.centerRight
         : Alignment.centerLeft,
-    width: double.infinity,
     margin: const EdgeInsets.only(top: 20),
     child: Column(
       crossAxisAlignment: map['pengirim'] == controller.auth.currentUser!.uid
@@ -304,7 +303,7 @@ Widget messages(BuildContext context, Map<String, dynamic> map) {
             Flexible(
               child: Container(
                 constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width * 0.6,
+                  maxWidth: MediaQuery.of(context).size.width * 0.9,
                 ),
                 padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
