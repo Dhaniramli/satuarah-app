@@ -24,14 +24,16 @@ class SearchRideController extends GetxController {
     } else {
       isLoading(true);
 
-      var capitalized = data.substring(0, 1).toUpperCase() + data.substring(1);
+      var startIndex = data.indexOf("Kecamatan") + "Kecamatan".length + 1;
+      var capitalized =
+          data.substring(startIndex, startIndex + 1).toUpperCase();
 
       if (queryAwal.isEmpty && data.length == 1) {
         //fungsi yang akan dijalankan pada satu huruf ketikan pertama
         CollectionReference trips = firestore.collection("trip");
         final keyNameResult = await trips
             .where("trip_status", whereIn: ['Menunggu', 'Dalam Perjalanan'])
-            .where("key_finish", isEqualTo: data.substring(0, 1).toUpperCase())
+            .where("key_finish", isEqualTo: capitalized)
             .get();
 
         if (keyNameResult.docs.isNotEmpty) {
@@ -52,7 +54,7 @@ class SearchRideController extends GetxController {
       if (queryAwal.isNotEmpty) {
         tempSearch.value = [];
         for (var element in queryAwal) {
-          if (element["city_finish"].startsWith(capitalized)) {
+          if (element["locality_finish"].startsWith(capitalized)) {
             tempSearch.add(element);
           }
         }

@@ -77,9 +77,9 @@ class MakeATripController extends GetxController {
           "thoroughfare_finish": placeNamethoroughfareFinishC,
           "subLocality_start": placesubLocalityStartC,
           "subLocality_finish": placesubLocalityFinishC,
-          "key_finish": placeNamesubAdministrativeAreaFinishC!
-              .substring(0, 1)
-              .toUpperCase(),
+          "key_finish": placeNameFinishC != '' ?
+              placeNameFinishC!.substring(10, 11)
+              .toUpperCase() : 'A',
         });
 
         firestore.collection("trip").doc(docRef.id).update({

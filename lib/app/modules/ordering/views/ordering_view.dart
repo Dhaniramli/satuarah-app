@@ -266,7 +266,7 @@ class _OrderingViewState extends State<OrderingView> {
                               style: textBlackDuaStyle.copyWith(
                                   fontSize: 15, fontWeight: medium),
                             ),
-                            const SizedBox(height: 5),
+                            const SizedBox(height: 20),
                             ElevatedButton(
                               onPressed: () {
                                 Get.to(() => OrderingMapView(
@@ -289,8 +289,12 @@ class _OrderingViewState extends State<OrderingView> {
                                           trip!.subLocalityFinish,
                                     ));
                               },
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(137, 35),
+                                padding: const EdgeInsets.all(10),
+                              ),
                               child: Text(
-                                'Peta',
+                                'Cek Peta',
                                 style:
                                     textWhiteStyle.copyWith(fontWeight: bold),
                               ),
