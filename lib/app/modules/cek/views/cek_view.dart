@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../theme.dart';
 import '../../../data/models/trip_model.dart';
@@ -21,7 +22,15 @@ class CekView extends GetView<CekController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Makassar - Bone'),
+        title: TextScroll(
+          '$cityStart - $cityFinish',
+          mode: TextScrollMode.endless,
+          velocity: const Velocity(pixelsPerSecond: Offset(50, 0)),
+          style: textWhiteStyle.copyWith(
+            fontSize: 15,
+            fontWeight: semiBold,
+          ),
+        ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Get.back(),

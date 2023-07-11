@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 import '../../../../theme.dart';
 import '../../cek/views/cek_view.dart';
@@ -65,88 +66,61 @@ class PopularRouteView extends GetView<PopularRouteController> {
                 decoration: BoxDecoration(
                     border: Border.all(color: grayDuaColor, width: 3),
                     borderRadius: BorderRadius.circular(5)),
-                child: SizedBox(
-                  height: 98,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        height: double.infinity,
-                        child: Image.asset(
-                          "assets/logo.png",
-                          width: 98.0,
-                          height: 98.0,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      const SizedBox(width: 24),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.circle_rounded,
-                                  size: 10,
-                                  color: grayDuaColor,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  snapshot.data!.docs[index]["city_start"],
-                                  style: textBlackDuaStyle.copyWith(
-                                    fontSize: 13,
-                                    fontWeight: semiBold,
-                                  ),
-                                ),
-                                const SizedBox(width: 4),
-                                Icon(
-                                  Icons.horizontal_rule_outlined,
-                                  size: 15,
-                                  color: black,
-                                ),
-                                const SizedBox(width: 4),
-                                Text(
-                                  snapshot.data!.docs[index]["city_finish"],
-                                  style: textBlackDuaStyle.copyWith(
-                                    fontSize: 13,
-                                    fontWeight: semiBold,
-                                  ),
-                                ),
-                              ],
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => CekView(
+                          snapshot.data!.docs[index]["city_start"],
+                          snapshot.data!.docs[index]["city_finish"],
+                        ));
+                  },
+                  child: SizedBox(
+                    height: 98,
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: TextScroll(
+                            '${snapshot.data!.docs[index]["city_start"]} - ${snapshot.data!.docs[index]["city_finish"]}',
+                            mode: TextScrollMode.endless,
+                            velocity:
+                                const Velocity(pixelsPerSecond: Offset(50, 0)),
+                            style: textBlackDuaStyle.copyWith(
+                              fontSize: 13,
+                              fontWeight: semiBold,
                             ),
-                            SizedBox(
-                              width: 145,
-                              height: 29,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Get.to(() => CekView(
-                                        snapshot.data!.docs[index]
-                                            ["city_start"],
-                                        snapshot.data!.docs[index]
-                                            ["city_finish"],
-                                      ));
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: primaryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
+                          ),
+                        ),
+                        Center(
+                          child: SizedBox(
+                            width: 145,
+                            height: 29,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Get.to(() => CekView(
+                                      snapshot.data!.docs[index]["city_start"],
+                                      snapshot.data!.docs[index]["city_finish"],
+                                    ));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: primaryColor,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                child: Text(
-                                  "Cek",
-                                  style: textWhiteStyle.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: semiBold,
-                                  ),
+                              ),
+                              child: Text(
+                                "Cek",
+                                style: textWhiteStyle.copyWith(
+                                  fontSize: 14,
+                                  fontWeight: semiBold,
                                 ),
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

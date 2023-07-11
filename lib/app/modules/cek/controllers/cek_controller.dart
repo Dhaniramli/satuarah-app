@@ -8,8 +8,8 @@ class CekController extends GetxController {
       String cityStart, String cityfinish) async* {
     yield* firestore
         .collection('trip')
-        .where("city_start", isEqualTo: cityStart)
-        .where("city_finish", isEqualTo: cityfinish)
+        .where("subAdministrativeArea_start", isEqualTo: cityStart)
+        .where("subAdministrativeArea_finish", isEqualTo: cityfinish)
         .where("trip_status",
             whereIn: ['Menunggu', 'Dalam Perjalanan']).snapshots();
   }
