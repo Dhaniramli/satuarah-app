@@ -22,16 +22,36 @@ class SignInController extends GetxController {
         "message": "Berhasil Login",
       };
     } on FirebaseAuthException catch (e) {
-      return {
-        "error": true,
-        "message": "${e.message}",
-      };
+      if (e.code == 'user-not-found') {
+        isLoading(false);
+        return {
+          "error": true,
+          "message": "Email tidak terdaftar",
+        };
+      } else if (e.code == 'wrong-password') {
+        isLoading(false);
+        return {
+          "error": true,
+          "message": "Email atau Password Salah",
+        };
+      } else if (e.code == 'too-many-requests') {
+        isLoading(false);
+        return {
+          "error": true,
+          "message": "Akun Anda telah diblokir. Silakan coba lagi nanti.",
+        };
+      }
     } catch (e) {
+      isLoading(false);
       return {
         "error": true,
-        "message": "Tidak Dapat Login",
+        "message": "$e",
       };
     }
+    return {
+      "error": false,
+      "message": "",
+    };
   }
 
   @override
