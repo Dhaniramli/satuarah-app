@@ -13,8 +13,7 @@ class ProfileController extends GetxController {
 
   doLogout() async {
     try {
-      final userRef = firestore.collection("users").doc(auth.currentUser?.uid);
-      userRef.update({
+      await firestore.collection("users").doc(auth.currentUser?.uid).update({
         'status': false,
       });
       await auth.signOut();
