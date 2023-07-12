@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
               // Get.testMode = true;
               return GetMaterialApp(
                 debugShowCheckedModeBanner: false,
-                title: "Application",
+                title: "Satuarah",
                 initialRoute:
                     snapAuth.hasData ? Routes.mainNavigation : Routes.signIn,
                 getPages: AppPages.routes,
